@@ -1,6 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_agri/app_screens/home.dart';
 import 'package:smart_agri/app_screens/signup_page.dart';
+import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 
 import '../config.dart';
@@ -34,70 +36,73 @@ class _LoginPageState extends State<LoginPage> {
         body: Form(
           key: _formKey,
           child: Center(
-            child: Container(
+            child: SizedBox(
               width: dynamicWidth(context, .86),
               height: dynamicHeight(context, .7),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                      bottom: dynamicHeight(context, .1),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Login",
-                          style: TextStyle(
-                            color: myGreen,
-                            fontSize: dynamicWidth(context, .1),
-                            fontWeight: FontWeight.bold,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        bottom: dynamicHeight(context, .1),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "Login",
+                            style: TextStyle(
+                              color: myGreen,
+                              fontSize: dynamicWidth(context, .1),
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: dynamicHeight(context, .02),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Flexible(
-                          child: inputTextField(
-                            context,
-                            false,
-                            "Mobile Number",
-                            number,
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: dynamicHeight(context, .02),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Flexible(
+                            child: inputTextField(
+                              context,
+                              false,
+                              "Mobile Number",
+                              number,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: dynamicHeight(context, .02),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Flexible(
-                          child: inputTextField(
-                            context,
-                            true,
-                            "Password",
-                            password,
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: dynamicHeight(context, .02),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Flexible(
+                            child: inputTextField(
+                              context,
+                              true,
+                              "Password",
+                              password,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: dynamicHeight(context, .02),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: dynamicHeight(context, .02),
+                      ),
+                      child: button(context, "Login", page: const Home()),
                     ),
-                    child: Row(
+                    Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         richTextWidget(
@@ -112,8 +117,8 @@ class _LoginPageState extends State<LoginPage> {
                             true),
                       ],
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
