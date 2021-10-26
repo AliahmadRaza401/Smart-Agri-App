@@ -1,11 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_agri/app_screens/login.dart';
-import 'package:smart_agri/app_screens/otp.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
+
+import 'package:smart_agri/trader_screens/authentication/auth_services.dart';
+import 'package:smart_agri/trader_screens/authentication/login.dart';
+import 'package:smart_agri/utils/config.dart';
+
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
-
-import '../config.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -15,6 +18,7 @@ final number = TextEditingController();
 final password = TextEditingController();
 final cnic = TextEditingController();
 final cPassword = TextEditingController();
+final mail = TextEditingController();
 
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
@@ -26,6 +30,8 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
+    var loading = Provider.of<AuthProvider>(context).loading;
+
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -148,6 +154,25 @@ class _SignUpPageState extends State<SignUpPage> {
                           Flexible(
                             child: inputTextField(
                               context,
+                              false,
+                              "Email",
+                              mail,
+                              TextInputType.name,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: dynamicHeight(context, .02),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Flexible(
+                            child: inputTextField(
+                              context,
                               true,
                               "Password",
                               password,
@@ -180,7 +205,12 @@ class _SignUpPageState extends State<SignUpPage> {
                       padding: EdgeInsets.symmetric(
                         vertical: dynamicHeight(context, .02),
                       ),
-                      child: button(context, "Sign Up", page: const OTP()),
+                      child: button(
+                          context, loading == true ? "Loading..." : "Sign Up",
+                          () {
+                        AuthServices.signUp(context, mail.text, password.text,
+                            fName.text, lName.text, number.text, cnic.text);
+                      }),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

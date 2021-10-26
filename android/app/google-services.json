@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "371638882449",
+    "project_id": "smart-agri-47623",
+    "storage_bucket": "smart-agri-47623.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:371638882449:android:47367e7e0b5d6adf336f30",
+        "android_client_info": {
+          "package_name": "com.example.smart_agri"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "371638882449-eblp0j8ql4cv4ko14omtlhvo8p21jhvh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.smart_agri",
+            "certificate_hash": "12b48cb5f842660cc67a75c8af6544a135f2e887"
+          }
+        },
+        {
+          "client_id": "371638882449-dkaqo797jqlf7sadvh23dh2ti6mc6q9u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClp1NHuWvdqeN5E6qN0sjHfd7Xo_CVzZU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "371638882449-dkaqo797jqlf7sadvh23dh2ti6mc6q9u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

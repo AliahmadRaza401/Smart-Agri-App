@@ -1,18 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../config.dart';
+import '../utils/config.dart';
 import 'dynamic_size.dart';
 
-Widget button(context, text, {page}) {
+Widget button(context, text, function) {
   return InkWell(
-    onTap: () {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => page,
-        ),
-      );
-    },
+    onTap: function,
     child: Container(
       width: dynamicWidth(context, .8),
       height: dynamicHeight(context, .064),

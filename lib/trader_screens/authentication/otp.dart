@@ -1,11 +1,9 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:pinput/pin_put/pin_put.dart';
+import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
-
-import '../config.dart';
-import 'home.dart';
 
 final pinController = TextEditingController();
 final pinFocusNode = FocusNode();
@@ -72,7 +70,7 @@ class _OTPState extends State<OTP> {
                     padding: EdgeInsets.symmetric(
                       vertical: dynamicHeight(context, .04),
                     ),
-                    child: button(context, "Verify", page: const Home()),
+                    child: button(context, "Verify", () {}),
                   ),
                 ],
               ),

@@ -1,15 +1,17 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_agri/app_screens/home.dart';
-import 'package:smart_agri/app_screens/signup_page.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
+
+import 'package:smart_agri/trader_screens/authentication/auth_services.dart';
+import 'package:smart_agri/trader_screens/authentication/signup_page.dart';
+import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 
-import '../config.dart';
-
 final _formKey = GlobalKey<FormState>();
 
-final number = TextEditingController();
+final email = TextEditingController();
 final password = TextEditingController();
 
 class LoginPage extends StatefulWidget {
@@ -24,6 +26,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
+    var loading = Provider.of<AuthProvider>(context).loading;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -72,7 +75,7 @@ class _LoginPageState extends State<LoginPage> {
                               context,
                               false,
                               "Mobile Number",
-                              number,
+                              email,
                             ),
                           ),
                         ],
@@ -100,7 +103,14 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.symmetric(
                         vertical: dynamicHeight(context, .02),
                       ),
-                      child: button(context, "Login", page: const Home()),
+                      child: button(
+                        context,
+                        loading == true?
+                        "Loading..." :
+                         "Login", 
+                         () {
+                        AuthServices.signIn(context, email.text, password.text);
+                      }),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,

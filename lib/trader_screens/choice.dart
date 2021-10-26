@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:smart_agri/config.dart';
+import 'package:smart_agri/trader_screens/authentication/login.dart';
+import 'package:smart_agri/utils/app_route.dart';
+import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 
-import 'login.dart';
+import 'authentication/auth_services.dart';
+import 'home/home.dart';
 
 class Choice extends StatefulWidget {
   const Choice({Key? key}) : super(key: key);
@@ -55,14 +58,21 @@ class _ChoiceState extends State<Choice> {
                   padding: EdgeInsets.symmetric(
                     vertical: dynamicHeight(context, .02),
                   ),
-                  child: button(context, "Login as Trader",
-                      page: const LoginPage()),
+                  child: button(context, "Login as Trader", () async {
+                    var user = await AuthServices.getUserLoggedIn();
+                    print('userLogin: $user');
+                    if (user == true) {
+                      AppRoutes.replace(context, Home());
+                    } else {
+                      AppRoutes.push(context, LoginPage());
+                    }
+                  }),
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(
                     vertical: dynamicHeight(context, .02),
                   ),
-                  child: button(context, "Login as Farmer"),
+                  child: button(context, "Login as Farmer", () {}),
                 ),
               ],
             ),
