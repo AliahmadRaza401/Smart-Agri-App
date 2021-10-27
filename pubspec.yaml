@@ -36,6 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.2
   auto_size_text: ^3.0.0-nullsafety.0
   pinput: ^1.2.0
+  email_validator: ^2.0.1
   cloud_firestore: ^2.5.4
   firebase_auth: ^3.1.4
   firebase_core: ^1.8.0

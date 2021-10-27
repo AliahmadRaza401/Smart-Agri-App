@@ -18,14 +18,16 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: multiProviders,
       child: MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: ThemeData(
-              brightness: Brightness.light,
-              primaryColor: Colors.blue,
-              fontFamily: 'Georgia',
-              unselectedWidgetColor: Colors.blue),
-          home: Choice()),
+        debugShowCheckedModeBanner: false,
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          brightness: Brightness.light,
+          primaryColor: Colors.blue,
+          fontFamily: 'Georgia',
+          unselectedWidgetColor: Colors.blue,
+        ),
+        home: const Choice(),
+      ),
     );
   }
 }

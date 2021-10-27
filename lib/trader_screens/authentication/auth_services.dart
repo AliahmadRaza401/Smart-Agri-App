@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'package:smart_agri/model/user_model.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/trader_screens/authentication/login.dart';
 import 'package:smart_agri/trader_screens/home/home.dart';
 import 'package:smart_agri/utils/app_route.dart';
+import 'package:smart_agri/utils/config.dart';
 
 class AuthServices {
   static var errorMessage;
@@ -25,8 +25,13 @@ class AuthServices {
       await auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((uid) => {
-                Fluttertoast.showToast(msg: "LogIn Successfull"),
-                AppRoutes.push(context, Home()),
+                Fluttertoast.showToast(
+                  msg: "LogIn Successful",
+                  backgroundColor: myGreen,
+                  textColor: myWhite,
+                  gravity: ToastGravity.CENTER,
+                ),
+                AppRoutes.push(context, const Home()),
                 userLoggedIn(true),
                 _authProvider.isLoading(false),
               });
@@ -54,7 +59,12 @@ class AuthServices {
           errorMessage = "An undefined Error happened.";
       }
       _authProvider.isLoading(false);
-      Fluttertoast.showToast(msg: errorMessage!);
+      Fluttertoast.showToast(
+        msg: errorMessage!,
+        backgroundColor: myGreen,
+        textColor: myWhite,
+        gravity: ToastGravity.CENTER,
+      );
       print(error.code);
     }
   }
@@ -70,13 +80,23 @@ class AuthServices {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) => {
-                Fluttertoast.showToast(msg: "SignUp Successfully!"),
+                Fluttertoast.showToast(
+                  msg: "SignUp Successfully!",
+                  backgroundColor: myGreen,
+                  textColor: myWhite,
+                  gravity: ToastGravity.CENTER,
+                ),
                 postDetailsToFirestore(
                     context, firstName, lastName, mobilenumber, cnic),
                 _authProvider.isLoading(false),
               })
           .catchError((e) {
-        Fluttertoast.showToast(msg: e!.message);
+        Fluttertoast.showToast(
+          msg: e!.message,
+          backgroundColor: myGreen,
+          textColor: myWhite,
+          gravity: ToastGravity.CENTER,
+        );
         _authProvider.isLoading(false);
       });
     } on FirebaseAuthException catch (error) {
@@ -103,7 +123,12 @@ class AuthServices {
           errorMessage = "An undefined Error happened.";
       }
       _authProvider.isLoading(false);
-      Fluttertoast.showToast(msg: errorMessage!);
+      Fluttertoast.showToast(
+        msg: errorMessage!,
+        backgroundColor: myGreen,
+        textColor: myWhite,
+        gravity: ToastGravity.CENTER,
+      );
       print(error.code);
     }
   }
@@ -131,9 +156,14 @@ class AuthServices {
         .collection("users")
         .doc(user.uid)
         .set(userModel.toMap());
-    Fluttertoast.showToast(msg: "Account created successfully :) ");
+    Fluttertoast.showToast(
+      msg: "Account created successfully :) ",
+      backgroundColor: myGreen,
+      textColor: myWhite,
+      gravity: ToastGravity.CENTER,
+    );
 
-    AppRoutes.push(context, LoginPage());
+    AppRoutes.push(context, const LoginPage());
   }
 
   // LogOut--------------------------------------
@@ -141,7 +171,7 @@ class AuthServices {
   static logOut(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     userLoggedIn(false);
-    AppRoutes.replace(context, LoginPage());
+    AppRoutes.replace(context, const LoginPage());
   }
 
   // user Logged

@@ -16,7 +16,8 @@ class Home extends StatefulWidget {
 class _HomeState extends State<Home> {
   User? user = FirebaseAuth.instance.currentUser;
   UserModel loggedInUser = UserModel();
-  FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+
   @override
   void initState() {
     super.initState();
@@ -24,14 +25,12 @@ class _HomeState extends State<Home> {
   }
 
   getUserData() {
-    _firebaseFirestore
-        .collection('users')
-        .doc(user!.uid)
-        .get()
-        .then((value) => {
-              this.loggedInUser = UserModel.fromMap(value.data()),
-              print(loggedInUser.firstName),
-            });
+    _firebaseFirestore.collection('users').doc(user!.uid).get().then(
+          (value) => {
+            loggedInUser = UserModel.fromMap(value.data()),
+            print(loggedInUser.firstName),
+          },
+        );
   }
 
   @override
@@ -42,45 +41,141 @@ class _HomeState extends State<Home> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              ElevatedButton(
-                  onPressed: () {
-                    AuthServices.logOut(context);
-                  },
-                  child: Text("Logout")),
-              Text(
-                '${loggedInUser.firstName}',
-                style: TextStyle(color: Colors.black, fontSize: 25),
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    height: dynamicHeight(context, .06),
-                    width: dynamicWidth(context, .4),
-                    child: Center(
-                      child: Text(
-                        "Rs. 80,000",
-                        style: TextStyle(
-                          color: myGreen,
-                          fontSize: dynamicWidth(context, .05),
-                        ),
-                      ),
+              Container(
+                height: dynamicHeight(context, .24),
+                width: dynamicWidth(context, 1),
+                decoration: BoxDecoration(
+                  color: myGreen,
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(
+                      dynamicWidth(context, .04),
+                    ),
+                    bottomRight: Radius.circular(
+                      dynamicWidth(context, .04),
                     ),
                   ),
-                  Container(
-                    height: dynamicHeight(context, .06),
-                    width: dynamicWidth(context, .4),
-                    child: Center(
-                      child: Text(
-                        "Rs. 50,000",
-                        style: TextStyle(
-                          color: Colors.red,
-                          fontSize: dynamicWidth(context, .05),
-                        ),
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: dynamicHeight(context, .02),
+                        horizontal: dynamicWidth(context, .06),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Hi, ${loggedInUser.firstName}',
+                            style: TextStyle(
+                              color: myWhite,
+                              fontSize: dynamicWidth(context, .06),
+                              fontWeight: FontWeight.w300,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              AuthServices.logOut(context);
+                            },
+                            child: Icon(
+                              Icons.logout,
+                              color: myWhite,
+                              size: dynamicWidth(context, .08),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                ],
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: dynamicHeight(context, .01),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            height: dynamicHeight(context, .12),
+                            width: dynamicWidth(context, .4),
+                            decoration: BoxDecoration(
+                              color: myWhite,
+                              borderRadius: BorderRadius.circular(
+                                dynamicWidth(context, .03),
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "DEBIT",
+                                      style: TextStyle(
+                                        color: myBlack,
+                                        fontSize: dynamicWidth(context, .054),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Rs. 80,000",
+                                      style: TextStyle(
+                                        color: myGreen,
+                                        fontSize: dynamicWidth(context, .048),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Container(
+                            height: dynamicHeight(context, .12),
+                            width: dynamicWidth(context, .4),
+                            decoration: BoxDecoration(
+                              color: myWhite,
+                              borderRadius: BorderRadius.circular(
+                                dynamicWidth(context, .03),
+                              ),
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "CREDIT",
+                                      style: TextStyle(
+                                        color: myBlack,
+                                        fontSize: dynamicWidth(context, .054),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "Rs. 30,000",
+                                      style: TextStyle(
+                                        color: myRed,
+                                        fontSize: dynamicWidth(context, .048),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Padding(
                 padding: EdgeInsets.only(
@@ -90,58 +185,62 @@ class _HomeState extends State<Home> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      height: dynamicHeight(context, .8),
+                      height: dynamicHeight(context, .6),
                       width: dynamicWidth(context, .9),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "Your Farmers",
-                                style: TextStyle(
-                                  fontSize: dynamicWidth(context, .07),
-                                  color: myGreen,
-                                  fontWeight: FontWeight.w600,
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: dynamicHeight(context, .02),
+                            ),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "Your Farmers",
+                                  style: TextStyle(
+                                    fontSize: dynamicWidth(context, .066),
+                                    color: myGreen,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                          Expanded(
-                            child: Container(
-                              width: dynamicWidth(context, .86),
-                              child: ListView.builder(
-                                itemCount: 10,
-                                itemBuilder: (context, i) {
-                                  return Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: dynamicHeight(context, .006),
+                          SizedBox(
+                            height: dynamicHeight(context, .52),
+                            width: dynamicWidth(context, .86),
+                            child: ListView.builder(
+                              itemCount: 10,
+                              itemBuilder: (context, i) {
+                                return Padding(
+                                  padding: EdgeInsets.symmetric(
+                                    vertical: dynamicHeight(context, .006),
+                                  ),
+                                  child: ListTile(
+                                    title: const Text("Ghulam Hussain"),
+                                    subtitle:
+                                        const Text("Bought a lot of things"),
+                                    leading: Icon(
+                                      Icons.person,
+                                      size: dynamicWidth(context, .1),
+                                      color: myGreen,
                                     ),
-                                    child: ListTile(
-                                      title: const Text("Ghulam Hussain"),
-                                      subtitle:
-                                          const Text("Bought a lot of things"),
-                                      leading: Icon(
-                                        Icons.person,
-                                        size: dynamicWidth(context, .1),
-                                        color: myGreen,
-                                      ),
-                                      trailing: Icon(
-                                        Icons.chevron_right_rounded,
-                                        size: dynamicWidth(context, .12),
-                                        color: myGreen,
-                                      ),
-                                      tileColor: myGrey,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                          dynamicWidth(context, .02),
-                                        ),
+                                    trailing: Icon(
+                                      Icons.chevron_right_rounded,
+                                      size: dynamicWidth(context, .12),
+                                      color: myGreen,
+                                    ),
+                                    tileColor: myGrey,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(
+                                        dynamicWidth(context, .02),
                                       ),
                                     ),
-                                  );
-                                },
-                              ),
+                                  ),
+                                );
+                              },
                             ),
                           ),
                         ],

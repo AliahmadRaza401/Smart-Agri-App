@@ -1,13 +1,14 @@
-import 'package:flutter/gestures.dart';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
-
 import 'package:smart_agri/trader_screens/authentication/auth_services.dart';
 import 'package:smart_agri/trader_screens/authentication/signup_page.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
+import 'package:smart_agri/widgets/form_fields.dart';
+import 'package:smart_agri/widgets/rich_text.dart';
 
 final _formKey = GlobalKey<FormState>();
 
@@ -28,202 +29,146 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     var loading = Provider.of<AuthProvider>(context).loading;
     return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: noColor,
-          iconTheme: const IconThemeData(
-            color: myGreen,
+      child: Container(
+        width: dynamicWidth(context, 1),
+        height: dynamicHeight(context, 1),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(
+              "assets/bg.jpg",
+            ),
+            fit: BoxFit.cover,
           ),
-          elevation: 0.0,
         ),
-        body: Form(
-          key: _formKey,
-          child: Center(
-            child: SizedBox(
-              width: dynamicWidth(context, .86),
-              height: dynamicHeight(context, .7),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.only(
-                        bottom: dynamicHeight(context, .1),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            "Login",
-                            style: TextStyle(
-                              color: myGreen,
-                              fontSize: dynamicWidth(context, .1),
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: dynamicHeight(context, .02),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Flexible(
-                            child: inputTextField(
-                              context,
-                              false,
-                              "Mobile Number",
-                              email,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: dynamicHeight(context, .02),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Flexible(
-                            child: inputTextField(
-                              context,
-                              true,
-                              "Password",
-                              password,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: dynamicHeight(context, .02),
-                      ),
-                      child: button(
-                        context,
-                        loading == true?
-                        "Loading..." :
-                         "Login", 
-                         () {
-                        AuthServices.signIn(context, email.text, password.text);
-                      }),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+        child: Container(
+          width: dynamicWidth(context, 1),
+          height: dynamicHeight(context, 1),
+          color: myBlack.withOpacity(0.6),
+          child: Scaffold(
+            backgroundColor: noColor,
+            appBar: AppBar(
+              backgroundColor: noColor,
+              iconTheme: const IconThemeData(
+                color: myGreen,
+              ),
+              elevation: 0.0,
+            ),
+            body: Form(
+              key: _formKey,
+              child: Center(
+                child: SizedBox(
+                  width: dynamicWidth(context, .86),
+                  height: dynamicHeight(context, .7),
+                  child: SingleChildScrollView(
+                    child: Column(
                       children: [
-                        richTextWidget(
-                            context,
-                            "Don't have an account?  ",
-                            "Sign Up",
-                            dynamicWidth(context, .04),
-                            dynamicWidth(context, .05),
-                            const SignUpPage(),
-                            myBlack,
-                            myGreen,
-                            true),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            bottom: dynamicHeight(context, .1),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Login",
+                                style: TextStyle(
+                                  color: myGreen,
+                                  fontSize: dynamicWidth(context, .1),
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: dynamicHeight(context, .01),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Flexible(
+                                child: inputTextField(
+                                  context,
+                                  "Email",
+                                  email,
+                                  TextInputType.emailAddress,
+                                  function: (value) {
+                                    if (EmailValidator.validate(value)) {
+                                    } else {
+                                      return "Enter Valid Email";
+                                    }
+                                    return null;
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: dynamicHeight(context, .01),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Flexible(
+                                child: inputTextField(
+                                  context,
+                                  "Password",
+                                  password,
+                                  TextInputType.visiblePassword,
+                                  password: true,
+                                  function: (value) {
+                                    if (value!.isEmpty || value.length < 6) {
+                                      return 'Password must have 6 characters';
+                                    }
+                                    return null;
+                                  },
+                                  function2: () {
+                                    setState(() {
+                                      obscureText = !obscureText;
+                                    });
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: dynamicHeight(context, .02),
+                          ),
+                          child: button(
+                              context, loading == true ? "Loading..." : "Login",
+                              () {
+                            AuthServices.signIn(
+                                context, email.text, password.text);
+                          }),
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            richTextWidget(
+                                context,
+                                "Don't have an account?  ",
+                                "Sign Up",
+                                dynamicWidth(context, .04),
+                                dynamicWidth(context, .05),
+                                const SignUpPage(),
+                                myWhite,
+                                myGreen,
+                                true),
+                          ],
+                        ),
                       ],
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
           ),
         ),
-      ),
-    );
-  }
-
-  Widget inputTextField(context, obscureText, label, myController,
-      {function, function2}) {
-    return TextFormField(
-      autovalidateMode: AutovalidateMode.onUserInteraction,
-      validator: (function == "") ? () {} : function,
-      controller: myController,
-      textInputAction: TextInputAction.next,
-      keyboardType: obscureText == true
-          ? TextInputType.visiblePassword
-          : TextInputType.phone,
-      obscureText: obscureText,
-      cursorColor: myGreen,
-      cursorWidth: 2.0,
-      cursorHeight: dynamicHeight(context, .034),
-      decoration: InputDecoration(
-        suffixIcon: obscureText == false
-            ? null
-            : InkWell(
-                onTap: function2,
-                child: const Icon(
-                  Icons.remove_red_eye_rounded,
-                  color: myGreen,
-                ),
-              ),
-        contentPadding: EdgeInsets.symmetric(
-          vertical: dynamicHeight(context, .02),
-          horizontal: dynamicWidth(context, .03),
-        ),
-        prefixText: obscureText == false ? "+92 " : "",
-        prefixStyle: TextStyle(
-          color: myGreen,
-          fontSize: dynamicWidth(context, .046),
-        ),
-        labelText: label,
-        labelStyle: TextStyle(
-          color: myGreen,
-          fontSize: dynamicWidth(context, .04),
-        ),
-        focusedBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: myGreen),
-        ),
-        enabledBorder: const UnderlineInputBorder(
-          borderSide: BorderSide(color: myGreen),
-        ),
-      ),
-    );
-  }
-
-  Widget richTextWidget(
-      context, text1, text2, size1, size2, page, color1, color2, push) {
-    return RichText(
-      text: TextSpan(
-        children: [
-          TextSpan(
-            text: text1,
-            style: TextStyle(
-              fontSize: size1,
-              color: color1,
-            ),
-          ),
-          page == ""
-              ? TextSpan(
-                  text: text2,
-                  style: TextStyle(
-                    fontSize: size2,
-                    color: color2,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )
-              : TextSpan(
-                  recognizer: TapGestureRecognizer()
-                    ..onTap = () => push == true
-                        ? Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => page,
-                            ),
-                          )
-                        : Navigator.pop(context),
-                  text: text2,
-                  style: TextStyle(
-                    fontSize: size2,
-                    color: color2,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-        ],
       ),
     );
   }

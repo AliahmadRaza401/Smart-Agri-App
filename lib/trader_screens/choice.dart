@@ -62,9 +62,9 @@ class _ChoiceState extends State<Choice> {
                     var user = await AuthServices.getUserLoggedIn();
                     print('userLogin: $user');
                     if (user == true) {
-                      AppRoutes.replace(context, Home());
+                      AppRoutes.replace(context, const Home());
                     } else {
-                      AppRoutes.push(context, LoginPage());
+                      AppRoutes.push(context, const LoginPage());
                     }
                   }),
                 ),
