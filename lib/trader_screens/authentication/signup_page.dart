@@ -250,8 +250,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                   TextInputType.visiblePassword,
                                   password: true,
                                   function: (value) {
-                                    if (value!.isEmpty || value.length < 6) {
-                                      return 'Password must have 6 characters';
+                                    if (value!.isEmpty || value.toString() != password.text) {
+                                      return 'Password must be Same!';
                                     }
                                     return null;
                                   },
@@ -269,17 +269,25 @@ class _SignUpPageState extends State<SignUpPage> {
                           padding: EdgeInsets.symmetric(
                             vertical: dynamicHeight(context, .02),
                           ),
-                          child: button(context,
-                              loading == true ? "Loading..." : "Sign Up", () {
-                            AuthServices.signUp(
-                                context,
-                                mail.text,
-                                password.text,
-                                fName.text,
-                                lName.text,
-                                number.text,
-                                cnic.text);
-                          }),
+                          child: button(
+                            context,
+                            loading == true ? "Loading..." : "Sign Up",
+                            () {
+                              if (!_formKey.currentState!.validate()) {
+                                return;
+                              } else {
+                                AuthServices.signUp(
+                                  context,
+                                  mail.text,
+                                  password.text,
+                                  fName.text,
+                                  lName.text,
+                                  number.text,
+                                  cnic.text,
+                                );
+                              }
+                            },
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,

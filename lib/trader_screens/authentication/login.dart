@@ -140,11 +140,17 @@ class _LoginPageState extends State<LoginPage> {
                             vertical: dynamicHeight(context, .02),
                           ),
                           child: button(
-                              context, loading == true ? "Loading..." : "Login",
-                              () {
-                            AuthServices.signIn(
-                                context, email.text, password.text);
-                          }),
+                            context,
+                            loading == true ? "Loading..." : "Login",
+                            () {
+                              if (!_formKey.currentState!.validate()) {
+                                return;
+                              } else {
+                                AuthServices.signIn(
+                                    context, email.text, password.text);
+                              }
+                            },
+                          ),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
