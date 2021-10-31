@@ -19,7 +19,10 @@ Widget inputTextField(context, label, myController, inputType,
       color: myWhite,
     ),
     decoration: InputDecoration(
-      suffixText: label == "Mobile Number" ? "+92" : "",
+      prefixText: label == "Mobile Number" ? "+92 " : "",
+      prefixStyle: const TextStyle(
+        color: myGreen,
+      ),
       suffixIcon: password == false
           ? null
           : InkWell(

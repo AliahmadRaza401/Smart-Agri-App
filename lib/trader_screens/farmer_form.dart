@@ -8,10 +8,9 @@ final _formKey = GlobalKey<FormState>();
 final farmerFName = TextEditingController();
 final farmerLName = TextEditingController();
 final userName = TextEditingController();
-final password = TextEditingController();
-final cnic = TextEditingController();
-final cPassword = TextEditingController();
-final mail = TextEditingController();
+final farmerPassword = TextEditingController();
+final farmerNumber = TextEditingController();
+final farmerCPassword = TextEditingController();
 
 class FarmerForm extends StatefulWidget {
   const FarmerForm({Key? key}) : super(key: key);
@@ -145,8 +144,32 @@ class _FarmerFormState extends State<FarmerForm> {
                         Flexible(
                           child: inputTextField(
                             context,
+                            "Mobile Number",
+                            farmerNumber,
+                            TextInputType.phone,
+                            function: (value) {
+                              if (value!.isEmpty || value.length < 11) {
+                                return 'Please enter a valid Number';
+                              }
+                              return null;
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: dynamicHeight(context, .01),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: inputTextField(
+                            context,
                             "Password",
-                            password,
+                            farmerPassword,
                             TextInputType.visiblePassword,
                             password: true,
                             function: (value) {
@@ -176,12 +199,12 @@ class _FarmerFormState extends State<FarmerForm> {
                           child: inputTextField(
                             context,
                             "Confirm Password",
-                            cPassword,
+                            farmerCPassword,
                             TextInputType.visiblePassword,
                             password: true,
                             function: (value) {
                               if (value!.isEmpty ||
-                                  value.toString() != password.text) {
+                                  value.toString() != farmerPassword.text) {
                                 return 'Password must be Same!';
                               }
                               return null;
