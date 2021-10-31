@@ -9,8 +9,8 @@ final farmerFName = TextEditingController();
 final farmerLName = TextEditingController();
 final userName = TextEditingController();
 final farmerPassword = TextEditingController();
-final farmerNumber = TextEditingController();
-final farmerCPassword = TextEditingController();
+final farmerNumber = TextEditingController(text: "password");
+final farmerCnic = TextEditingController();
 
 class FarmerForm extends StatefulWidget {
   const FarmerForm({Key? key}) : super(key: key);
@@ -168,20 +168,14 @@ class _FarmerFormState extends State<FarmerForm> {
                         Flexible(
                           child: inputTextField(
                             context,
-                            "Password",
-                            farmerPassword,
-                            TextInputType.visiblePassword,
-                            password: true,
+                            "CNIC",
+                            farmerCnic,
+                            TextInputType.number,
                             function: (value) {
-                              if (value!.isEmpty || value.length < 6) {
-                                return 'Password must have 6 characters';
+                              if (value!.isEmpty || value.length <= 13) {
+                                return 'Please enter a valid CNIC';
                               }
                               return null;
-                            },
-                            function2: () {
-                              setState(() {
-                                obscureText = !obscureText;
-                              });
                             },
                           ),
                         ),
@@ -198,14 +192,13 @@ class _FarmerFormState extends State<FarmerForm> {
                         Flexible(
                           child: inputTextField(
                             context,
-                            "Confirm Password",
-                            farmerCPassword,
+                            "Password",
+                            farmerPassword,
                             TextInputType.visiblePassword,
                             password: true,
                             function: (value) {
-                              if (value!.isEmpty ||
-                                  value.toString() != farmerPassword.text) {
-                                return 'Password must be Same!';
+                              if (value!.isEmpty || value.length < 6) {
+                                return 'Password must have 6 characters';
                               }
                               return null;
                             },
