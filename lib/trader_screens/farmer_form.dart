@@ -8,8 +8,8 @@ final _formKey = GlobalKey<FormState>();
 final farmerFName = TextEditingController();
 final farmerLName = TextEditingController();
 final userName = TextEditingController();
-final farmerPassword = TextEditingController();
-final farmerNumber = TextEditingController(text: "password");
+final farmerPassword = TextEditingController(text: "password");
+final farmerNumber = TextEditingController();
 final farmerCnic = TextEditingController();
 
 class FarmerForm extends StatefulWidget {
