@@ -215,7 +215,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               Flexible(
                                 child: inputTextField(
                                   context,
-                                  "Confirm Password",
+                                  "Password",
                                   password,
                                   TextInputType.visiblePassword,
                                   password: true,
