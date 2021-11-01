@@ -68,7 +68,8 @@ class _HomeState extends State<Home> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Hi, ${loggedInUser.firstName}',
+                          // 'Hi, ${loggedInUser.firstName}',
+                          'Hi',
                           style: TextStyle(
                             color: myWhite,
                             fontSize: dynamicWidth(context, .06),
