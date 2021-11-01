@@ -250,7 +250,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                   TextInputType.visiblePassword,
                                   password: true,
                                   function: (value) {
-                                    if (value!.isEmpty || value.toString() != password.text) {
+                                    if (value!.isEmpty ||
+                                        value.toString() != password.text) {
                                       return 'Password must be Same!';
                                     }
                                     return null;

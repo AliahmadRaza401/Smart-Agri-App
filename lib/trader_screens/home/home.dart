@@ -219,9 +219,8 @@ class _HomeState extends State<Home> {
                 itemBuilder: (context, i) {
                   return Padding(
                     padding: EdgeInsets.symmetric(
-                      vertical: dynamicHeight(context, .006),
-                      horizontal: dynamicWidth(context, .05)
-                    ),
+                        vertical: dynamicHeight(context, .006),
+                        horizontal: dynamicWidth(context, .05)),
                     child: ListTile(
                       title: const Text(
                         "Ghulam Hussain",
