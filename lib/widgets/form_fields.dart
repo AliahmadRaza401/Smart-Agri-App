@@ -4,7 +4,7 @@ import 'package:smart_agri/utils/config.dart';
 import 'dynamic_size.dart';
 
 Widget inputTextField(context, label, myController, inputType,
-    {function, function2, password = false, auth}) {
+    {function, function2, password = false, auth = true}) {
   return TextFormField(
     autovalidateMode: AutovalidateMode.onUserInteraction,
     validator: (function == "") ? () {} : function,
@@ -15,12 +15,12 @@ Widget inputTextField(context, label, myController, inputType,
     cursorColor: myGreen,
     cursorWidth: 2.0,
     cursorHeight: dynamicHeight(context, .034),
-    style: const TextStyle(
-      color: myWhite,
+    style: TextStyle(
+      color: auth == true ? myWhite : myGreen,
     ),
     decoration: InputDecoration(
       prefixText: label == "Mobile Number" ? "+92 " : "",
-      prefixStyle: const TextStyle(
+      prefixStyle: TextStyle(
         color: auth == true ? myWhite : myGreen,
       ),
       suffixIcon: password == false

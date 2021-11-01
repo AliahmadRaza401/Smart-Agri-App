@@ -75,6 +75,7 @@ class _FarmerFormState extends State<FarmerForm> {
                             "UserName",
                             userName,
                             TextInputType.phone,
+                            auth: false,
                             function: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter a valid Username';
@@ -99,6 +100,7 @@ class _FarmerFormState extends State<FarmerForm> {
                             "First Name",
                             farmerFName,
                             TextInputType.name,
+                            auth: false,
                             function: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter a valid Name';
@@ -123,6 +125,7 @@ class _FarmerFormState extends State<FarmerForm> {
                             "Last Name",
                             farmerLName,
                             TextInputType.name,
+                            auth: false,
                             function: (value) {
                               if (value!.isEmpty) {
                                 return 'Please enter a valid Name';
@@ -147,6 +150,7 @@ class _FarmerFormState extends State<FarmerForm> {
                             "Mobile Number",
                             farmerNumber,
                             TextInputType.phone,
+                            auth: false,
                             function: (value) {
                               if (value!.isEmpty || value.length < 11) {
                                 return 'Please enter a valid Number';
@@ -171,6 +175,7 @@ class _FarmerFormState extends State<FarmerForm> {
                             "CNIC",
                             farmerCnic,
                             TextInputType.number,
+                            auth: false,
                             function: (value) {
                               if (value!.isEmpty || value.length <= 13) {
                                 return 'Please enter a valid CNIC';
@@ -196,6 +201,7 @@ class _FarmerFormState extends State<FarmerForm> {
                             farmerPassword,
                             TextInputType.visiblePassword,
                             password: true,
+                            auth: false,
                             function: (value) {
                               if (value!.isEmpty || value.length < 6) {
                                 return 'Password must have 6 characters';
