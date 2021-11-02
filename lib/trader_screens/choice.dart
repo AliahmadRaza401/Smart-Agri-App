@@ -5,7 +5,7 @@ import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 
-import 'authentication/auth_services.dart';
+import '../services/auth_services.dart';
 import 'home/home.dart';
 
 class Choice extends StatefulWidget {

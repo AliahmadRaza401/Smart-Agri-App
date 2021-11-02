@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_agri/model/user_model.dart';
-import 'package:smart_agri/trader_screens/authentication/auth_services.dart';
+import 'package:smart_agri/services/auth_services.dart';
 import 'package:smart_agri/trader_screens/farmer_form.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
@@ -206,7 +206,7 @@ class _HomeState extends State<Home> {
                 child: Text(
                   "Your Farmers",
                   style: TextStyle(
-                    fontSize: dynamicWidth(context, .066),
+                    fontSize: dynamicWidth(context, .056),
                     color: myGreen,
                     fontWeight: FontWeight.w600,
                   ),

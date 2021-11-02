@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_agri/services/farmer_services.dart';
+import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
@@ -22,6 +25,8 @@ class FarmerForm extends StatefulWidget {
 class _FarmerFormState extends State<FarmerForm> {
   @override
   Widget build(BuildContext context) {
+        var loading = Provider.of<AuthProvider>(context).loading;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -224,9 +229,19 @@ class _FarmerFormState extends State<FarmerForm> {
                     ),
                     child: button(
                       context,
-                      "ADD FARMER",
+                      loading == false ?
+                      "ADD FARMER" : "Loading...",
                       () {
-                        if (!_formKey.currentState!.validate()) {}
+                        if (!_formKey.currentState!.validate()) {
+                          FarmerServices.addFarmerToDB(
+                              context,
+                              userName.text,
+                              farmerPassword.text,
+                              farmerFName.text,
+                              farmerLName.text,
+                              farmerNumber.text,
+                              farmerCnic.text);
+                        }
                       },
                     ),
                   ),

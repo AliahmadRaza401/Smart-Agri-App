@@ -2,7 +2,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
-import 'package:smart_agri/trader_screens/authentication/auth_services.dart';
+import 'package:smart_agri/services/auth_services.dart';
 import 'package:smart_agri/trader_screens/authentication/login.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
@@ -18,8 +18,6 @@ final number = TextEditingController();
 final password = TextEditingController();
 final cnic = TextEditingController();
 final cPassword = TextEditingController();
-final mail = TextEditingController();
-
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
@@ -279,7 +277,7 @@ class _SignUpPageState extends State<SignUpPage> {
                               } else {
                                 AuthServices.signUp(
                                   context,
-                                  mail.text,
+                                  email.text,
                                   password.text,
                                   fName.text,
                                   lName.text,

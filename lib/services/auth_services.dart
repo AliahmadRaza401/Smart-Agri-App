@@ -10,6 +10,7 @@ import 'package:smart_agri/trader_screens/authentication/login.dart';
 import 'package:smart_agri/trader_screens/home/home.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/widgets/app_dialog.dart';
 
 class AuthServices {
   static var errorMessage;
@@ -59,6 +60,7 @@ class AuthServices {
           errorMessage = "An undefined Error happened.";
       }
       _authProvider.isLoading(false);
+      // GeneralDialogs.showOopsDialog(context, errorMessage);
       Fluttertoast.showToast(
         msg: errorMessage!,
         backgroundColor: myGreen,
@@ -91,6 +93,7 @@ class AuthServices {
                 _authProvider.isLoading(false),
               })
           .catchError((e) {
+        print("Fail");
         Fluttertoast.showToast(
           msg: e!.message,
           backgroundColor: myGreen,
