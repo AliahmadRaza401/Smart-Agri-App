@@ -17,9 +17,7 @@ class FarmerServices {
   static addFarmerToDB(BuildContext context, userName, password, firstName,
       lastName, mobileNumber, cnic) async {
     print('mobileNumber: $mobileNumber');
-    // calling our firestore
-    // calling our user model
-    // sedning these values
+
     AuthProvider authProvider =
         Provider.of<AuthProvider>(context, listen: false);
     User? user = _auth.currentUser;
