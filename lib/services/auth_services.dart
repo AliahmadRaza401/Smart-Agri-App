@@ -11,6 +11,7 @@ import 'package:smart_agri/trader_screens/home/home.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/app_dialog.dart';
+import 'package:smart_agri/widgets/botton_nav.dart';
 
 class AuthServices {
   static var errorMessage;
@@ -32,7 +33,7 @@ class AuthServices {
                   textColor: myWhite,
                   gravity: ToastGravity.CENTER,
                 ),
-                AppRoutes.push(context, const Home()),
+                AppRoutes.push(context, const BottomNav()),
                 userLoggedIn(true),
                 _authProvider.isLoading(false),
               });

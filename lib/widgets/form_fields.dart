@@ -41,10 +41,10 @@ Widget inputTextField(context, label, myController, inputType,
         color: myGreen,
         fontSize: dynamicWidth(context, .04),
       ),
-      focusedBorder: const UnderlineInputBorder(
-        borderSide: BorderSide(color: myGreen),
+      focusedBorder: const OutlineInputBorder(
+        borderSide: BorderSide(color: myYellow),
       ),
-      enabledBorder: const UnderlineInputBorder(
+      enabledBorder: const OutlineInputBorder(
         borderSide: BorderSide(color: myGreen),
       ),
     ),

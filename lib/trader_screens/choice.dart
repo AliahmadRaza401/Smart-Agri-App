@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_agri/trader_screens/authentication/login.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/widgets/botton_nav.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 
@@ -62,7 +63,7 @@ class _ChoiceState extends State<Choice> {
                     var user = await AuthServices.getUserLoggedIn();
                     print('userLogin: $user');
                     if (user == true) {
-                      AppRoutes.replace(context, const Home());
+                      AppRoutes.replace(context, const BottomNav());
                     } else {
                       AppRoutes.push(context, const LoginPage());
                     }

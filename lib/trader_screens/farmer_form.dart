@@ -79,7 +79,7 @@ class _FarmerFormState extends State<FarmerForm> {
                             context,
                             "UserName",
                             userName,
-                            TextInputType.phone,
+                            TextInputType.name,
                             auth: false,
                             function: (value) {
                               if (value!.isEmpty) {
