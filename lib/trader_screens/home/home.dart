@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:smart_agri/model/user_model.dart';
-import 'package:smart_agri/services/auth_services.dart';
 import 'package:smart_agri/trader_screens/farmers.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
@@ -42,25 +42,63 @@ class _HomeState extends State<Home> {
       body: SafeArea(
         child: Column(
           children: [
+            SizedBox(
+              height: dynamicHeight(context, .01),
+            ),
             Container(
-              height: dynamicHeight(context, .24),
-              width: dynamicWidth(context, 1),
+              height: dynamicHeight(context, .26),
+              width: dynamicWidth(context, .96),
               decoration: BoxDecoration(
                 color: myGreen,
                 borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(
+                  topLeft: Radius.circular(
                     dynamicWidth(context, .04),
+                  ),
+                  topRight: Radius.circular(
+                    dynamicWidth(context, .04),
+                  ),
+                  bottomLeft: Radius.circular(
+                    dynamicWidth(context, .08),
                   ),
                   bottomRight: Radius.circular(
-                    dynamicWidth(context, .04),
+                    dynamicWidth(context, .08),
                   ),
+                ),
+                gradient: const LinearGradient(
+                  colors: [
+                    myLiteGreen,
+                    myGreen,
+                  ],
+                  begin: FractionalOffset(0.0, 0.0),
+                  end: FractionalOffset(1.0, 0.0),
+                  stops: [0.0, 1.0],
+                  tileMode: TileMode.clamp,
                 ),
               ),
               child: Column(
                 children: [
                   Padding(
                     padding: EdgeInsets.symmetric(
-                      vertical: dynamicHeight(context, .02),
+                      vertical: dynamicHeight(context, .01),
+                      horizontal: dynamicWidth(context, .06),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'SMART AGRI',
+                          style: TextStyle(
+                            color: myWhite,
+                            fontSize: dynamicWidth(context, .06),
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: dynamicHeight(context, .01),
                       horizontal: dynamicWidth(context, .06),
                     ),
                     child: Row(
@@ -75,14 +113,11 @@ class _HomeState extends State<Home> {
                             fontWeight: FontWeight.w300,
                           ),
                         ),
-                        InkWell(
-                          onTap: () {
-                            AuthServices.logOut(context);
-                          },
-                          child: Icon(
-                            Icons.logout,
+                        Text(
+                          DateFormat.yMMMEd().format(DateTime.now()).toString(),
+                          style: TextStyle(
                             color: myWhite,
-                            size: dynamicWidth(context, .08),
+                            fontSize: dynamicWidth(context, .04),
                           ),
                         ),
                       ],
@@ -105,9 +140,9 @@ class _HomeState extends State<Home> {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: myYellow.withOpacity(0.4),
-                                spreadRadius: 4,
-                                blurRadius: 7,
+                                color: myBlack.withOpacity(0.4),
+                                spreadRadius: 1,
+                                blurRadius: 6,
                                 offset: const Offset(
                                     0, 3), // changes position of shadow
                               ),
@@ -153,9 +188,9 @@ class _HomeState extends State<Home> {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: myYellow.withOpacity(0.4),
-                                spreadRadius: 4,
-                                blurRadius: 7,
+                                color: myBlack.withOpacity(0.4),
+                                spreadRadius: 1,
+                                blurRadius: 6,
                                 offset: const Offset(
                                     0, 3), // changes position of shadow
                               ),
@@ -250,8 +285,8 @@ class _HomeState extends State<Home> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Container(
-                            width: dynamicWidth(context, .84),
-                            height: dynamicHeight(context, .22),
+                            width: dynamicWidth(context, .82),
+                            height: dynamicHeight(context, .2),
                             decoration: BoxDecoration(
                               color: myYellow,
                               borderRadius: BorderRadius.circular(
@@ -259,16 +294,16 @@ class _HomeState extends State<Home> {
                               ),
                               boxShadow: [
                                 BoxShadow(
-                                  color: myYellow.withOpacity(0.4),
-                                  spreadRadius: 4,
-                                  blurRadius: 7,
+                                  color: myBlack.withOpacity(0.4),
+                                  spreadRadius: 1,
+                                  blurRadius: 6,
                                   offset: const Offset(
                                       0, 3), // changes position of shadow
                                 ),
                               ],
                             ),
                             padding: EdgeInsets.all(
-                              dynamicWidth(context, .04),
+                              dynamicWidth(context, .03),
                             ),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -324,15 +359,15 @@ class _HomeState extends State<Home> {
                                 ),
                                 Padding(
                                   padding: EdgeInsets.symmetric(
-                                    vertical: dynamicHeight(context, .01),
+                                    vertical: dynamicHeight(context, .012),
                                   ),
                                   child: Row(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Container(
-                                        height: dynamicHeight(context, .08),
-                                        width: dynamicWidth(context, .28),
+                                        height: dynamicHeight(context, .07),
+                                        width: dynamicWidth(context, .27),
                                         decoration: BoxDecoration(
                                           color: myWhite,
                                           borderRadius: BorderRadius.circular(
@@ -384,8 +419,8 @@ class _HomeState extends State<Home> {
                                         ),
                                       ),
                                       Container(
-                                        height: dynamicHeight(context, .08),
-                                        width: dynamicWidth(context, .28),
+                                        height: dynamicHeight(context, .07),
+                                        width: dynamicWidth(context, .27),
                                         decoration: BoxDecoration(
                                           color: myWhite,
                                           borderRadius: BorderRadius.circular(
@@ -449,52 +484,6 @@ class _HomeState extends State<Home> {
                 ),
               ),
             ),
-            // Flexible(
-            //   child: ListView.builder(
-            //     itemCount: 10,
-            //     itemBuilder: (context, i) {
-            //       return Padding(
-            //         padding: EdgeInsets.symmetric(
-            //             vertical: dynamicHeight(context, .006),
-            //             horizontal: dynamicWidth(context, .05)),
-            //         child: ListTile(
-            //           title: const Text(
-            //             "Ghulam Hussain",
-            //             style: TextStyle(
-            //               color: myWhite,
-            //             ),
-            //           ),
-            //           subtitle: const Text(
-            //             "Bought a lot of things",
-            //             style: TextStyle(
-            //               color: myGrey,
-            //             ),
-            //           ),
-            //           leading: Icon(
-            //             Icons.person,
-            //             size: dynamicWidth(context, .1),
-            //             color: myWhite,
-            //           ),
-            //           trailing: Icon(
-            //             Icons.chevron_right_rounded,
-            //             size: dynamicWidth(context, .12),
-            //             color: myWhite,
-            //           ),
-            //           tileColor: myGreen,
-            //           shape: RoundedRectangleBorder(
-            //             borderRadius: BorderRadius.circular(
-            //               dynamicWidth(context, .02),
-            //             ),
-            //           ),
-            //         ),
-            //       );
-            //     },
-            //   ),
-            // ),
-            // Container(
-            //   height: dynamicHeight(context, .1),
-            //   color: myWhite,
-            // )
           ],
         ),
       ),

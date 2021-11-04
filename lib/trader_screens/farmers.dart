@@ -63,8 +63,8 @@ class _FarmersState extends State<Farmers> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          width: dynamicWidth(context, .84),
-                          height: dynamicHeight(context, .22),
+                          width: dynamicWidth(context, .82),
+                          height: dynamicHeight(context, .2),
                           decoration: BoxDecoration(
                             color: myYellow,
                             borderRadius: BorderRadius.circular(
@@ -72,16 +72,16 @@ class _FarmersState extends State<Farmers> {
                             ),
                             boxShadow: [
                               BoxShadow(
-                                color: myYellow.withOpacity(0.4),
-                                spreadRadius: 4,
-                                blurRadius: 7,
+                                color: myBlack.withOpacity(0.4),
+                                spreadRadius: 1,
+                                blurRadius: 6,
                                 offset: const Offset(
                                     0, 3), // changes position of shadow
                               ),
                             ],
                           ),
                           padding: EdgeInsets.all(
-                            dynamicWidth(context, .04),
+                            dynamicWidth(context, .03),
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -109,7 +109,7 @@ class _FarmersState extends State<Farmers> {
                                             style: TextStyle(
                                               color: myBlack,
                                               fontSize:
-                                                  dynamicWidth(context, .05),
+                                              dynamicWidth(context, .05),
                                               fontWeight: FontWeight.w600,
                                             ),
                                           ),
@@ -125,7 +125,7 @@ class _FarmersState extends State<Farmers> {
                                             style: TextStyle(
                                               color: myBlack,
                                               fontSize:
-                                                  dynamicWidth(context, .04),
+                                              dynamicWidth(context, .04),
                                               fontWeight: FontWeight.w600,
                                             ),
                                           ),
@@ -137,15 +137,15 @@ class _FarmersState extends State<Farmers> {
                               ),
                               Padding(
                                 padding: EdgeInsets.symmetric(
-                                  vertical: dynamicHeight(context, .01),
+                                  vertical: dynamicHeight(context, .012),
                                 ),
                                 child: Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
+                                  MainAxisAlignment.spaceEvenly,
                                   children: [
                                     Container(
-                                      height: dynamicHeight(context, .08),
-                                      width: dynamicWidth(context, .28),
+                                      height: dynamicHeight(context, .07),
+                                      width: dynamicWidth(context, .27),
                                       decoration: BoxDecoration(
                                         color: myWhite,
                                         borderRadius: BorderRadius.circular(
@@ -163,11 +163,11 @@ class _FarmersState extends State<Farmers> {
                                       ),
                                       child: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
+                                        MainAxisAlignment.spaceEvenly,
                                         children: [
                                           Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                             children: [
                                               Text(
                                                 "DEBIT",
@@ -181,7 +181,7 @@ class _FarmersState extends State<Farmers> {
                                           ),
                                           Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                             children: [
                                               Text(
                                                 "Rs. 80,000",
@@ -197,8 +197,8 @@ class _FarmersState extends State<Farmers> {
                                       ),
                                     ),
                                     Container(
-                                      height: dynamicHeight(context, .08),
-                                      width: dynamicWidth(context, .28),
+                                      height: dynamicHeight(context, .07),
+                                      width: dynamicWidth(context, .27),
                                       decoration: BoxDecoration(
                                         color: myWhite,
                                         borderRadius: BorderRadius.circular(
@@ -216,11 +216,11 @@ class _FarmersState extends State<Farmers> {
                                       ),
                                       child: Column(
                                         mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
+                                        MainAxisAlignment.spaceEvenly,
                                         children: [
                                           Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                             children: [
                                               Text(
                                                 "CREDIT",
@@ -234,7 +234,7 @@ class _FarmersState extends State<Farmers> {
                                           ),
                                           Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                            MainAxisAlignment.center,
                                             children: [
                                               Text(
                                                 "Rs. 30,000",
