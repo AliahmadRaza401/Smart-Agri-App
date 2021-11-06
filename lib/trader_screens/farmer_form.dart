@@ -25,7 +25,7 @@ class FarmerForm extends StatefulWidget {
 class _FarmerFormState extends State<FarmerForm> {
   @override
   Widget build(BuildContext context) {
-        var loading = Provider.of<AuthProvider>(context).loading;
+    var loading = Provider.of<AuthProvider>(context).loading;
 
     return Scaffold(
       appBar: AppBar(
@@ -229,10 +229,20 @@ class _FarmerFormState extends State<FarmerForm> {
                     ),
                     child: button(
                       context,
-                      loading == false ?
-                      "ADD FARMER" : "Loading...",
+                      loading == false ? "ADD FARMER" : "Loading...",
                       () {
+                        print("btn");
                         if (!_formKey.currentState!.validate()) {
+                          FarmerServices.addFarmerToDB(
+                              context,
+                              userName.text,
+                              farmerPassword.text,
+                              farmerFName.text,
+                              farmerLName.text,
+                              farmerNumber.text,
+                              farmerCnic.text);
+                        } else {
+                          print("No validate");
                           FarmerServices.addFarmerToDB(
                               context,
                               userName.text,

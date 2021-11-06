@@ -34,6 +34,7 @@ class FarmerServices {
     authProvider.isLoading(true);
 
     try {
+      print(farmer.firstName);
       await firebaseFirestore
           .collection("users")
           .doc(user.uid)
