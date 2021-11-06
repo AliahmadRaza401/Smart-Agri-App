@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_agri/trader_screens/daily_update/add_daily_update.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
@@ -29,7 +31,7 @@ class _DailyUpdatesState extends State<DailyUpdates> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          // AppRoutes.push(context, const FarmerForm());
+          AppRoutes.push(context, AddDailyUpdate());
         },
         backgroundColor: myGreen,
         elevation: 4.0,
@@ -45,6 +47,34 @@ class _DailyUpdatesState extends State<DailyUpdates> {
         icon: const Icon(
           Icons.add,
           color: myWhite,
+        ),
+      ),
+      body: Container(
+        child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+          stream:
+              FirebaseFirestore.instance.collection('dailyUpdate').snapshots(),
+          builder: (_, snapshot) {
+            if (snapshot.hasError) return Text('Oops! Something went wrong');
+            if (!snapshot.hasData) return Center(child: Text("Empty"));
+            if (snapshot.hasData) {
+              final docs = snapshot.data!.docs;
+              return ListView.builder(
+                shrinkWrap: true,
+                physics: ClampingScrollPhysics(),
+                itemCount: docs.length,
+                itemBuilder: (_, i) {
+                  final data = docs[i].data();
+                  return ListTile(
+                    title: Text(data['itemName'] ?? ""),
+                    subtitle: Text(data['itemPrice'] ?? ""),
+                    trailing: Text(data['itemUnit'] ?? ""),
+                  );
+                },
+              );
+            }
+
+            return Center(child: CircularProgressIndicator());
+          },
         ),
       ),
     );

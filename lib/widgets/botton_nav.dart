@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:smart_agri/trader_screens/daily_updates.dart';
-import 'package:smart_agri/trader_screens/farmers.dart';
+import 'package:smart_agri/trader_screens/daily_update/daily_updates.dart';
+import 'package:smart_agri/trader_screens/farmers/farmers.dart';
 import 'package:smart_agri/trader_screens/home/home.dart';
-import 'package:smart_agri/trader_screens/profile.dart';
+import 'package:smart_agri/trader_screens/profile/profile.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 

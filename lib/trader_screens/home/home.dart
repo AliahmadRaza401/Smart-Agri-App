@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_agri/model/user_model.dart';
-import 'package:smart_agri/trader_screens/farmers.dart';
+import 'package:smart_agri/trader_screens/farmers/farmers.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
@@ -104,14 +104,36 @@ class _HomeState extends State<Home> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          // 'Hi, ${loggedInUser.firstName}',
-                          'Hi',
-                          style: TextStyle(
-                            color: myWhite,
-                            fontSize: dynamicWidth(context, .06),
-                            fontWeight: FontWeight.w300,
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text(
+                                  'Hi ',
+                                  style: TextStyle(
+                                    color: myWhite,
+                                    fontSize: dynamicWidth(context, .04),
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Image.asset('assets/hi.gif'),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            Text(
+                              loggedInUser.firstName ?? '',
+                              style: TextStyle(
+                                color: myWhite,
+                                fontSize: dynamicWidth(context, .04),
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ],
                         ),
                         Text(
                           DateFormat.yMMMEd().format(DateTime.now()).toString(),

@@ -7,7 +7,7 @@ import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 
 import '../services/auth_services.dart';
-import 'home/home.dart';
+import '../trader_screens/home/home.dart';
 
 class Choice extends StatefulWidget {
   const Choice({Key? key}) : super(key: key);

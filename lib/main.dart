@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/providers/multi_providers.dart';
-import 'package:smart_agri/trader_screens/choice.dart';
+import 'package:smart_agri/start_up/choice.dart';
 import 'package:smart_agri/utils/config.dart';
 
 Future<void> main() async {
