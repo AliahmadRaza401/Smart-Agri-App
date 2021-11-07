@@ -30,7 +30,9 @@ class _HomeState extends State<Home> {
   getUserData() {
     _firebaseFirestore.collection('users').doc(user!.uid).get().then(
           (value) => {
-            loggedInUser = UserModel.fromMap(value.data()),
+            setState(() {
+              loggedInUser = UserModel.fromMap(value.data());
+            }),
             print(loggedInUser.firstName),
           },
         );

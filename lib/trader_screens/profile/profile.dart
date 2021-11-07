@@ -1,4 +1,9 @@
+// ignore_for_file: prefer_const_constructors
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_agri/model/user_model.dart';
 import 'package:smart_agri/services/auth_services.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
@@ -12,6 +17,27 @@ class Profile extends StatefulWidget {
 }
 
 class _ProfileState extends State<Profile> {
+  UserModel loggedInUser = UserModel();
+  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  User? user = FirebaseAuth.instance.currentUser;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getUserData();
+  }
+
+  getUserData() async {
+    await _firebaseFirestore.collection('users').doc(user!.uid).get().then(
+          (value) => {
+            setState(() {
+              loggedInUser = UserModel.fromMap(value.data());
+            }),
+          },
+        );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -92,9 +118,10 @@ class _ProfileState extends State<Profile> {
                     height: dynamicHeight(context, .01),
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "First Name",
+                        loggedInUser.firstName ?? 'First Name',
                         style: TextStyle(
                           color: myBlack,
                           fontSize: dynamicWidth(context, .052),
@@ -129,9 +156,10 @@ class _ProfileState extends State<Profile> {
                     height: dynamicHeight(context, .01),
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Last Name",
+                        loggedInUser.secondName ?? "Last Name",
                         style: TextStyle(
                           color: myBlack,
                           fontSize: dynamicWidth(context, .052),
@@ -166,9 +194,10 @@ class _ProfileState extends State<Profile> {
                     height: dynamicHeight(context, .01),
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Mobile Number",
+                        loggedInUser.mobileNumber ?? "Mobile Number",
                         style: TextStyle(
                           color: myBlack,
                           fontSize: dynamicWidth(context, .052),
@@ -203,9 +232,10 @@ class _ProfileState extends State<Profile> {
                     height: dynamicHeight(context, .01),
                   ),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "CNIC",
+                        loggedInUser.cnic ?? "CNIC",
                         style: TextStyle(
                           color: myBlack,
                           fontSize: dynamicWidth(context, .052),

@@ -18,6 +18,7 @@ final number = TextEditingController();
 final password = TextEditingController();
 final cnic = TextEditingController();
 final cPassword = TextEditingController();
+
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
@@ -144,7 +145,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   number,
                                   TextInputType.phone,
                                   function: (value) {
-                                    if (value!.isEmpty || value.length < 11) {
+                                    if (value!.isEmpty || value.length < 10) {
                                       return 'Please enter a valid Number';
                                     }
                                     return null;
