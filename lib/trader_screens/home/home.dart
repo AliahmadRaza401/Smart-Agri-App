@@ -47,7 +47,7 @@ class _HomeState extends State<Home> {
               height: dynamicHeight(context, .01),
             ),
             Container(
-              height: dynamicHeight(context, .28),
+              height: dynamicHeight(context, .3),
               width: dynamicWidth(context, .96),
               decoration: BoxDecoration(
                 color: myGreen,
