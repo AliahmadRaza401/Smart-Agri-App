@@ -1,7 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_agri/trader_screens/farmers/farmer_details.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
@@ -62,25 +61,29 @@ class _FarmersState extends State<Farmers> {
               stream:
                   FirebaseFirestore.instance.collection('farmers').snapshots(),
               builder: (_, snapshot) {
-                if (snapshot.hasError)
-                  return Text('Oops! Something went wrong');
-                if (!snapshot.hasData) return Center(child: Text("Empty"));
+                if (snapshot.hasError) {
+                  return const Text('Oops! Something went wrong');
+                }
+                if (!snapshot.hasData)
+                  return const Center(
+                    child: Text("Empty"),
+                  );
                 if (snapshot.hasData) {
                   final docs = snapshot.data!.docs;
                   return ListView.builder(
                     shrinkWrap: true,
-                    physics: ClampingScrollPhysics(),
+                    physics: const ClampingScrollPhysics(),
                     itemCount: docs.length,
                     itemBuilder: (_, i) {
                       final data = docs[i].data();
                       return InkWell(
                         onTap: () {
-                          AppRoutes.push(
-                            context,
-                            FarmerDetails(
-                              userName: data['userName'],
-                            ),
-                          );
+                          // AppRoutes.push(
+                          //   context,
+                          //   FarmerDetails(
+                          //     userName: data['userName'],
+                          //   ),
+                          // );
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(
