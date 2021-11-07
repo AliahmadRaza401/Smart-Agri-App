@@ -578,7 +578,7 @@ class _HomeState extends State<Home> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "a",
+                                    "Item 1",
                                     // snapshot.data!.docs[0]
                                     //     .data()[
                                     // 'itemName'] ??
@@ -596,7 +596,7 @@ class _HomeState extends State<Home> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Text(
-                                    "b",
+                                    "Nov 07, 2021",
                                     // snapshot.data!.docs[0]
                                     //     .data()['date'] ??
                                     //     "",
@@ -613,7 +613,7 @@ class _HomeState extends State<Home> {
                                 children: [
                                   Flexible(
                                     child: Text(
-                                      "a",
+                                      "Rs. 500 per Kg",
                                       // "Rs. " +
                                       //     snapshot.data!.docs[0]
                                       //         .data()[
