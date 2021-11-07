@@ -131,14 +131,17 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text(
-                                    data['itemName'] ?? "",
-                                    style: TextStyle(
-                                      color: myBlack,
-                                      fontSize: dynamicWidth(context, .056),
-                                      fontWeight: FontWeight.w600,
+                                  Flexible(
+                                    child: Text(
+                                      data['itemName'] ?? "",
+                                      style: TextStyle(
+                                        color: myBlack,
+                                        fontSize: dynamicWidth(context, .056),
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
                                     ),
-                                    maxLines: 1,
                                   )
                                 ],
                               ),
