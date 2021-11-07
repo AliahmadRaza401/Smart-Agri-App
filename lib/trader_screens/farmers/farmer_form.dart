@@ -231,18 +231,18 @@ class _FarmerFormState extends State<FarmerForm> {
                       context,
                       loading == false ? "ADD FARMER" : "Loading...",
                       () {
-                        print("btn");
                         if (!_formKey.currentState!.validate()) {
-                          FirebaseServices.addFarmerToDB(
-                              context,
-                              userName.text,
-                              farmerPassword.text,
-                              farmerFName.text,
-                              farmerLName.text,
-                              farmerNumber.text,
-                              farmerCnic.text);
+                          return;
                         } else {
-                          print("No validate");
+                          FirebaseServices.addFarmerToDB(
+                            context,
+                            userName.text,
+                            farmerPassword.text,
+                            farmerFName.text,
+                            farmerLName.text,
+                            farmerNumber.text,
+                            farmerCnic.text,
+                          );
                         }
                       },
                     ),

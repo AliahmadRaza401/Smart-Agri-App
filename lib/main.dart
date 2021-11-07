@@ -44,9 +44,11 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
-          brightness: Brightness.light,
           primarySwatch: primaryColor,
-          fontFamily: 'Georgia',
+          fontFamily: 'Zen Kurenaido',
+          appBarTheme: const AppBarTheme(
+            systemOverlayStyle: SystemUiOverlayStyle.light,
+          ),
         ),
         home: const Choice(),
       ),

@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:smart_agri/utils/config.dart';
 
@@ -43,11 +41,19 @@ Widget inputTextField(context, label, myController, inputType,
         color: myGreen,
         fontSize: dynamicWidth(context, .04),
       ),
-      focusedBorder: const OutlineInputBorder(
+      focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: myYellow),
+        borderRadius: BorderRadius.all(
+          Radius.circular(50.0),
+        ),
       ),
-      enabledBorder: const OutlineInputBorder(
+      enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: myGreen),
+        borderRadius: BorderRadius.all(
+          Radius.circular(
+            dynamicWidth(context, .6),
+          ),
+        ),
       ),
     ),
   );

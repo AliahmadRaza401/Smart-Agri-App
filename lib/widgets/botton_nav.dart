@@ -30,6 +30,7 @@ class _BottomNavState extends State<BottomNav> {
         key: _bottomNavigationKey,
         backgroundColor: myGreen,
         waterDropColor: myWhite,
+        inactiveIconColor: myYellow,
         onItemSelected: (index) {
           setState(() {
             currentPage = index;

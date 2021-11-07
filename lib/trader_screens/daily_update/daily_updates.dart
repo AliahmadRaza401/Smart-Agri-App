@@ -49,33 +49,147 @@ class _DailyUpdatesState extends State<DailyUpdates> {
           color: myWhite,
         ),
       ),
-      body: Container(
-        child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-          stream:
-              FirebaseFirestore.instance.collection('dailyUpdate').snapshots(),
-          builder: (_, snapshot) {
-            if (snapshot.hasError) return Text('Oops! Something went wrong');
-            if (!snapshot.hasData) return Center(child: Text("Empty"));
-            if (snapshot.hasData) {
-              final docs = snapshot.data!.docs;
-              return ListView.builder(
-                shrinkWrap: true,
-                physics: ClampingScrollPhysics(),
-                itemCount: docs.length,
-                itemBuilder: (_, i) {
-                  final data = docs[i].data();
-                  return ListTile(
-                    title: Text(data['itemName'] ?? ""),
-                    subtitle: Text(data['itemPrice'] ?? ""),
-                    trailing: Text(data['itemUnit'] ?? ""),
-                  );
-                },
-              );
-            }
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(
+              top: dynamicHeight(context, .06),
+              bottom: dynamicHeight(context, .01),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "All Updates",
+                  style: TextStyle(
+                    color: myGreen,
+                    fontSize: dynamicWidth(context, .06),
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+            stream: FirebaseFirestore.instance
+                .collection('dailyUpdate')
+                .snapshots(),
+            builder: (_, snapshot) {
+              if (snapshot.hasError) {
+                return const Text('Oops! Something went wrong');
+              }
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: Text("Empty"),
+                );
+              }
+              if (snapshot.hasData) {
+                final docs = snapshot.data!.docs;
+                return Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: dynamicHeight(context, .01),
+                    horizontal: dynamicWidth(context, .02),
+                  ),
+                  child: GridView.builder(
+                    physics: const ScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: docs.length,
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      childAspectRatio: dynamicWidth(context, .8) /
+                          dynamicHeight(context, .3),
+                    ),
+                    itemBuilder: (context, i) {
+                      final data = docs[i].data();
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: dynamicWidth(context, .03),
+                          vertical: dynamicHeight(context, .02),
+                        ),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: myYellow,
+                            borderRadius: BorderRadius.circular(
+                              dynamicWidth(context, .03),
+                            ),
+                            boxShadow: [
+                              BoxShadow(
+                                color: myBlack.withOpacity(0.4),
+                                spreadRadius: 1,
+                                blurRadius: 6,
+                                offset: const Offset(
+                                    0, 3), // changes position of shadow
+                              ),
+                            ],
+                          ),
+                          padding: EdgeInsets.all(
+                            dynamicWidth(context, .03),
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    data['itemName'] ?? "",
+                                    style: TextStyle(
+                                      color: myBlack,
+                                      fontSize: dynamicWidth(context, .056),
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    maxLines: 1,
+                                  )
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    data['date'] ?? "",
+                                    style: TextStyle(
+                                      color: myBlack,
+                                      fontSize: dynamicWidth(context, .036),
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      "Rs. " +
+                                          data['itemPrice'] +
+                                          " per " +
+                                          data['itemUnit'],
+                                      style: TextStyle(
+                                        color: myBlack,
+                                        fontSize: dynamicWidth(context, .044),
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                );
+              }
 
-            return Center(child: CircularProgressIndicator());
-          },
-        ),
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          ),
+        ],
       ),
     );
   }

@@ -12,12 +12,12 @@ Widget button(context, text, function) {
       decoration: BoxDecoration(
         color: myGreen,
         borderRadius: BorderRadius.circular(
-          dynamicWidth(context, .026),
+          dynamicWidth(context, .6),
         ),
         gradient: const LinearGradient(
           colors: [
-            myLiteGreen,
             myGreen,
+            myLiteGreen,
           ],
           begin: FractionalOffset(0.0, 0.0),
           end: FractionalOffset(1.0, 0.0),
