@@ -1,6 +1,9 @@
+// ignore_for_file: curly_braces_in_flow_control_structures, prefer_const_constructors
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_agri/trader_screens/farmers/farmer_details.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
@@ -65,7 +68,7 @@ class _FarmersState extends State<Farmers> {
                   return const Text('Oops! Something went wrong');
                 }
                 if (!snapshot.hasData)
-                  return const Center(
+                  return Center(
                     child: Text("Empty"),
                   );
                 if (snapshot.hasData) {
@@ -78,12 +81,12 @@ class _FarmersState extends State<Farmers> {
                       final data = docs[i].data();
                       return InkWell(
                         onTap: () {
-                          // AppRoutes.push(
-                          //   context,
-                          //   FarmerDetails(
-                          //     userName: data['userName'],
-                          //   ),
-                          // );
+                          AppRoutes.push(
+                            context,
+                            FarmerDetails(
+                              userName: data['userName'],
+                            ),
+                          );
                         },
                         child: Padding(
                           padding: EdgeInsets.symmetric(
@@ -94,8 +97,8 @@ class _FarmersState extends State<Farmers> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Container(
-                                width: dynamicWidth(context, .82),
-                                height: dynamicHeight(context, .2),
+                                width: dynamicWidth(context, .92),
+                                height: dynamicHeight(context, .1),
                                 decoration: BoxDecoration(
                                   color: myYellow,
                                   borderRadius: BorderRadius.circular(
@@ -112,7 +115,7 @@ class _FarmersState extends State<Farmers> {
                                   ],
                                 ),
                                 padding: EdgeInsets.all(
-                                  dynamicWidth(context, .03),
+                                  dynamicWidth(context, .02),
                                 ),
                                 child: Column(
                                   mainAxisAlignment:
@@ -167,127 +170,6 @@ class _FarmersState extends State<Farmers> {
                                           ],
                                         ),
                                       ],
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(
-                                        vertical: dynamicHeight(context, .012),
-                                      ),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
-                                        children: [
-                                          Container(
-                                            height: dynamicHeight(context, .07),
-                                            width: dynamicWidth(context, .27),
-                                            decoration: BoxDecoration(
-                                              color: myWhite,
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                dynamicWidth(context, .02),
-                                              ),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color:
-                                                      myBlack.withOpacity(0.4),
-                                                  spreadRadius: 1,
-                                                  blurRadius: 6,
-                                                  offset: const Offset(0,
-                                                      3), // changes position of shadow
-                                                ),
-                                              ],
-                                            ),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      "DEBIT",
-                                                      style: TextStyle(
-                                                        color: myBlack,
-                                                        fontSize: dynamicWidth(
-                                                            context, .04),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      "Rs. 80,000",
-                                                      style: TextStyle(
-                                                        color: myGreen,
-                                                        fontSize: dynamicWidth(
-                                                            context, .038),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                          Container(
-                                            height: dynamicHeight(context, .07),
-                                            width: dynamicWidth(context, .27),
-                                            decoration: BoxDecoration(
-                                              color: myWhite,
-                                              borderRadius:
-                                                  BorderRadius.circular(
-                                                dynamicWidth(context, .02),
-                                              ),
-                                              boxShadow: [
-                                                BoxShadow(
-                                                  color:
-                                                      myBlack.withOpacity(0.4),
-                                                  spreadRadius: 1,
-                                                  blurRadius: 6,
-                                                  offset: const Offset(0,
-                                                      3), // changes position of shadow
-                                                ),
-                                              ],
-                                            ),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
-                                              children: [
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      "CREDIT",
-                                                      style: TextStyle(
-                                                        color: myBlack,
-                                                        fontSize: dynamicWidth(
-                                                            context, .04),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      "Rs. 30,000",
-                                                      style: TextStyle(
-                                                        color: myRed,
-                                                        fontSize: dynamicWidth(
-                                                            context, .038),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ],
-                                      ),
                                     ),
                                   ],
                                 ),
