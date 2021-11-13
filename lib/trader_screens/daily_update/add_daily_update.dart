@@ -7,10 +7,7 @@ import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/form_fields.dart';
 
-final _formKey = GlobalKey<FormState>();
-final itemName = TextEditingController();
-final itemPrice = TextEditingController();
-final itemUnit = TextEditingController();
+
 
 class AddDailyUpdate extends StatefulWidget {
   const AddDailyUpdate({Key? key}) : super(key: key);
@@ -20,6 +17,11 @@ class AddDailyUpdate extends StatefulWidget {
 }
 
 class _AddDailyUpdateState extends State<AddDailyUpdate> {
+  final _formKey = GlobalKey<FormState>();
+final itemName = TextEditingController();
+final itemPrice = TextEditingController();
+final itemUnit = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     var loading = Provider.of<AuthProvider>(context).loading;

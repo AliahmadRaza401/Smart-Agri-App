@@ -85,6 +85,7 @@ class _FarmersState extends State<Farmers> {
                             context,
                             FarmerDetails(
                               userName: data['userName'],
+                               farmerId: docs[i].id,
                             ),
                           );
                         },
@@ -139,6 +140,7 @@ class _FarmersState extends State<Farmers> {
                                           children: [
                                             Row(
                                               children: [
+                                                Text(docs[i].id),
                                                 Text(
                                                   data['firstName'] ?? "",
                                                   style: TextStyle(

@@ -3,12 +3,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_agri/services/farmer_services.dart';
+import 'package:smart_agri/trader_screens/daily_update/add_daily_update.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 
 class AddAmount extends StatefulWidget {
-  // Function onTap;
-  // JobCancelDialogue({required this.onTap});
+  final String farmerId;
+  AddAmount({required this.farmerId});
 
   @override
   State<AddAmount> createState() => _AddAmountState();
@@ -17,6 +19,8 @@ class AddAmount extends StatefulWidget {
 class _AddAmountState extends State<AddAmount> {
   final TextEditingController _cancelReasonController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+  final itemName = TextEditingController();
+  final itemPrice = TextEditingController();
 
   int hour = 00;
   int mint = 00;
@@ -68,7 +72,7 @@ class _AddAmountState extends State<AddAmount> {
                         Container(
                           margin: EdgeInsets.only(),
                           child: TextFormField(
-                            controller: _cancelReasonController,
+                            controller: itemName,
                             decoration: InputDecoration(
                               hintText: "item Name",
                             ),
@@ -85,7 +89,7 @@ class _AddAmountState extends State<AddAmount> {
                         Container(
                           margin: EdgeInsets.only(),
                           child: TextFormField(
-                            controller: _cancelReasonController,
+                            controller: itemPrice,
                             decoration: InputDecoration(
                               hintText: "Price",
                             ),
@@ -116,6 +120,9 @@ class _AddAmountState extends State<AddAmount> {
                           // if (_formKey.currentState!.validate()) {
 
                           // }
+
+                          FarmerServices.addFarmerAmount(context,
+                              widget.farmerId, itemName.text, itemPrice.text);
                         },
                         child: Container(
                             alignment: Alignment.center,

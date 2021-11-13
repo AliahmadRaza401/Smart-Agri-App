@@ -6,8 +6,10 @@ import 'package:smart_agri/widgets/dynamic_size.dart';
 
 class FarmerDetails extends StatefulWidget {
   final String userName;
-
-  const FarmerDetails({Key? key, required this.userName}) : super(key: key);
+  final farmerId;
+  const FarmerDetails(
+      {Key? key, required this.userName, required this.farmerId})
+      : super(key: key);
 
   @override
   _FarmerDetailsState createState() => _FarmerDetailsState();
@@ -47,14 +49,18 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                       onPressed: () {
                         showDialog(
                             context: context,
-                            builder: (context) => AddAmount());
+                            builder: (context) => AddAmount(
+                                  farmerId: widget.farmerId,
+                                ));
                       },
                       child: Text("You Gave Rs")),
                   ElevatedButton(
                       onPressed: () {
                         showDialog(
                             context: context,
-                            builder: (context) => AddAmount());
+                            builder: (context) => AddAmount(
+                                  farmerId: widget.farmerId,
+                                ));
                       },
                       child: Text("You Got Rs")),
                 ],
