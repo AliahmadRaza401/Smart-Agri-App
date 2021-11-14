@@ -64,12 +64,12 @@ class _ProfileState extends State<Profile> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius: dynamicWidth(context, .2),
+                    radius: dynamicWidth(context, .18),
                     backgroundColor: myYellow,
                     child: Icon(
                       Icons.person,
                       color: myBlack,
-                      size: dynamicWidth(context, .3),
+                      size: dynamicWidth(context, .26),
                     ),
                   ),
                 ],
@@ -84,7 +84,9 @@ class _ProfileState extends State<Profile> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "UserName",
+                    loggedInUser.firstName.toString() +
+                        " " +
+                        loggedInUser.secondName.toString(),
                     style: TextStyle(
                       color: myGreen,
                       fontWeight: FontWeight.bold,
@@ -109,7 +111,7 @@ class _ProfileState extends State<Profile> {
                         style: TextStyle(
                           color: myGreen,
                           fontWeight: FontWeight.bold,
-                          fontSize: dynamicWidth(context, .06),
+                          fontSize: dynamicWidth(context, .056),
                         ),
                       ),
                     ],
@@ -118,13 +120,13 @@ class _ProfileState extends State<Profile> {
                     height: dynamicHeight(context, .01),
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         loggedInUser.firstName ?? 'First Name',
                         style: TextStyle(
                           color: myBlack,
-                          fontSize: dynamicWidth(context, .052),
+                          fontSize: dynamicWidth(context, .048),
                         ),
                       ),
                     ],
@@ -134,7 +136,7 @@ class _ProfileState extends State<Profile> {
             ),
             Padding(
               padding: EdgeInsets.symmetric(
-                vertical: dynamicHeight(context, .01),
+                vertical: dynamicHeight(context, .014),
                 horizontal: dynamicWidth(context, .06),
               ),
               child: Column(
@@ -147,7 +149,7 @@ class _ProfileState extends State<Profile> {
                         style: TextStyle(
                           color: myGreen,
                           fontWeight: FontWeight.bold,
-                          fontSize: dynamicWidth(context, .06),
+                          fontSize: dynamicWidth(context, .056),
                         ),
                       ),
                     ],
@@ -156,13 +158,13 @@ class _ProfileState extends State<Profile> {
                     height: dynamicHeight(context, .01),
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         loggedInUser.secondName ?? "Last Name",
                         style: TextStyle(
                           color: myBlack,
-                          fontSize: dynamicWidth(context, .052),
+                          fontSize: dynamicWidth(context, .048),
                         ),
                       ),
                     ],
@@ -185,7 +187,7 @@ class _ProfileState extends State<Profile> {
                         style: TextStyle(
                           color: myGreen,
                           fontWeight: FontWeight.bold,
-                          fontSize: dynamicWidth(context, .06),
+                          fontSize: dynamicWidth(context, .056),
                         ),
                       ),
                     ],
@@ -194,13 +196,13 @@ class _ProfileState extends State<Profile> {
                     height: dynamicHeight(context, .01),
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         loggedInUser.mobileNumber ?? "Mobile Number",
                         style: TextStyle(
                           color: myBlack,
-                          fontSize: dynamicWidth(context, .052),
+                          fontSize: dynamicWidth(context, .048),
                         ),
                       ),
                     ],
@@ -223,7 +225,7 @@ class _ProfileState extends State<Profile> {
                         style: TextStyle(
                           color: myGreen,
                           fontWeight: FontWeight.bold,
-                          fontSize: dynamicWidth(context, .06),
+                          fontSize: dynamicWidth(context, .056),
                         ),
                       ),
                     ],
@@ -232,13 +234,13 @@ class _ProfileState extends State<Profile> {
                     height: dynamicHeight(context, .01),
                   ),
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
                         loggedInUser.cnic ?? "CNIC",
                         style: TextStyle(
                           color: myBlack,
-                          fontSize: dynamicWidth(context, .052),
+                          fontSize: dynamicWidth(context, .048),
                         ),
                       ),
                     ],
@@ -248,7 +250,7 @@ class _ProfileState extends State<Profile> {
             ),
             Padding(
               padding: EdgeInsets.symmetric(
-                vertical: dynamicHeight(context, .02),
+                vertical: dynamicHeight(context, .04),
                 horizontal: dynamicWidth(context, .06),
               ),
               child: Row(

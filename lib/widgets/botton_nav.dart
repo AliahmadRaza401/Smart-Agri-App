@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:smart_agri/trader_screens/daily_update/daily_updates.dart';
 import 'package:smart_agri/trader_screens/farmers/farmers.dart';
 import 'package:smart_agri/trader_screens/home/home.dart';
 import 'package:smart_agri/trader_screens/profile/profile.dart';
 import 'package:smart_agri/utils/config.dart';
-import 'package:water_drop_nav_bar/water_drop_nav_bar.dart';
 
 class BottomNav extends StatefulWidget {
   const BottomNav({Key? key}) : super(key: key);
@@ -26,33 +26,29 @@ class _BottomNavState extends State<BottomNav> {
           child: _getPage(currentPage),
         ),
       ),
-      bottomNavigationBar: WaterDropNavBar(
-        key: _bottomNavigationKey,
-        backgroundColor: myGreen,
-        waterDropColor: myWhite,
-        inactiveIconColor: myYellow,
-        onItemSelected: (index) {
-          setState(() {
-            currentPage = index;
-          });
-        },
-        selectedIndex: currentPage,
-        barItems: [
-          BarItem(
-            filledIcon: Icons.home_filled,
-            outlinedIcon: Icons.home_outlined,
+      bottomNavigationBar: SalomonBottomBar(
+        currentIndex: currentPage,
+        onTap: (i) => setState(() => currentPage = i),
+        items: [
+          SalomonBottomBarItem(
+            icon: const Icon(Icons.home),
+            title: const Text("Home"),
+            selectedColor: myGreen,
           ),
-          BarItem(
-            filledIcon: Icons.supervised_user_circle_rounded,
-            outlinedIcon: Icons.supervised_user_circle_outlined,
+          SalomonBottomBarItem(
+            icon: const Icon(Icons.supervised_user_circle_rounded),
+            title: const Text("Farmers"),
+            selectedColor: myGreen,
           ),
-          BarItem(
-            filledIcon: Icons.calendar_today_rounded,
-            outlinedIcon: Icons.calendar_today_outlined,
+          SalomonBottomBarItem(
+            icon: const Icon(Icons.calendar_today),
+            title: const Text("Daily Updates"),
+            selectedColor: myGreen,
           ),
-          BarItem(
-            filledIcon: Icons.person,
-            outlinedIcon: Icons.person_outline,
+          SalomonBottomBarItem(
+            icon: const Icon(Icons.person),
+            title: const Text("Profile"),
+            selectedColor: myGreen,
           ),
         ],
       ),

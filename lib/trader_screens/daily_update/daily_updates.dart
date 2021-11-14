@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_agri/trader_screens/daily_update/add_daily_update.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/widgets/box_widgets.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 
 class DailyUpdates extends StatefulWidget {
@@ -17,6 +18,7 @@ class _DailyUpdatesState extends State<DailyUpdates> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: myGrey,
       appBar: AppBar(
         title: const Text(
           "Daily Updates",
@@ -70,127 +72,56 @@ class _DailyUpdatesState extends State<DailyUpdates> {
               ],
             ),
           ),
-          StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-            stream: FirebaseFirestore.instance
-                .collection('dailyUpdate')
-                .snapshots(),
-            builder: (_, snapshot) {
-              if (snapshot.hasError) {
-                return const Text('Oops! Something went wrong');
-              }
-              if (!snapshot.hasData) {
-                return const Center(
-                  child: Text("Empty"),
-                );
-              }
-              if (snapshot.hasData) {
-                final docs = snapshot.data!.docs;
-                return Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: dynamicHeight(context, .01),
-                    horizontal: dynamicWidth(context, .02),
-                  ),
-                  child: GridView.builder(
-                    physics: const ScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: docs.length,
-                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: dynamicWidth(context, .8) /
-                          dynamicHeight(context, .3),
+          Expanded(
+            child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+              stream: FirebaseFirestore.instance
+                  .collection('dailyUpdate')
+                  .snapshots(),
+              builder: (_, snapshot) {
+                if (snapshot.hasError) {
+                  return const Text('Oops! Something went wrong');
+                }
+                if (!snapshot.hasData) {
+                  return const Center(
+                    child: Text("Empty"),
+                  );
+                }
+                if (snapshot.hasData) {
+                  final docs = snapshot.data!.docs;
+                  return Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: dynamicWidth(context, .02),
                     ),
-                    itemBuilder: (context, i) {
-                      final data = docs[i].data();
-                      return Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: dynamicWidth(context, .03),
-                          vertical: dynamicHeight(context, .02),
-                        ),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: myYellow,
-                            borderRadius: BorderRadius.circular(
-                              dynamicWidth(context, .03),
+                    child: ListView.builder(
+                      itemCount: docs.length,
+                      itemBuilder: (context, i) {
+                        final data = docs[i].data();
+                        return Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: dynamicHeight(context, .006),
+                          ),
+                          child: Center(
+                            child: dailyUpdateCard(
+                              context,
+                              data['itemName'],
+                              data['date'],
+                              data['itemPrice'],
+                              data['itemUnit'],
                             ),
-                            boxShadow: [
-                              BoxShadow(
-                                color: myBlack.withOpacity(0.4),
-                                spreadRadius: 1,
-                                blurRadius: 6,
-                                offset: const Offset(
-                                    0, 3), // changes position of shadow
-                              ),
-                            ],
                           ),
-                          padding: EdgeInsets.all(
-                            dynamicWidth(context, .03),
-                          ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Flexible(
-                                    child: Text(
-                                      data['itemName'] ?? "",
-                                      style: TextStyle(
-                                        color: myBlack,
-                                        fontSize: dynamicWidth(context, .056),
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    data['date'] ?? "",
-                                    style: TextStyle(
-                                      color: myBlack,
-                                      fontSize: dynamicWidth(context, .036),
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Flexible(
-                                    child: Text(
-                                      "Rs. " +
-                                          data['itemPrice'] +
-                                          " per " +
-                                          data['itemUnit'],
-                                      style: TextStyle(
-                                        color: myBlack,
-                                        fontSize: dynamicWidth(context, .044),
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    },
-                  ),
+                        );
+                      },
+                    ),
+                  );
+                }
+                return const Center(
+                  child: CircularProgressIndicator(),
                 );
-              }
-
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
+              },
+            ),
+          ),
+          SizedBox(
+            height: dynamicHeight(context, .02),
           ),
         ],
       ),

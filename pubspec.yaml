@@ -43,7 +43,7 @@ dependencies:
   fluttertoast: ^8.0.8
   shared_preferences: ^2.0.8
   provider: ^6.0.1
-  water_drop_nav_bar: ^2.0.0
+  salomon_bottom_bar: ^3.1.0
   intl: ^0.17.0
   flutter_datetime_picker: ^1.5.1
 
