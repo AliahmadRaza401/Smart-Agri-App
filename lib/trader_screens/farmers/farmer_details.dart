@@ -150,7 +150,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                   ),
                   farmerRecordCard(
                     context,
-                    "Entry 1",
+                    "Entries",
                     FontWeight.w600,
                     myBlack,
                     debit: "Sent",
@@ -185,7 +185,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              button(
+              redButton(
                 context,
                 "You Gave Rs.",
                 () {
@@ -197,7 +197,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                   );
                 },
                 width: dynamicWidth(context, .36),
-                fontSize: dynamicWidth(context, .044),
+                fontSize: dynamicWidth(context, .042),
               ),
               button(
                 context,
@@ -211,7 +211,8 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                   );
                 },
                 width: dynamicWidth(context, .36),
-                fontSize: dynamicWidth(context, .044),
+                fontSize: dynamicWidth(context, .042),
+                color: myGreen,
               ),
             ],
           ),

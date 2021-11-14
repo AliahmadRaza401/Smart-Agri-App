@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_agri/utils/config.dart';
@@ -23,31 +25,51 @@ Widget balanceBox(context, title, amount, color) {
       ],
     ),
     child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                color: myBlack,
-                fontSize: dynamicWidth(context, .054),
+        Container(
+          margin: EdgeInsets.only(top: 20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    title,
+                    style: TextStyle(
+                      color: myBlack,
+                      fontSize: dynamicWidth(context, .054),
+                    ),
+                  ),
+                ],
               ),
-            ),
-          ],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Rs. $amount",
+                    style: TextStyle(
+                      color: color,
+                      fontSize: dynamicWidth(context, .048),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              "Rs. $amount",
-              style: TextStyle(
-                color: color,
-                fontSize: dynamicWidth(context, .048),
-              ),
+        Container(
+          width: dynamicWidth(context, .37),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(
+              dynamicWidth(context, .03),
             ),
-          ],
+            color: myLiteGreen,
+          ),
+          child: SizedBox(
+            height: dynamicHeight(context, 0.005),
+          ),
         ),
       ],
     ),
@@ -58,7 +80,7 @@ Widget farmerCard(context, userName, number, debit, credit) {
   return Center(
     child: Container(
       height: dynamicHeight(context, .14),
-      width: dynamicWidth(context, .8),
+      width: dynamicWidth(context, .9),
       decoration: BoxDecoration(
         color: greenLite,
         borderRadius: BorderRadius.circular(
@@ -213,7 +235,7 @@ Widget dailyUpdateCard(context, title, date, price, unit) {
       Center(
         child: Container(
           height: dynamicHeight(context, .12),
-          width: dynamicWidth(context, .8),
+          width: dynamicWidth(context, .9),
           decoration: BoxDecoration(
             color: greenLite,
             borderRadius: BorderRadius.circular(

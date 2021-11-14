@@ -180,7 +180,7 @@ class _HomeState extends State<Home> {
                     children: [
                       rowText(
                         context,
-                        "New Updates",
+                        "Recent Updates",
                         const DailyUpdates(),
                         "See All",
                       ),
@@ -243,13 +243,13 @@ class _HomeState extends State<Home> {
                       ),
                       rowText(
                         context,
-                        "New Updates",
+                        "Recent Farmer",
                         const Farmers(),
                         "See All",
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(
-                          vertical: dynamicHeight(context, .014),
+                          vertical: dynamicHeight(context, .002),
                           horizontal: dynamicWidth(context, .04),
                         ),
                         child: Flexible(
@@ -299,7 +299,7 @@ class _HomeState extends State<Home> {
                                             vertical:
                                                 dynamicHeight(context, .014),
                                             horizontal:
-                                                dynamicWidth(context, .04),
+                                                dynamicWidth(context, .00),
                                           ),
                                           child: farmerCard(
                                             context,
