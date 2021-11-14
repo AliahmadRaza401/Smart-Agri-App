@@ -44,8 +44,8 @@ class _FarmersState extends State<Farmers> {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              top: dynamicHeight(context, .06),
-              bottom: dynamicHeight(context, .01),
+              top: dynamicHeight(context, .04),
+              bottom: dynamicHeight(context, .02),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
