@@ -6,6 +6,7 @@ import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/box_widgets.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
+import 'package:smart_agri/widgets/essential_widgets.dart';
 
 class DailyUpdates extends StatefulWidget {
   const DailyUpdates({Key? key}) : super(key: key);
@@ -55,8 +56,8 @@ class _DailyUpdatesState extends State<DailyUpdates> {
         children: [
           Padding(
             padding: EdgeInsets.only(
-              top: dynamicHeight(context, .06),
-              bottom: dynamicHeight(context, .01),
+              top: dynamicHeight(context, .04),
+              bottom: dynamicHeight(context, .02),
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -83,36 +84,45 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                 }
                 if (!snapshot.hasData) {
                   return const Center(
-                    child: Text("Empty"),
+                    child: CircularProgressIndicator(),
                   );
                 }
                 if (snapshot.hasData) {
                   final docs = snapshot.data!.docs;
-                  return Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: dynamicWidth(context, .02),
-                    ),
-                    child: ListView.builder(
-                      itemCount: docs.length,
-                      itemBuilder: (context, i) {
-                        final data = docs[i].data();
-                        return Padding(
-                          padding: EdgeInsets.symmetric(
-                            vertical: dynamicHeight(context, .006),
-                          ),
-                          child: Center(
-                            child: dailyUpdateCard(
-                              context,
-                              data['itemName'],
-                              data['date'],
-                              data['itemPrice'],
-                              data['itemUnit'],
+                  if (docs.isEmpty) {
+                    return noDataError(
+                      context,
+                      "assets/dailyUpdatesCartoon.png",
+                      const AddDailyUpdate(),
+                      dynamicHeight(context, .34),
+                    );
+                  } else {
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: dynamicWidth(context, .02),
+                      ),
+                      child: ListView.builder(
+                        itemCount: docs.length,
+                        itemBuilder: (context, i) {
+                          final data = docs[i].data();
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: dynamicHeight(context, .006),
                             ),
-                          ),
-                        );
-                      },
-                    ),
-                  );
+                            child: Center(
+                              child: dailyUpdateCard(
+                                context,
+                                data['itemName'],
+                                data['date'],
+                                data['itemPrice'],
+                                data['itemUnit'],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    );
+                  }
                 }
                 return const Center(
                   child: CircularProgressIndicator(),

@@ -3,8 +3,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_agri/model/user_model.dart';
+import 'package:smart_agri/trader_screens/daily_update/add_daily_update.dart';
 import 'package:smart_agri/trader_screens/daily_update/daily_updates.dart';
+import 'package:smart_agri/trader_screens/farmers/farmer_details.dart';
+import 'package:smart_agri/trader_screens/farmers/farmer_form.dart';
 import 'package:smart_agri/trader_screens/farmers/farmers.dart';
+import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/box_widgets.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
@@ -42,7 +46,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: myWhite,
+      backgroundColor: myGrey,
       body: SafeArea(
         child: Column(
           children: [
@@ -171,7 +175,7 @@ class _HomeState extends State<Home> {
               child: Container(
                 width: dynamicWidth(context, 1),
                 height: dynamicHeight(context, .7),
-                color: myWhite,
+                color: noColor,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -191,38 +195,47 @@ class _HomeState extends State<Home> {
                           }
                           if (!snapshot.hasData) {
                             return const Center(
-                              child: Text("Empty"),
+                              child: CircularProgressIndicator(),
                             );
                           }
                           if (snapshot.hasData) {
                             final docs = snapshot.data!.docs;
-                            return Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: dynamicWidth(context, .02),
-                              ),
-                              child: ListView.builder(
-                                physics: const ScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: docs.length > 2 ? 2 : docs.length,
-                                itemBuilder: (context, i) {
-                                  final data = docs[i].data();
-                                  return Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: dynamicHeight(context, .006),
-                                    ),
-                                    child: Center(
-                                      child: dailyUpdateCard(
-                                        context,
-                                        data['itemName'],
-                                        data['date'],
-                                        data['itemPrice'],
-                                        data['itemUnit'],
+                            if (docs.isEmpty) {
+                              return noDataError(
+                                context,
+                                "assets/dailyUpdatesCartoon.png",
+                                const AddDailyUpdate(),
+                                dynamicHeight(context, .18),
+                              );
+                            } else {
+                              return Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: dynamicWidth(context, .02),
+                                ),
+                                child: ListView.builder(
+                                  physics: const ScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: docs.length > 2 ? 2 : docs.length,
+                                  itemBuilder: (context, i) {
+                                    final data = docs[i].data();
+                                    return Padding(
+                                      padding: EdgeInsets.symmetric(
+                                        vertical: dynamicHeight(context, .006),
                                       ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            );
+                                      child: Center(
+                                        child: dailyUpdateCard(
+                                          context,
+                                          data['itemName'],
+                                          data['date'],
+                                          data['itemPrice'],
+                                          data['itemUnit'],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              );
+                            }
                           }
                           return const Center(
                             child: CircularProgressIndicator(),
@@ -240,204 +253,73 @@ class _HomeState extends State<Home> {
                           vertical: dynamicHeight(context, .014),
                           horizontal: dynamicWidth(context, .04),
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: dynamicWidth(context, .82),
-                              height: dynamicHeight(context, .2),
-                              decoration: BoxDecoration(
-                                color: myYellow,
-                                borderRadius: BorderRadius.circular(
-                                  dynamicWidth(context, .03),
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: myBlack.withOpacity(0.4),
-                                    spreadRadius: 1,
-                                    blurRadius: 6,
-                                    offset: const Offset(
-                                        0, 3), // changes position of shadow
-                                  ),
-                                ],
-                              ),
-                              padding: EdgeInsets.all(
-                                dynamicWidth(context, .03),
-                              ),
-                              child: Column(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      CircleAvatar(
-                                        radius: dynamicWidth(context, .08),
-                                        backgroundColor: myWhite,
-                                        child: Icon(
-                                          Icons.person,
-                                          size: dynamicWidth(context, .1),
-                                          color: myGreen,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: dynamicWidth(context, .04),
-                                      ),
-                                      Column(
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "Ghulam Hussain",
-                                                style: TextStyle(
-                                                  color: myBlack,
-                                                  fontSize: dynamicWidth(
-                                                      context, .05),
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                          SizedBox(
-                                            height: dynamicHeight(context, .01),
-                                          ),
-                                          Row(
-                                            children: [
-                                              Text(
-                                                "+92 300 0909091",
-                                                style: TextStyle(
-                                                  color: myBlack,
-                                                  fontSize: dynamicWidth(
-                                                      context, .04),
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: dynamicHeight(context, .012),
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Container(
-                                          height: dynamicHeight(context, .07),
-                                          width: dynamicWidth(context, .27),
-                                          decoration: BoxDecoration(
-                                            color: myWhite,
-                                            borderRadius: BorderRadius.circular(
-                                              dynamicWidth(context, .02),
+                        child: Flexible(
+                          child: StreamBuilder<
+                              QuerySnapshot<Map<String, dynamic>>>(
+                            stream: FirebaseFirestore.instance
+                                .collection('farmers')
+                                .snapshots(),
+                            builder: (_, snapshot) {
+                              if (snapshot.hasError) {
+                                return const Text('Oops! Something went wrong');
+                              }
+                              if (!snapshot.hasData) {
+                                return const Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
+                              if (snapshot.hasData) {
+                                final docs = snapshot.data!.docs;
+                                if (docs.isEmpty) {
+                                  return noDataError(
+                                    context,
+                                    "assets/dailyUpdatesCartoon.png",
+                                    const FarmerForm(),
+                                    dynamicHeight(context, .18),
+                                  );
+                                } else {
+                                  return ListView.builder(
+                                    shrinkWrap: true,
+                                    physics: const ClampingScrollPhysics(),
+                                    itemCount:
+                                        docs.length > 2 ? 2 : docs.length,
+                                    itemBuilder: (_, i) {
+                                      final data = docs[i].data();
+                                      return InkWell(
+                                        onTap: () {
+                                          AppRoutes.push(
+                                            context,
+                                            FarmerDetails(
+                                              userName: data['userName'],
+                                              farmerId: docs[i].id,
                                             ),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: myBlack.withOpacity(0.4),
-                                                spreadRadius: 1,
-                                                blurRadius: 6,
-                                                offset: const Offset(0,
-                                                    3), // changes position of shadow
-                                              ),
-                                            ],
+                                          );
+                                        },
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            vertical:
+                                                dynamicHeight(context, .014),
+                                            horizontal:
+                                                dynamicWidth(context, .04),
                                           ),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    "DEBIT",
-                                                    style: TextStyle(
-                                                      color: myBlack,
-                                                      fontSize: dynamicWidth(
-                                                          context, .04),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    "Rs. 80,000",
-                                                    style: TextStyle(
-                                                      color: myGreen,
-                                                      fontSize: dynamicWidth(
-                                                          context, .038),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
+                                          child: farmerCard(
+                                            context,
+                                            data['userName'],
+                                            data['mobileNumber'],
+                                            "80,000",
+                                            "30,000",
                                           ),
                                         ),
-                                        Container(
-                                          height: dynamicHeight(context, .07),
-                                          width: dynamicWidth(context, .27),
-                                          decoration: BoxDecoration(
-                                            color: myWhite,
-                                            borderRadius: BorderRadius.circular(
-                                              dynamicWidth(context, .02),
-                                            ),
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: myBlack.withOpacity(0.4),
-                                                spreadRadius: 1,
-                                                blurRadius: 6,
-                                                offset: const Offset(0,
-                                                    3), // changes position of shadow
-                                              ),
-                                            ],
-                                          ),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceEvenly,
-                                            children: [
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    "CREDIT",
-                                                    style: TextStyle(
-                                                      color: myBlack,
-                                                      fontSize: dynamicWidth(
-                                                          context, .04),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  Text(
-                                                    "Rs. 30,000",
-                                                    style: TextStyle(
-                                                      color: myRed,
-                                                      fontSize: dynamicWidth(
-                                                          context, .038),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
+                                      );
+                                    },
+                                  );
+                                }
+                              }
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ],

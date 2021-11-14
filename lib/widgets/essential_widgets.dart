@@ -47,3 +47,34 @@ Widget rowText(context, text1, page, text2) {
     ),
   );
 }
+
+Widget noDataError(context, image, page, imageSize) {
+  return Column(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Center(
+        child: Image.asset(
+          image,
+          height: imageSize,
+          fit: BoxFit.cover,
+        ),
+      ),
+      SizedBox(
+        height: dynamicHeight(context, .02),
+      ),
+      InkWell(
+        onTap: () {
+          AppRoutes.push(context, page);
+        },
+        child: Text(
+          "Nothing To Show!!\nTap to Add",
+          style: TextStyle(
+            color: myGreen,
+            fontSize: dynamicWidth(context, .046),
+          ),
+          textAlign: TextAlign.center,
+        ),
+      ),
+    ],
+  );
+}
