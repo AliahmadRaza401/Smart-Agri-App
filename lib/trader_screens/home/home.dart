@@ -38,7 +38,6 @@ class _HomeState extends State<Home> {
             setState(() {
               loggedInUser = UserModel.fromMap(value.data());
             }),
-            print(loggedInUser.firstName),
           },
         );
   }
@@ -273,7 +272,7 @@ class _HomeState extends State<Home> {
                                 if (docs.isEmpty) {
                                   return noDataError(
                                     context,
-                                    "assets/dailyUpdatesCartoon.png",
+                                    "assets/farmerCartoon.png",
                                     const FarmerForm(),
                                     dynamicHeight(context, .18),
                                   );

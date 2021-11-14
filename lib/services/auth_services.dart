@@ -7,10 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_agri/model/user_model.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/trader_screens/authentication/login.dart';
-import 'package:smart_agri/trader_screens/home/home.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
-import 'package:smart_agri/widgets/app_dialog.dart';
 import 'package:smart_agri/widgets/botton_nav.dart';
 
 class AuthServices {
@@ -68,7 +66,6 @@ class AuthServices {
         textColor: myWhite,
         gravity: ToastGravity.CENTER,
       );
-      print(error.code);
     }
   }
 
@@ -94,7 +91,6 @@ class AuthServices {
                 _authProvider.isLoading(false),
               })
           .catchError((e) {
-        print("Fail");
         Fluttertoast.showToast(
           msg: e!.message,
           backgroundColor: myGreen,
@@ -133,7 +129,6 @@ class AuthServices {
         textColor: myWhite,
         gravity: ToastGravity.CENTER,
       );
-      print(error.code);
     }
   }
 
@@ -141,7 +136,7 @@ class AuthServices {
       BuildContext context, firstName, lastName, mobileNumber, cnic) async {
     // calling our firestore
     // calling our user model
-    // sedning these values
+    // sending these values
     final _auth = FirebaseAuth.instance;
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;

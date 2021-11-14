@@ -1,5 +1,3 @@
-// ignore_for_file: curly_braces_in_flow_control_structures, prefer_const_constructors
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +26,7 @@ class _FarmersState extends State<Farmers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: myGrey,
       appBar: AppBar(
         title: const Text(
           "Farmers",
@@ -69,16 +68,17 @@ class _FarmersState extends State<Farmers> {
                 if (snapshot.hasError) {
                   return const Text('Oops! Something went wrong');
                 }
-                if (!snapshot.hasData)
-                  return Center(
+                if (!snapshot.hasData) {
+                  return const Center(
                     child: CircularProgressIndicator(),
                   );
+                }
                 if (snapshot.hasData) {
                   final docs = snapshot.data!.docs;
                   if (docs.isEmpty) {
                     return noDataError(
                       context,
-                      "assets/dailyUpdatesCartoon.png",
+                      "assets/farmerCartoon.png",
                       const FarmerForm(),
                       dynamicHeight(context, .3),
                     );
@@ -117,7 +117,9 @@ class _FarmersState extends State<Farmers> {
                     );
                   }
                 }
-                return Center(child: CircularProgressIndicator());
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
               },
             ),
           ),

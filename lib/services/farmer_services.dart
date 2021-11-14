@@ -14,7 +14,6 @@ class FarmerServices {
 // add farmer in DB
   static addFarmerToDB(BuildContext context, userName, password, firstName,
       lastName, mobileNumber, cnic) async {
-    print('adding Farmer...........:');
 
     AuthProvider authProvider =
         Provider.of<AuthProvider>(context, listen: false);

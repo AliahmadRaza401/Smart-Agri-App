@@ -191,7 +191,7 @@ Widget farmerCard(context, userName, number, debit, credit) {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                number.toString(),
+                "+92 " + number.toString(),
                 style: TextStyle(
                   color: myBlack,
                   fontSize: dynamicWidth(context, .042),

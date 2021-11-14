@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import '../utils/config.dart';
 import 'dynamic_size.dart';
 
-Widget button(context, text, function) {
+Widget button(context, text, function,
+    {width = "", height = "", fontSize = ""}) {
   return InkWell(
     onTap: function,
     child: Container(
-      width: dynamicWidth(context, .8),
-      height: dynamicHeight(context, .064),
+      width: width == "" ? dynamicWidth(context, .8) : width,
+      height: height == "" ? dynamicHeight(context, .064) : height,
       decoration: BoxDecoration(
         color: myGreen,
         borderRadius: BorderRadius.circular(
@@ -30,7 +31,7 @@ Widget button(context, text, function) {
           text,
           style: TextStyle(
             color: Colors.white,
-            fontSize: dynamicWidth(context, .054),
+            fontSize: fontSize == "" ? dynamicWidth(context, .054) : fontSize,
           ),
         ),
       ),

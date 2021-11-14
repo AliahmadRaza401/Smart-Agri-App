@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -41,6 +39,7 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: myGrey,
       appBar: AppBar(
         title: const Text(
           "Profile",
@@ -65,10 +64,10 @@ class _ProfileState extends State<Profile> {
                 children: [
                   CircleAvatar(
                     radius: dynamicWidth(context, .18),
-                    backgroundColor: myYellow,
+                    backgroundColor: myGreen,
                     child: Icon(
                       Icons.person,
-                      color: myBlack,
+                      color: myWhite,
                       size: dynamicWidth(context, .26),
                     ),
                   ),
