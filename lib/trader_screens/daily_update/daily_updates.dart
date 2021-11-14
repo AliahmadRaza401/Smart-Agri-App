@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_agri/trader_screens/daily_update/add_daily_update.dart';
 import 'package:smart_agri/utils/app_route.dart';
@@ -16,6 +17,8 @@ class DailyUpdates extends StatefulWidget {
 }
 
 class _DailyUpdatesState extends State<DailyUpdates> {
+    User? user = FirebaseAuth.instance.currentUser;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,6 +80,7 @@ class _DailyUpdatesState extends State<DailyUpdates> {
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
               stream: FirebaseFirestore.instance
                   .collection('dailyUpdate')
+                   .where("traderId", isEqualTo: user!.uid)
                   .snapshots(),
               builder: (_, snapshot) {
                 if (snapshot.hasError) {

@@ -25,51 +25,31 @@ Widget balanceBox(context, title, amount, color) {
       ],
     ),
     child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
-        Container(
-          margin: EdgeInsets.only(top: 20),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    title,
-                    style: TextStyle(
-                      color: myBlack,
-                      fontSize: dynamicWidth(context, .054),
-                    ),
-                  ),
-                ],
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                color: myBlack,
+                fontSize: dynamicWidth(context, .054),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Rs. $amount",
-                    style: TextStyle(
-                      color: color,
-                      fontSize: dynamicWidth(context, .048),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-        Container(
-          width: dynamicWidth(context, .37),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(
-              dynamicWidth(context, .03),
             ),
-            color: myLiteGreen,
-          ),
-          child: SizedBox(
-            height: dynamicHeight(context, 0.005),
-          ),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              "Rs. $amount",
+              style: TextStyle(
+                color: color,
+                fontSize: dynamicWidth(context, .048),
+              ),
+            ),
+          ],
         ),
       ],
     ),

@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_agri/trader_screens/farmers/farmer_details.dart';
 import 'package:smart_agri/utils/app_route.dart';
@@ -18,6 +19,8 @@ class Farmers extends StatefulWidget {
 }
 
 class _FarmersState extends State<Farmers> {
+  User? user = FirebaseAuth.instance.currentUser;
+
   @override
   void initState() {
     super.initState();
@@ -62,8 +65,10 @@ class _FarmersState extends State<Farmers> {
           ),
           Flexible(
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream:
-                  FirebaseFirestore.instance.collection('farmers').snapshots(),
+              stream: FirebaseFirestore.instance
+                  .collection('farmers')
+                  .where("traderId", isEqualTo: user!.uid)
+                  .snapshots(),
               builder: (_, snapshot) {
                 if (snapshot.hasError) {
                   return const Text('Oops! Something went wrong');

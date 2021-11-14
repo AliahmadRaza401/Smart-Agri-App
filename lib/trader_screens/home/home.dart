@@ -129,7 +129,7 @@ class _HomeState extends State<Home> {
                                   children: [
                                     Image.asset(
                                       'assets/hi.gif',
-                                      height: dynamicHeight(context, .02),
+                                      height: dynamicHeight(context, .03),
                                     ),
                                   ],
                                 ),
@@ -187,6 +187,7 @@ class _HomeState extends State<Home> {
                       StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                         stream: FirebaseFirestore.instance
                             .collection('dailyUpdate')
+                            .where("traderId", isEqualTo: user!.uid)
                             .snapshots(),
                         builder: (_, snapshot) {
                           if (snapshot.hasError) {
@@ -257,6 +258,7 @@ class _HomeState extends State<Home> {
                               QuerySnapshot<Map<String, dynamic>>>(
                             stream: FirebaseFirestore.instance
                                 .collection('farmers')
+                                .where("traderId", isEqualTo: user!.uid)
                                 .snapshots(),
                             builder: (_, snapshot) {
                               if (snapshot.hasError) {
