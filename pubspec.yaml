@@ -46,6 +46,7 @@ dependencies:
   salomon_bottom_bar: ^3.1.0
   intl: ^0.17.0
   flutter_datetime_picker: ^1.5.1
+  flutter_slidable: ^1.1.0
 
 
 dev_dependencies:

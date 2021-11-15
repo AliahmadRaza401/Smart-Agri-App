@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:smart_agri/trader_screens/daily_update/add_daily_update.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
@@ -113,13 +114,28 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                             padding: EdgeInsets.symmetric(
                               vertical: dynamicHeight(context, .006),
                             ),
-                            child: Center(
-                              child: dailyUpdateCard(
-                                context,
-                                data['itemName'],
-                                data['date'],
-                                data['itemPrice'],
-                                data['itemUnit'],
+                            child: Slidable(
+                              endActionPane: const ActionPane(
+                                motion: ScrollMotion(),
+                                children: [
+                                  SlidableAction(
+                                    flex: 2,
+                                    onPressed: null,
+                                    backgroundColor: myRed,
+                                    foregroundColor: Colors.white,
+                                    icon: Icons.delete,
+                                    label: 'Delete',
+                                  ),
+                                ],
+                              ),
+                              child: Center(
+                                child: dailyUpdateCard(
+                                  context,
+                                  data['itemName'],
+                                  data['date'],
+                                  data['itemPrice'],
+                                  data['itemUnit'],
+                                ),
                               ),
                             ),
                           );
