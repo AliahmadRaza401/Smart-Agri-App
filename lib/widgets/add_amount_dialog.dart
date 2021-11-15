@@ -1,5 +1,8 @@
+// ignore_for_file: prefer_typing_uninitialized_variables
+
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:smart_agri/services/farmer_services.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
@@ -28,6 +31,8 @@ class _AddAmountState extends State<AddAmount> {
   var currentYear;
   var currentmonth;
   var currentDay;
+  var nowDate;
+  var nowTime;
 
   @override
   void initState() {
@@ -35,6 +40,10 @@ class _AddAmountState extends State<AddAmount> {
     currentYear = DateTime.now().year;
     currentmonth = DateTime.now().month;
     currentDay = DateTime.now().day;
+
+    DateTime now = DateTime.now();
+    nowDate = DateFormat.yMMMMd('en_US').format(now);
+    nowTime = DateFormat.jm().format(now);
   }
 
   @override
@@ -154,7 +163,7 @@ class _AddAmountState extends State<AddAmount> {
                           },
                           "Select Date",
                           Icons.calendar_today,
-                          addDate ?? "",
+                          addDate ?? nowDate,
                         ),
                         getDateTime(
                           () {
@@ -192,7 +201,7 @@ class _AddAmountState extends State<AddAmount> {
                           },
                           "End Time",
                           Icons.access_time,
-                          addTime ?? "",
+                          addTime ?? nowTime,
                         ),
                       ],
                     ),
@@ -213,7 +222,9 @@ class _AddAmountState extends State<AddAmount> {
                           },
                           width: dynamicWidth(context, .3),
                           height: dynamicHeight(context, .056),
-                          fontSize: dynamicWidth(context, .044),
+                          fontSize: dynamicWidth(context, .042),
+                          color: myWhite,
+                          btnColor: myGreen,
                         ),
                         button(
                           context,
@@ -223,7 +234,9 @@ class _AddAmountState extends State<AddAmount> {
                           },
                           width: dynamicWidth(context, .3),
                           height: dynamicHeight(context, .056),
-                          fontSize: dynamicWidth(context, .044),
+                          fontSize: dynamicWidth(context, .042),
+                          color: myBlack,
+                          btnColor: myWhite,
                         ),
                       ],
                     ),

@@ -1,11 +1,16 @@
+// ignore_for_file: avoid_print
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/trader_screens/daily_update/add_daily_update.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/widgets/add_amount_dialog.dart';
+import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/box_widgets.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
@@ -18,7 +23,7 @@ class DailyUpdates extends StatefulWidget {
 }
 
 class _DailyUpdatesState extends State<DailyUpdates> {
-    User? user = FirebaseAuth.instance.currentUser;
+  User? user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +43,7 @@ class _DailyUpdatesState extends State<DailyUpdates> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          AppRoutes.push(context, AddDailyUpdate());
+          showDialog(context: context, builder: (context) => AddUpdate());
         },
         backgroundColor: myGreen,
         elevation: 4.0,
@@ -81,7 +86,7 @@ class _DailyUpdatesState extends State<DailyUpdates> {
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
               stream: FirebaseFirestore.instance
                   .collection('dailyUpdate')
-                   .where("traderId", isEqualTo: user!.uid)
+                  .where("traderId", isEqualTo: user!.uid)
                   .snapshots(),
               builder: (_, snapshot) {
                 if (snapshot.hasError) {
@@ -94,6 +99,7 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                 }
                 if (snapshot.hasData) {
                   final docs = snapshot.data!.docs;
+
                   if (docs.isEmpty) {
                     return noDataError(
                       context,
@@ -115,12 +121,18 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                               vertical: dynamicHeight(context, .006),
                             ),
                             child: Slidable(
-                              endActionPane: const ActionPane(
+                              endActionPane: ActionPane(
                                 motion: ScrollMotion(),
                                 children: [
                                   SlidableAction(
                                     flex: 2,
-                                    onPressed: null,
+                                    onPressed: (BuildContext context) {
+                                      var id =
+                                          snapshot.data!.docs[i].reference.id;
+                                      print('id: $id');
+                                      FirebaseServices.deleteRecord(
+                                          context, 'dailyUpdate', id);
+                                    },
                                     backgroundColor: myRed,
                                     foregroundColor: Colors.white,
                                     icon: Icons.delete,

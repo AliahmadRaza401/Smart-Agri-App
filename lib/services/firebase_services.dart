@@ -17,8 +17,6 @@ class FirebaseServices {
   static final _auth = FirebaseAuth.instance;
   static FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
-
-
   static addDailyItemToDB(
     BuildContext context,
     name,
@@ -32,7 +30,7 @@ class FirebaseServices {
     DateTime now = DateTime.now();
     var date = DateFormat.yMMMMd('en_US').format(now);
     var time = DateFormat.jm().format(now);
-  
+
     try {
       print(name);
       firebaseFirestore.collection("dailyUpdate").add({
@@ -62,5 +60,15 @@ class FirebaseServices {
         gravity: ToastGravity.CENTER,
       );
     }
+  }
+
+  static deleteRecord(BuildContext context,docsName ,id) {
+    var collection = FirebaseFirestore.instance.collection(docsName);
+    collection
+        .doc(id) // <-- Doc ID to be deleted.
+        .delete()
+        .then((e) {
+      print("Delete");
+    });
   }
 }
