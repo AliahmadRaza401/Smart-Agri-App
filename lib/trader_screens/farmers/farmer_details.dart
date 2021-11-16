@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:quds_popup_menu/quds_popup_menu.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/add_amount_dialog.dart';
 import 'package:smart_agri/widgets/buttons.dart';
@@ -46,14 +48,49 @@ class _FarmerDetailsState extends State<FarmerDetails> {
               ),
             ),
           ),
-          InkWell(
-            onTap: () {},
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: dynamicWidth(context, .04),
-              ),
-              child: const Icon(
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: dynamicWidth(context, .04),
+            ),
+            child: QudsPopupButton(
+              items: [
+                QudsPopupMenuItem(
+                    leading: const Icon(
+                      Icons.edit,
+                      color: myGreen,
+                    ),
+                    title: Text(
+                      'Update',
+                      style: TextStyle(
+                        color: myGreen,
+                        fontWeight: FontWeight.w600,
+                        fontSize: dynamicWidth(context, .042),
+                      ),
+                      maxLines: 1,
+                    ),
+                    onPressed: () {}),
+                QudsPopupMenuDivider(),
+                QudsPopupMenuItem(
+                  leading: const Icon(
+                    Icons.delete,
+                    color: myRed,
+                  ),
+                  title: Text(
+                    'Delete',
+                    style: TextStyle(
+                      color: myRed,
+                      fontWeight: FontWeight.w600,
+                      fontSize: dynamicWidth(context, .042),
+                    ),
+                    maxLines: 1,
+                  ),
+                  onPressed: () {},
+                ),
+              ],
+              child: Icon(
                 Icons.more_vert_rounded,
+                size: dynamicWidth(context, .08),
+                color: myWhite,
               ),
             ),
           ),
@@ -163,13 +200,30 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                       child: ListView.builder(
                         itemCount: 3,
                         itemBuilder: (context, i) {
-                          return farmerRecordCard(
-                            context,
-                            "Entries",
-                            FontWeight.normal,
-                            myBlack,
-                            debit: "4,500",
-                            credit: "3,000",
+                          return Slidable(
+                            endActionPane: ActionPane(
+                              motion: const ScrollMotion(),
+                              children: [
+                                SlidableAction(
+                                  flex: 1,
+                                  onPressed: (BuildContext context) {},
+                                  backgroundColor: myRed,
+                                  foregroundColor: Colors.white,
+                                  icon: Icons.delete,
+                                  label: 'Delete',
+                                ),
+                              ],
+                            ),
+                            child: Center(
+                              child: farmerRecordCard(
+                                context,
+                                "Entries",
+                                FontWeight.normal,
+                                myBlack,
+                                debit: "4,500",
+                                credit: "3,000",
+                              ),
+                            ),
                           );
                         },
                       ),

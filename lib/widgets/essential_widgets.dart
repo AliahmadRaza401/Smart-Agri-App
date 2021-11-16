@@ -99,7 +99,7 @@ Widget farmerRecordCard(context, entry, bold, textColor,
               width: dynamicWidth(context, .41),
               child: Center(
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
                       entry,
