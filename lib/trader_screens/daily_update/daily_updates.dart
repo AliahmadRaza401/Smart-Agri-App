@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -7,9 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/trader_screens/daily_update/add_daily_update.dart';
-import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
-import 'package:smart_agri/widgets/add_amount_dialog.dart';
 import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/box_widgets.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
@@ -43,7 +39,10 @@ class _DailyUpdatesState extends State<DailyUpdates> {
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
-          showDialog(context: context, builder: (context) => AddUpdate());
+          showDialog(
+            context: context,
+            builder: (context) => AddUpdate(),
+          );
         },
         backgroundColor: myGreen,
         elevation: 4.0,
@@ -122,19 +121,29 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                             ),
                             child: Slidable(
                               endActionPane: ActionPane(
-                                motion: ScrollMotion(),
+                                motion: const ScrollMotion(),
                                 children: [
+                                  SlidableAction(
+                                    flex: 2,
+                                    onPressed: (BuildContext context) {},
+                                    backgroundColor: myLiteGreen,
+                                    foregroundColor: myWhite,
+                                    icon: Icons.edit,
+                                    label: 'Edit',
+                                  ),
                                   SlidableAction(
                                     flex: 2,
                                     onPressed: (BuildContext context) {
                                       var id =
                                           snapshot.data!.docs[i].reference.id;
-                                      print('id: $id');
                                       FirebaseServices.deleteRecord(
-                                          context, 'dailyUpdate', id);
+                                        context,
+                                        'dailyUpdate',
+                                        id,
+                                      );
                                     },
                                     backgroundColor: myRed,
-                                    foregroundColor: Colors.white,
+                                    foregroundColor: myWhite,
                                     icon: Icons.delete,
                                     label: 'Delete',
                                   ),

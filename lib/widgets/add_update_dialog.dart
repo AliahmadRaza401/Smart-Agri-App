@@ -1,8 +1,4 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:smart_agri/services/farmer_services.dart';
 import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
@@ -56,66 +52,60 @@ class _AddUpdateState extends State<AddUpdate> {
                             "Add Today Update",
                             textAlign: TextAlign.center,
                             style: TextStyle(
-                              fontSize: 16,
+                              fontSize: dynamicWidth(context, .046),
                               fontWeight: FontWeight.w700,
                             ),
                           ),
                           SizedBox(
                             height: dynamicHeight(context, .02),
                           ),
-                          Container(
-                            margin: EdgeInsets.only(),
-                            child: TextFormField(
-                              controller: itemName,
-                              decoration: InputDecoration(
-                                hintText: "item Name",
-                              ),
-                              validator: (text) {
-                                if (text == null || text.isEmpty) {
-                                  return 'Required!';
-                                }
-                                return null;
-                              },
-                              onChanged: (_) => setState(() {}),
+                          TextFormField(
+                            controller: itemName,
+                            keyboardType: TextInputType.text,
+                            decoration: const InputDecoration(
+                              hintText: "item Name",
                             ),
+                            validator: (text) {
+                              if (text == null || text.isEmpty) {
+                                return 'Required!';
+                              }
+                              return null;
+                            },
+                            onChanged: (_) => setState(() {}),
                           ),
                           SizedBox(
                             height: dynamicHeight(context, .02),
                           ),
-                          Container(
-                            margin: EdgeInsets.only(),
-                            child: TextFormField(
-                              controller: itemPrice,
-                              decoration: InputDecoration(
-                                hintText: "Price",
-                              ),
-                              validator: (text) {
-                                if (text == null || text.isEmpty) {
-                                  return 'Required!';
-                                }
-                                return null;
-                              },
-                              onChanged: (_) => setState(() {}),
+                          TextFormField(
+                            controller: itemPrice,
+                            keyboardType: TextInputType.number,
+                            decoration: const InputDecoration(
+                              hintText: "Price",
                             ),
+                            validator: (text) {
+                              if (text == null || text.isEmpty) {
+                                return 'Required!';
+                              }
+                              return null;
+                            },
+                            onChanged: (_) => setState(() {}),
                           ),
                           SizedBox(
                             height: dynamicHeight(context, .02),
                           ),
-                          Container(
-                            margin: EdgeInsets.only(),
-                            child: TextFormField(
-                              controller: itemPrice,
-                              decoration: InputDecoration(
-                                hintText: "Unit",
-                              ),
-                              validator: (text) {
-                                if (text == null || text.isEmpty) {
-                                  return 'Required!';
-                                }
-                                return null;
-                              },
-                              onChanged: (_) => setState(() {}),
+                          TextFormField(
+                            controller: itemUnit,
+                            keyboardType: TextInputType.text,
+                            decoration: const InputDecoration(
+                              hintText: "Unit",
                             ),
+                            validator: (text) {
+                              if (text == null || text.isEmpty) {
+                                return 'Required!';
+                              }
+                              return null;
+                            },
+                            onChanged: (_) => setState(() {}),
                           ),
                           SizedBox(
                             height: dynamicHeight(context, .02),
@@ -140,8 +130,7 @@ class _AddUpdateState extends State<AddUpdate> {
                             height: dynamicHeight(context, .056),
                             fontSize: dynamicWidth(context, .042),
                             color: myWhite,
-                            btnColor: myGreen
-                            ),
+                            btnColor: myGreen),
                         button(
                           context,
                           "Cancel",
