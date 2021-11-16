@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+// ignore_for_file: avoid_print, empty_catches
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -62,13 +62,36 @@ class FirebaseServices {
     }
   }
 
-  static deleteRecord(BuildContext context,docsName ,id) {
+  static deleteRecord(BuildContext context, docsName, id) {
     var collection = FirebaseFirestore.instance.collection(docsName);
     collection
         .doc(id) // <-- Doc ID to be deleted.
         .delete()
         .then((e) {
+      Fluttertoast.showToast(
+        msg: "Delete Successfully!",
+        backgroundColor: myGreen,
+        textColor: myWhite,
+      );
       print("Delete");
     });
+  }
+
+  static deleteBalance(BuildContext context, farmerId, balanceId) {
+    try {
+      FirebaseFirestore.instance
+          .collection("farmers")
+          .doc(farmerId)
+          .collection("balance")
+          .doc(balanceId)
+          .delete();
+      Fluttertoast.showToast(
+        msg: "Delete Successfully!",
+        backgroundColor: myGreen,
+        textColor: myWhite,
+      );
+    } catch (e) {
+      print("Failed!");
+    }
   }
 }

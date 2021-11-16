@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:quds_popup_menu/quds_popup_menu.dart';
+import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/add_amount_dialog.dart';
 import 'package:smart_agri/widgets/buttons.dart';
@@ -195,38 +197,75 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                     heading: true,
                   ),
                   Flexible(
-                    child: SizedBox(
-                      width: dynamicWidth(context, 1),
-                      child: ListView.builder(
-                        itemCount: 3,
-                        itemBuilder: (context, i) {
-                          return Slidable(
-                            endActionPane: ActionPane(
-                              motion: const ScrollMotion(),
-                              children: [
-                                SlidableAction(
-                                  flex: 1,
-                                  onPressed: (BuildContext context) {},
-                                  backgroundColor: myRed,
-                                  foregroundColor: Colors.white,
-                                  icon: Icons.delete,
-                                  label: 'Delete',
-                                ),
-                              ],
-                            ),
-                            child: Center(
-                              child: farmerRecordCard(
-                                context,
-                                "Entries",
-                                FontWeight.normal,
-                                myBlack,
-                                debit: "4,500",
-                                credit: "3,000",
-                              ),
-                            ),
+                    child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+                      stream: FirebaseFirestore.instance
+                          .collection("farmers")
+                          .doc(widget.farmerId)
+                          .collection("balance")
+                          .snapshots(),
+                      builder: (_, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Text('Oops! Something went wrong');
+                        }
+                        if (!snapshot.hasData) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
                           );
-                        },
-                      ),
+                        }
+                        if (snapshot.hasData) {
+                          final docs = snapshot.data!.docs;
+                          if (docs.isEmpty) {
+                            return Text("Record is empty");
+                          } else {
+                            return ListView.builder(
+                              shrinkWrap: true,
+                              physics: const ClampingScrollPhysics(),
+                              itemCount: docs.length,
+                              itemBuilder: (_, i) {
+                                final data = docs[i].data();
+                                return Slidable(
+                                  endActionPane: ActionPane(
+                                    motion: const ScrollMotion(),
+                                    children: [
+                                      SlidableAction(
+                                        flex: 1,
+                                        onPressed: (BuildContext context) {
+                                          var balaceId = docs[i].id;
+                                          FirebaseServices.deleteBalance(
+                                              context,
+                                              widget.farmerId,
+                                              balaceId);
+                                        },
+                                        backgroundColor: myRed,
+                                        foregroundColor: Colors.white,
+                                        icon: Icons.delete,
+                                        label: 'Delete',
+                                      ),
+                                    ],
+                                  ),
+                                  child: Center(
+                                    child: farmerRecordCard(
+                                      context,
+                                      data['name'],
+                                      FontWeight.w400,
+                                      myBlack,
+                                      debit: data['type'] == 'dabit'
+                                          ? data['price']
+                                          : "",
+                                      credit: data['type'] != 'dabit'
+                                          ? data['price']
+                                          : "",
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          }
+                        }
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      },
                     ),
                   ),
                 ],
@@ -247,7 +286,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                     context: context,
                     builder: (context) => AddAmount(
                       farmerId: widget.farmerId,
-                       balanceType: 'credit',
+                      balanceType: 'dabit',
                     ),
                   );
                 },
@@ -262,7 +301,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                     context: context,
                     builder: (context) => AddAmount(
                       farmerId: widget.farmerId,
-                       balanceType: 'dabit',
+                      balanceType: 'credit',
                     ),
                   );
                 },

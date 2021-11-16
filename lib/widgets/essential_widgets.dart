@@ -150,11 +150,6 @@ Widget farmerRecordCard(context, entry, bold, textColor,
             ),
           ],
         ),
-        Divider(
-          height: 0,
-          color: myGreen,
-          thickness: 0.5,
-        ),
       ],
     ),
   );

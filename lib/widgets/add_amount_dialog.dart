@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_typing_uninitialized_variables
+// ignore_for_file: prefer_typing_uninitialized_variables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
@@ -24,27 +24,27 @@ class _AddAmountState extends State<AddAmount> {
   final itemName = TextEditingController();
   final itemPrice = TextEditingController();
 
-  int hour = 00;
-  int mint = 00;
-  var addTime;
-  var addDate;
-  var currentYear;
-  var currentmonth;
-  var currentDay;
-  var nowDate;
-  var nowTime;
+  // int hour = 00;
+  // int mint = 00;
+  // var addTime;
+  // var addDate;
+  // var currentYear;
+  // var currentmonth;
+  // var currentDay;
+  // var nowDate;
+  // var nowTime;
 
-  @override
-  void initState() {
-    super.initState();
-    currentYear = DateTime.now().year;
-    currentmonth = DateTime.now().month;
-    currentDay = DateTime.now().day;
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   currentYear = DateTime.now().year;
+  //   currentmonth = DateTime.now().month;
+  //   currentDay = DateTime.now().day;
 
-    DateTime now = DateTime.now();
-    nowDate = DateFormat.yMMMMd('en_US').format(now);
-    nowTime = DateFormat.jm().format(now);
-  }
+  //   DateTime now = DateTime.now();
+  //   nowDate = DateFormat.yMMMMd('en_US').format(now);
+  //   nowTime = DateFormat.jm().format(now);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -126,85 +126,85 @@ class _AddAmountState extends State<AddAmount> {
                         ],
                       ),
                     ),
-                    Column(
-                      children: [
-                        getDateTime(
-                          () {
-                            DatePicker.showDatePicker(context,
-                                showTitleActions: true,
-                                minTime: DateTime(
-                                    currentYear - 2, currentmonth, currentDay),
-                                maxTime: DateTime(2025, 1, 7),
-                                theme: DatePickerTheme(
-                                  headerColor: myGreen,
-                                  backgroundColor: myBlack,
-                                  itemStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: dynamicWidth(context, .044),
-                                  ),
-                                  cancelStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: dynamicWidth(context, .044),
-                                  ),
-                                  doneStyle: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: dynamicWidth(context, .04),
-                                  ),
-                                ),
-                                onChanged: (date) {}, onConfirm: (date) {
-                              setState(() {
-                                addDate =
-                                    "${date.year}-${date.month}-${date.day}";
-                              });
-                            },
-                                currentTime: DateTime.now(),
-                                locale: LocaleType.en);
-                          },
-                          "Select Date",
-                          Icons.calendar_today,
-                          addDate ?? nowDate,
-                        ),
-                        getDateTime(
-                          () {
-                            DatePicker.showTime12hPicker(
-                              context,
-                              showTitleActions: true,
-                              theme: DatePickerTheme(
-                                headerColor: myGreen,
-                                backgroundColor: myBlack,
-                                itemStyle: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: dynamicWidth(context, .044),
-                                ),
-                                cancelStyle: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: dynamicWidth(context, .044),
-                                ),
-                                doneStyle: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: dynamicWidth(context, .04),
-                                ),
-                              ),
-                              onChanged: (date) {},
-                              onConfirm: (date) {
-                                setState(() {
-                                  hour = date.hour;
-                                  mint = date.minute;
-                                  addTime = "${date.hour} : ${date.minute}";
-                                  // endTime = date;
-                                });
-                              },
-                              currentTime: DateTime.now(),
-                            );
-                          },
-                          "End Time",
-                          Icons.access_time,
-                          addTime ?? nowTime,
-                        ),
-                      ],
-                    ),
+                    // Column(
+                    //   children: [
+                    //     getDateTime(
+                    //       () {
+                    //         DatePicker.showDatePicker(context,
+                    //             showTitleActions: true,
+                    //             minTime: DateTime(
+                    //                 currentYear - 2, currentmonth, currentDay),
+                    //             maxTime: DateTime(2025, 1, 7),
+                    //             theme: DatePickerTheme(
+                    //               headerColor: myGreen,
+                    //               backgroundColor: myBlack,
+                    //               itemStyle: TextStyle(
+                    //                 color: Colors.white,
+                    //                 fontWeight: FontWeight.bold,
+                    //                 fontSize: dynamicWidth(context, .044),
+                    //               ),
+                    //               cancelStyle: TextStyle(
+                    //                 color: Colors.white,
+                    //                 fontSize: dynamicWidth(context, .044),
+                    //               ),
+                    //               doneStyle: TextStyle(
+                    //                 color: Colors.white,
+                    //                 fontSize: dynamicWidth(context, .04),
+                    //               ),
+                    //             ),
+                    //             onChanged: (date) {}, onConfirm: (date) {
+                    //           setState(() {
+                    //             addDate =
+                    //                 "${date.year}-${date.month}-${date.day}";
+                    //           });
+                    //         },
+                    //             currentTime: DateTime.now(),
+                    //             locale: LocaleType.en);
+                    //       },
+                    //       "Select Date",
+                    //       Icons.calendar_today,
+                    //       addDate ?? nowDate,
+                    //     ),
+                    //     getDateTime(
+                    //       () {
+                    //         DatePicker.showTime12hPicker(
+                    //           context,
+                    //           showTitleActions: true,
+                    //           theme: DatePickerTheme(
+                    //             headerColor: myGreen,
+                    //             backgroundColor: myBlack,
+                    //             itemStyle: TextStyle(
+                    //               color: Colors.white,
+                    //               fontWeight: FontWeight.bold,
+                    //               fontSize: dynamicWidth(context, .044),
+                    //             ),
+                    //             cancelStyle: TextStyle(
+                    //               color: Colors.white,
+                    //               fontSize: dynamicWidth(context, .044),
+                    //             ),
+                    //             doneStyle: TextStyle(
+                    //               color: Colors.white,
+                    //               fontSize: dynamicWidth(context, .04),
+                    //             ),
+                    //           ),
+                    //           onChanged: (date) {},
+                    //           onConfirm: (date) {
+                    //             setState(() {
+                    //               hour = date.hour;
+                    //               mint = date.minute;
+                    //               addTime = "${date.hour} : ${date.minute}";
+                    //               // endTime = date;
+                    //             });
+                    //           },
+                    //           currentTime: DateTime.now(),
+                    //         );
+                    //       },
+                    //       "End Time",
+                    //       Icons.access_time,
+                    //       addTime ?? nowTime,
+                    //     ),
+                    //   ],
+                    // ),
                     SizedBox(
                       height: dynamicHeight(context, .02),
                     ),
@@ -215,14 +215,14 @@ class _AddAmountState extends State<AddAmount> {
                           context,
                           "ADD",
                           () {
-                            // if (_formKey.currentState!.validate()) {
-                            // }
-                            FarmerServices.addFarmerAmount(
-                                context,
-                                widget.farmerId,
-                                itemName.text,
-                                itemPrice.text,
-                                "");
+                            if (_formKey.currentState!.validate()) {
+                              FarmerServices.addFarmerAmount(
+                                  context,
+                                  widget.farmerId,
+                                  itemName.text,
+                                  itemPrice.text,
+                                  widget.balanceType);
+                            }
                           },
                           width: dynamicWidth(context, .3),
                           height: dynamicHeight(context, .056),

@@ -80,7 +80,7 @@ class FarmerServices {
           .collection("balance")
           .add(
         {
-          'type': 'dabit',
+          'type': balanceType,
           'name': name,
           'price': price,
           'date': date,
@@ -92,7 +92,6 @@ class FarmerServices {
         msg: "Added Success",
         backgroundColor: myGreen,
         textColor: myWhite,
-        gravity: ToastGravity.CENTER,
       );
       AppRoutes.pop(context);
       print("Success");
@@ -103,7 +102,6 @@ class FarmerServices {
         msg: e.toString(),
         backgroundColor: myGreen,
         textColor: myWhite,
-        gravity: ToastGravity.CENTER,
       );
     }
   }
