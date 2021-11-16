@@ -170,92 +170,22 @@ class _HomeState extends State<Home> {
                 ],
               ),
             ),
-            Container(
-              width: dynamicWidth(context, 1),
-              height: dynamicHeight(context, .56),
-              color: noColor,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    rowText(
-                      context,
-                      "Recent Updates",
-                      const DailyUpdates(),
-                      "See All",
-                    ),
-                    StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-                      stream: FirebaseFirestore.instance
-                          .collection('dailyUpdate')
-                          .where("traderId", isEqualTo: user!.uid)
-                          .snapshots(),
-                      builder: (_, snapshot) {
-                        if (snapshot.hasError) {
-                          return const Text('Oops! Something went wrong');
-                        }
-                        if (!snapshot.hasData) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        if (snapshot.hasData) {
-                          final docs = snapshot.data!.docs;
-                          if (docs.isEmpty) {
-                            return noDataError(
-                              context,
-                              "assets/dailyUpdatesCartoon.png",
-                              const AddDailyUpdate(),
-                              dynamicHeight(context, .18),
-                            );
-                          } else {
-                            return Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: dynamicWidth(context, .02),
-                              ),
-                              child: ListView.builder(
-                                physics: const ScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: docs.length > 2 ? 2 : docs.length,
-                                itemBuilder: (context, i) {
-                                  final data = docs[i].data();
-                                  return Padding(
-                                    padding: EdgeInsets.symmetric(
-                                      vertical: dynamicHeight(context, .006),
-                                    ),
-                                    child: Center(
-                                      child: dailyUpdateCard(
-                                        context,
-                                        data['itemName'],
-                                        data['date'],
-                                        data['itemPrice'],
-                                        data['itemUnit'],
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
-                            );
-                          }
-                        }
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      },
-                    ),
-                    rowText(
-                      context,
-                      "Recent Farmer",
-                      const Farmers(),
-                      "See All",
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: dynamicHeight(context, .002),
-                        horizontal: dynamicWidth(context, .04),
+            Expanded(
+              child: Container(
+                width: dynamicWidth(context, 1),
+                color: noColor,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      rowText(
+                        context,
+                        "Recent Updates",
+                        const DailyUpdates(),
+                        "See All",
                       ),
-                      child: StreamBuilder<
-                          QuerySnapshot<Map<String, dynamic>>>(
+                      StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                         stream: FirebaseFirestore.instance
-                            .collection('farmers')
+                            .collection('dailyUpdate')
                             .where("traderId", isEqualTo: user!.uid)
                             .snapshots(),
                         builder: (_, snapshot) {
@@ -272,45 +202,37 @@ class _HomeState extends State<Home> {
                             if (docs.isEmpty) {
                               return noDataError(
                                 context,
-                                "assets/farmerCartoon.png",
-                                const FarmerForm(),
+                                "assets/dailyUpdatesCartoon.png",
+                                const AddDailyUpdate(),
                                 dynamicHeight(context, .18),
                               );
                             } else {
-                              return ListView.builder(
-                                shrinkWrap: true,
-                                physics: const ClampingScrollPhysics(),
-                                itemCount:
-                                    docs.length > 2 ? 2 : docs.length,
-                                itemBuilder: (_, i) {
-                                  final data = docs[i].data();
-                                  return InkWell(
-                                    onTap: () {
-                                      AppRoutes.push(
-                                        context,
-                                        FarmerDetails(
-                                          userName: data['userName'],
-                                          farmerId: docs[i].id,
-                                        ),
-                                      );
-                                    },
-                                    child: Padding(
+                              return Padding(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: dynamicWidth(context, .02),
+                                ),
+                                child: ListView.builder(
+                                  physics: const ScrollPhysics(),
+                                  shrinkWrap: true,
+                                  itemCount: docs.length > 2 ? 2 : docs.length,
+                                  itemBuilder: (context, i) {
+                                    final data = docs[i].data();
+                                    return Padding(
                                       padding: EdgeInsets.symmetric(
-                                        vertical:
-                                            dynamicHeight(context, .014),
-                                        horizontal:
-                                            dynamicWidth(context, .00),
+                                        vertical: dynamicHeight(context, .006),
                                       ),
-                                      child: farmerCard(
-                                        context,
-                                        data['userName'],
-                                        data['mobileNumber'],
-                                        "80,000",
-                                        "30,000",
+                                      child: Center(
+                                        child: dailyUpdateCard(
+                                          context,
+                                          data['itemName'],
+                                          data['date'],
+                                          data['itemPrice'],
+                                          data['itemUnit'],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                },
+                                    );
+                                  },
+                                ),
                               );
                             }
                           }
@@ -319,8 +241,87 @@ class _HomeState extends State<Home> {
                           );
                         },
                       ),
-                    ),
-                  ],
+                      rowText(
+                        context,
+                        "Recent Farmer",
+                        const Farmers(),
+                        "See All",
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: dynamicHeight(context, .002),
+                          horizontal: dynamicWidth(context, .04),
+                        ),
+                        child: StreamBuilder<
+                            QuerySnapshot<Map<String, dynamic>>>(
+                          stream: FirebaseFirestore.instance
+                              .collection('farmers')
+                              .where("traderId", isEqualTo: user!.uid)
+                              .snapshots(),
+                          builder: (_, snapshot) {
+                            if (snapshot.hasError) {
+                              return const Text('Oops! Something went wrong');
+                            }
+                            if (!snapshot.hasData) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            if (snapshot.hasData) {
+                              final docs = snapshot.data!.docs;
+                              if (docs.isEmpty) {
+                                return noDataError(
+                                  context,
+                                  "assets/farmerCartoon.png",
+                                  const FarmerForm(),
+                                  dynamicHeight(context, .18),
+                                );
+                              } else {
+                                return ListView.builder(
+                                  shrinkWrap: true,
+                                  physics: const ClampingScrollPhysics(),
+                                  itemCount:
+                                      docs.length > 2 ? 2 : docs.length,
+                                  itemBuilder: (_, i) {
+                                    final data = docs[i].data();
+                                    return InkWell(
+                                      onTap: () {
+                                        AppRoutes.push(
+                                          context,
+                                          FarmerDetails(
+                                            userName: data['userName'],
+                                            farmerId: docs[i].id,
+                                          ),
+                                        );
+                                      },
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                          vertical:
+                                              dynamicHeight(context, .014),
+                                          horizontal:
+                                              dynamicWidth(context, .00),
+                                        ),
+                                        child: farmerCard(
+                                          context,
+                                          data['userName'],
+                                          data['mobileNumber'],
+                                          "80,000",
+                                          "30,000",
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                );
+                              }
+                            }
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
