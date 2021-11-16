@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print, unused_local_variable
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +16,6 @@ class FarmerServices {
 // add farmer in DB
   static addFarmerToDB(BuildContext context, userName, password, firstName,
       lastName, mobileNumber, cnic) async {
-
     AuthProvider authProvider =
         Provider.of<AuthProvider>(context, listen: false);
     User? user = _auth.currentUser;
@@ -23,6 +24,10 @@ class FarmerServices {
 
     try {
       print(firstName);
+      // firebaseFirestore
+      //     .collection("farmers")
+      //     .doc(firebaseFirestore.collection("farmers").id)
+      //     .collection("balance");
       firebaseFirestore.collection("farmers").add({
         'firstName': firstName,
         'lastName': lastName,
@@ -74,7 +79,6 @@ class FarmerServices {
     AuthProvider authProvider =
         Provider.of<AuthProvider>(context, listen: false);
     User? user = _auth.currentUser;
-
     authProvider.isLoading(true);
 
     try {
