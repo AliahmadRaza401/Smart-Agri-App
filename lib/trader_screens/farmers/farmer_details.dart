@@ -142,7 +142,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                         horizontal: dynamicWidth(context, .04),
                       ),
                       child: Text(
-                        "First name and last name",
+                        widget.fName + " " + widget.lName,
                         style: TextStyle(
                           color: myWhite,
                           fontWeight: FontWeight.w600,
@@ -160,7 +160,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                         horizontal: dynamicWidth(context, .04),
                       ),
                       child: Text(
-                        "CNIC Number",
+                        widget.fCNIC.toString(),
                         style: TextStyle(
                           color: myWhite,
                           fontWeight: FontWeight.w400,
