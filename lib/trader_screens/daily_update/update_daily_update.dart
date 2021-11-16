@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 
-class AddUpdate extends StatefulWidget {
+class UpdateDailyUpdate extends StatefulWidget {
+  final String itemName, price, unit;
+
+  const UpdateDailyUpdate(
+      {Key? key,
+      required this.itemName,
+      required this.price,
+      required this.unit})
+      : super(key: key);
+
   @override
-  State<AddUpdate> createState() => _AddUpdateState();
+  _UpdateDailyUpdateState createState() => _UpdateDailyUpdateState();
 }
 
-class _AddUpdateState extends State<AddUpdate> {
+class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
   final _formKey = GlobalKey<FormState>();
   final itemName = TextEditingController();
   final itemPrice = TextEditingController();
@@ -45,7 +53,7 @@ class _AddUpdateState extends State<AddUpdate> {
                       child: Column(
                         children: <Widget>[
                           Text(
-                            "Add Today Update",
+                            "update Today Update",
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: dynamicWidth(context, .046),
@@ -56,7 +64,8 @@ class _AddUpdateState extends State<AddUpdate> {
                             height: dynamicHeight(context, .02),
                           ),
                           TextFormField(
-                            controller: itemName,
+                            controller: itemName
+                              ..text = widget.itemName.toString(),
                             keyboardType: TextInputType.text,
                             decoration: const InputDecoration(
                               hintText: "item Name",
@@ -73,7 +82,8 @@ class _AddUpdateState extends State<AddUpdate> {
                             height: dynamicHeight(context, .02),
                           ),
                           TextFormField(
-                            controller: itemPrice,
+                            controller: itemPrice
+                              ..text = widget.price.toString(),
                             keyboardType: TextInputType.number,
                             decoration: const InputDecoration(
                               hintText: "Price",
@@ -90,7 +100,7 @@ class _AddUpdateState extends State<AddUpdate> {
                             height: dynamicHeight(context, .02),
                           ),
                           TextFormField(
-                            controller: itemUnit,
+                            controller: itemUnit..text = widget.unit.toString(),
                             keyboardType: TextInputType.text,
                             decoration: const InputDecoration(
                               hintText: "Unit",
@@ -112,15 +122,8 @@ class _AddUpdateState extends State<AddUpdate> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        button(context, "ADD", () {
-                          if (_formKey.currentState!.validate()) {
-                            FirebaseServices.addDailyItemToDB(
-                              context,
-                              itemName.text,
-                              itemPrice.text,
-                              itemUnit.text,
-                            );
-                          }
+                        button(context, "UPDATE", () {
+                          if (_formKey.currentState!.validate()) {}
                         },
                             width: dynamicWidth(context, .3),
                             height: dynamicHeight(context, .056),
