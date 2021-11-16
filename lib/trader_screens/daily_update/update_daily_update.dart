@@ -81,8 +81,7 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                           height: dynamicHeight(context, .02),
                         ),
                         TextFormField(
-                          controller: itemPrice
-                            ..text = widget.price.toString(),
+                          controller: itemPrice..text = widget.price.toString(),
                           keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                             hintText: "Price",
