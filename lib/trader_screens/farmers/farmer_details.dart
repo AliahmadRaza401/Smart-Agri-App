@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:quds_popup_menu/quds_popup_menu.dart';
+import 'package:smart_agri/trader_screens/farmers/update_farmer.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/add_amount_dialog.dart';
 import 'package:smart_agri/widgets/buttons.dart';
@@ -8,12 +9,19 @@ import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
 
 class FarmerDetails extends StatefulWidget {
-  final String userName;
+  final String userName, fName, lName, mNumber, fCNIC, password;
   final farmerId;
 
-  const FarmerDetails(
-      {Key? key, required this.userName, required this.farmerId})
-      : super(key: key);
+  const FarmerDetails({
+    Key? key,
+    required this.userName,
+    required this.fName,
+    required this.lName,
+    required this.mNumber,
+    required this.fCNIC,
+    required this.password,
+    required this.farmerId,
+  }) : super(key: key);
 
   @override
   _FarmerDetailsState createState() => _FarmerDetailsState();
@@ -68,7 +76,19 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                       ),
                       maxLines: 1,
                     ),
-                    onPressed: () {}),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => UpdateFarmer(
+                          userName: widget.userName,
+                          fName: widget.fName,
+                          lName: widget.lName,
+                          mNumber: widget.mNumber,
+                          fCNIC: widget.fCNIC,
+                          password: widget.password,
+                        ),
+                      );
+                    }),
                 QudsPopupMenuDivider(),
                 QudsPopupMenuItem(
                   leading: const Icon(

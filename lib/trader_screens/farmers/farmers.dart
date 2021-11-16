@@ -100,6 +100,11 @@ class _FarmersState extends State<Farmers> {
                               context,
                               FarmerDetails(
                                 userName: data['userName'],
+                                fName: data['firstName'],
+                                lName: data['lastName'],
+                                mNumber: data['mobileNumber'],
+                                fCNIC: data['cnic'],
+                                password: data['password'],
                                 farmerId: docs[i].id,
                               ),
                             );
