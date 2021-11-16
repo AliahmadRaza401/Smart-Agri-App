@@ -193,6 +193,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                     context: context,
                     builder: (context) => AddAmount(
                       farmerId: widget.farmerId,
+                       balanceType: 'credit',
                     ),
                   );
                 },
@@ -207,6 +208,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                     context: context,
                     builder: (context) => AddAmount(
                       farmerId: widget.farmerId,
+                       balanceType: 'dabit',
                     ),
                   );
                 },

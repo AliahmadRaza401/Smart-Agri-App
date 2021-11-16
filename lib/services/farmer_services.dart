@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/utils/app_route.dart';
@@ -24,10 +25,6 @@ class FarmerServices {
 
     try {
       print(firstName);
-      // firebaseFirestore
-      //     .collection("farmers")
-      //     .doc(firebaseFirestore.collection("farmers").id)
-      //     .collection("balance");
       firebaseFirestore.collection("farmers").add({
         'firstName': firstName,
         'lastName': lastName,
@@ -36,16 +33,8 @@ class FarmerServices {
         'userName': userName,
         'password': password,
         'traderId': user!.uid,
-        'amount': [
-          {
-            'type': '',
-            'name': '',
-            'price': '',
-            'date': '',
-            'time': '',
-          },
-        ],
       });
+
       authProvider.isLoading(false);
       Fluttertoast.showToast(
         msg: "Added Success",
@@ -73,26 +62,31 @@ class FarmerServices {
     farmerId,
     name,
     price,
+    balanceType,
   ) async {
     print('adding Farmer Amount...........:');
-
+    DateTime now = DateTime.now();
+    var date = DateFormat.yMMMMd('en_US').format(now);
+    var time = DateFormat.jm().format(now);
     AuthProvider authProvider =
         Provider.of<AuthProvider>(context, listen: false);
     User? user = _auth.currentUser;
     authProvider.isLoading(true);
 
     try {
-      firebaseFirestore.collection("farmers").doc(farmerId).update({
-        'amount': [
-          {
-            'type': 'dabit',
-            'name': name,
-            'price': price,
-            'date': '',
-            'time': '',
-          },
-        ],
-      });
+      firebaseFirestore
+          .collection("farmers")
+          .doc(farmerId)
+          .collection("balance")
+          .add(
+        {
+          'type': 'dabit',
+          'name': name,
+          'price': price,
+          'date': date,
+          'time': time,
+        },
+      );
       authProvider.isLoading(false);
       Fluttertoast.showToast(
         msg: "Added Success",

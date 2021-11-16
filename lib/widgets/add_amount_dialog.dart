@@ -11,8 +11,8 @@ import 'package:smart_agri/widgets/dynamic_size.dart';
 
 class AddAmount extends StatefulWidget {
   final String farmerId;
-
-  AddAmount({required this.farmerId});
+  final String balanceType;
+  AddAmount({required this.farmerId, required this.balanceType});
 
   @override
   State<AddAmount> createState() => _AddAmountState();
@@ -217,8 +217,12 @@ class _AddAmountState extends State<AddAmount> {
                           () {
                             // if (_formKey.currentState!.validate()) {
                             // }
-                            FarmerServices.addFarmerAmount(context,
-                                widget.farmerId, itemName.text, itemPrice.text);
+                            FarmerServices.addFarmerAmount(
+                                context,
+                                widget.farmerId,
+                                itemName.text,
+                                itemPrice.text,
+                                "");
                           },
                           width: dynamicWidth(context, .3),
                           height: dynamicHeight(context, .056),
