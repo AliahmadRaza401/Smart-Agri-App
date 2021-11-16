@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:quds_popup_menu/quds_popup_menu.dart';
 import 'package:smart_agri/services/firebase_services.dart';
+import 'package:smart_agri/trader_screens/farmers/update_farmer.dart';
+import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/add_amount_dialog.dart';
 import 'package:smart_agri/widgets/buttons.dart';
@@ -10,18 +12,45 @@ import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
 
 class FarmerDetails extends StatefulWidget {
-  final String userName;
+  final String userName, fName, lName, mNumber, fCNIC, password;
   final farmerId;
 
-  const FarmerDetails(
-      {Key? key, required this.userName, required this.farmerId})
-      : super(key: key);
+  const FarmerDetails({
+    Key? key,
+    required this.userName,
+    required this.fName,
+    required this.lName,
+    required this.mNumber,
+    required this.fCNIC,
+    required this.password,
+    required this.farmerId,
+  }) : super(key: key);
 
   @override
   _FarmerDetailsState createState() => _FarmerDetailsState();
 }
 
 class _FarmerDetailsState extends State<FarmerDetails> {
+  int netBalance = 0;
+  late DocumentSnapshot snapshot;
+  @override
+  void initState() {
+    super.initState();
+    // getData();
+  }
+
+  // Future<String> getData() async {
+  //   var data = await FirebaseFirestore.instance
+  //       .collection("farmers")
+  //       .doc(widget.farmerId)
+  //       .collection("balance")
+  //       .get();
+  //   snapshot = data as DocumentSnapshot<Object?>;
+  //   print(snapshot);
+
+  //   return data.toString();
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +99,20 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                       ),
                       maxLines: 1,
                     ),
-                    onPressed: () {}),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) => UpdateFarmer(
+                          userName: widget.userName,
+                          fName: widget.fName,
+                          lName: widget.lName,
+                          mNumber: widget.mNumber,
+                          fCNIC: widget.fCNIC,
+                          password: widget.password,
+                          docsID: widget.farmerId,
+                        ),
+                      );
+                    }),
                 QudsPopupMenuDivider(),
                 QudsPopupMenuItem(
                   leading: const Icon(
@@ -86,7 +128,14 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                     ),
                     maxLines: 1,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    FirebaseServices.deleteRecord(
+                      context,
+                      "farmers",
+                      widget.farmerId,
+                    );
+                    AppRoutes.pop(context);
+                  },
                 ),
               ],
               child: Icon(
@@ -124,7 +173,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                         horizontal: dynamicWidth(context, .04),
                       ),
                       child: Text(
-                        "First name and last name",
+                        widget.fName + " " + widget.lName,
                         style: TextStyle(
                           color: myWhite,
                           fontWeight: FontWeight.w600,
@@ -142,7 +191,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                         horizontal: dynamicWidth(context, .04),
                       ),
                       child: Text(
-                        "CNIC Number",
+                        widget.fCNIC.toString(),
                         style: TextStyle(
                           color: myWhite,
                           fontWeight: FontWeight.w400,
@@ -175,7 +224,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                         ),
                       ),
                       Text(
-                        "Rs. 78000",
+                        "",
                         style: TextStyle(
                           color: myBlack,
                           fontSize: dynamicWidth(context, .048),
@@ -187,7 +236,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                   SizedBox(
                     height: dynamicHeight(context, .02),
                   ),
-                  farmerRecordCard(
+                  farmerRecordCardHeading(
                     context,
                     "Entries",
                     FontWeight.w600,
@@ -223,6 +272,11 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                               itemCount: docs.length,
                               itemBuilder: (_, i) {
                                 final data = docs[i].data();
+
+                                netBalance =
+                                    netBalance + int.parse(data['price']);
+                                print('netBalance: $netBalance');
+
                                 return Slidable(
                                   endActionPane: ActionPane(
                                     motion: const ScrollMotion(),
@@ -255,6 +309,8 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                                       credit: data['type'] != 'dabit'
                                           ? data['price']
                                           : "",
+                                      date: data['date'],
+                                      time: data['time'],
                                     ),
                                   ),
                                 );

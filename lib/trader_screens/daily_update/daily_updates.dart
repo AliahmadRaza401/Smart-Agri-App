@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/trader_screens/daily_update/add_daily_update.dart';
+import 'package:smart_agri/trader_screens/daily_update/update_daily_update.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/box_widgets.dart';
@@ -125,7 +126,19 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                                 children: [
                                   SlidableAction(
                                     flex: 2,
-                                    onPressed: (BuildContext context) {},
+                                    onPressed: (BuildContext context) {
+                                      var id =
+                                          snapshot.data!.docs[i].reference.id;
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => UpdateDailyUpdate(
+                                          itemName: data['itemName'],
+                                          price: data['itemPrice'],
+                                          unit: data['itemUnit'],
+                                          docsId: id,
+                                        ),
+                                      );
+                                    },
                                     backgroundColor: myLiteGreen,
                                     foregroundColor: myWhite,
                                     icon: Icons.edit,

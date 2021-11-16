@@ -6,10 +6,6 @@ import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 
 class AddUpdate extends StatefulWidget {
-  // final String farmerId;
-
-  // AddUpdate({required this.farmerId});
-
   @override
   State<AddUpdate> createState() => _AddUpdateState();
 }

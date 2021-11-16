@@ -62,6 +62,53 @@ class FirebaseServices {
     }
   }
 
+
+    static updateDailyItemToDB(
+    BuildContext context,
+    docsID,
+    name,
+    price,
+    unit,
+  ) async {
+    AuthProvider authProvider =
+        Provider.of<AuthProvider>(context, listen: false);
+    User? user = _auth.currentUser;
+    authProvider.isLoading(true);
+    DateTime now = DateTime.now();
+    var date = DateFormat.yMMMMd('en_US').format(now);
+    var time = DateFormat.jm().format(now);
+
+    try {
+      print(name);
+      firebaseFirestore.collection("dailyUpdate").doc(docsID).update({
+        'itemName': name,
+        'itemPrice': price,
+        'itemUnit': unit,
+        'date': date,
+        'time': time,
+        'traderId': user!.uid,
+      });
+      authProvider.isLoading(false);
+      Fluttertoast.showToast(
+        msg: "Update Success!",
+        backgroundColor: myGreen,
+        textColor: myWhite,
+        gravity: ToastGravity.CENTER,
+      );
+      AppRoutes.pop(context);
+      print("Success");
+    } catch (e) {
+      authProvider.isLoading(false);
+      print("Catch Error");
+      Fluttertoast.showToast(
+        msg: e.toString(),
+        backgroundColor: myGreen,
+        textColor: myWhite,
+        gravity: ToastGravity.CENTER,
+      );
+    }
+  }
+
   static deleteRecord(BuildContext context, docsName, id) {
     var collection = FirebaseFirestore.instance.collection(docsName);
     collection
