@@ -252,8 +252,8 @@ class _HomeState extends State<Home> {
                           vertical: dynamicHeight(context, .002),
                           horizontal: dynamicWidth(context, .04),
                         ),
-                        child: StreamBuilder<
-                            QuerySnapshot<Map<String, dynamic>>>(
+                        child:
+                            StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                           stream: FirebaseFirestore.instance
                               .collection('farmers')
                               .where("traderId", isEqualTo: user!.uid)
@@ -280,8 +280,7 @@ class _HomeState extends State<Home> {
                                 return ListView.builder(
                                   shrinkWrap: true,
                                   physics: const ClampingScrollPhysics(),
-                                  itemCount:
-                                      docs.length > 2 ? 2 : docs.length,
+                                  itemCount: docs.length > 2 ? 2 : docs.length,
                                   itemBuilder: (_, i) {
                                     final data = docs[i].data();
                                     return InkWell(

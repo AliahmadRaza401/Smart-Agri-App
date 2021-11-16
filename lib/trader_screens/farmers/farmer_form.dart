@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/services/farmer_services.dart';
-import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
