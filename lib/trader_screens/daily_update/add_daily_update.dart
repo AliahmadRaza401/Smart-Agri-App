@@ -1,3 +1,4 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/services/firebase_services.dart';
@@ -6,8 +7,6 @@ import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/form_fields.dart';
-
-
 
 class AddDailyUpdate extends StatefulWidget {
   const AddDailyUpdate({Key? key}) : super(key: key);
@@ -18,9 +17,15 @@ class AddDailyUpdate extends StatefulWidget {
 
 class _AddDailyUpdateState extends State<AddDailyUpdate> {
   final _formKey = GlobalKey<FormState>();
-final itemName = TextEditingController();
-final itemPrice = TextEditingController();
-final itemUnit = TextEditingController();
+  final itemName = TextEditingController();
+  final itemPrice = TextEditingController();
+  final itemUnit = TextEditingController();
+  dynamic itemCategory = "";
+
+  List<String> dropdownList = <String>[
+    'Fertilizers',
+    'Sprays',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -134,6 +139,33 @@ final itemUnit = TextEditingController();
                                 return 'Please enter a valid Unit';
                               }
                               return null;
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      vertical: dynamicHeight(context, .01),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Flexible(
+                          child: DropdownSearch(
+                            mode: Mode.DIALOG,
+                            showSearchBox: true,
+                            showClearButton: true,
+                            items: dropdownList,
+                            label: "Department",
+                            hint: "Select Department",
+                            onChanged: (value) {
+                              setState(
+                                () {
+                                  itemCategory = value;
+                                },
+                              );
                             },
                           ),
                         ),

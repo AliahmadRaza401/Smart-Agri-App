@@ -50,6 +50,7 @@ dependencies:
   quds_popup_menu: ^0.0.1+1
   image_picker: ^0.8.2
   flutter_local_notifications: ^8.2.0
+  dropdown_search: ^1.0.3
 
 
 dev_dependencies:
