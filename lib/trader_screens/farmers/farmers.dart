@@ -109,19 +109,22 @@ class _FarmersState extends State<Farmers> {
                               ),
                             );
                           },
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: dynamicHeight(context, .014),
-                              horizontal: dynamicWidth(context, .04),
-                            ),
-                            child: farmerCard(
-                              context,
-                              data['userName'],
-                              data['mobileNumber'],
-                              "80,000",
-                              "30,000",
-                            ),
-                          ),
+                          child: data['image'] != null
+                              ? Image.network(data['image'])
+                              : Text("hy"),
+                          //  Padding(
+                          //   padding: EdgeInsets.symmetric(
+                          //     vertical: dynamicHeight(context, .014),
+                          //     horizontal: dynamicWidth(context, .04),
+                          //   ),
+                          //   child: farmerCard(
+                          //     context,
+                          //     data['userName'],
+                          //     data['mobileNumber'],
+                          //     "80,000",
+                          //     "30,000",
+                          //   ),
+                          // ),
                         );
                       },
                     );

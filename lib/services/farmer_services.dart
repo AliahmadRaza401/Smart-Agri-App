@@ -15,7 +15,7 @@ class FarmerServices {
 
 // add farmer in DB
   static addFarmerToDB(BuildContext context, userName, password, firstName,
-      lastName, mobileNumber, cnic) async {
+      lastName, mobileNumber, cnic, ) async {
     AuthProvider authProvider =
         Provider.of<AuthProvider>(context, listen: false);
     User? user = _auth.currentUser;
@@ -31,6 +31,7 @@ class FarmerServices {
         'mobileNumber': mobileNumber,
         'userName': userName,
         'password': password,
+     
         'traderId': user!.uid,
       });
 

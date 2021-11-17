@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'dart:io';
 
 import 'package:email_validator/email_validator.dart';
@@ -7,6 +9,7 @@ import 'package:smart_agri/services/auth_services.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/trader_screens/authentication/login.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/utils/image_piker.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/form_fields.dart';
@@ -29,10 +32,9 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
-
   File? _image;
   String? imageUrl;
-  
+
   @override
   Widget build(BuildContext context) {
     var loading = Provider.of<AuthProvider>(context).loading;
@@ -89,6 +91,7 @@ class _SignUpPageState extends State<SignUpPage> {
                             ],
                           ),
                         ),
+                        profilePicture(context),
                         Padding(
                           padding: EdgeInsets.symmetric(
                             vertical: dynamicHeight(context, .01),
@@ -322,36 +325,36 @@ class _SignUpPageState extends State<SignUpPage> {
     );
   }
 
-  // Widget profilePicture(BuildContext context) {
-  //   return Align(
-  //     alignment: Alignment.topCenter,
-  //     child: GestureDetector(
-  //       onTap: openFilePicker,
-  //       child: CircleAvatar(
-  //         radius: 40,
-  //         backgroundColor: AppColors.greyColor,
-  //         child: _image != null
-  //             ? ClipOval(
-  //                 child: Image.file(
-  //                   _image!,
-  //                   fit: BoxFit.cover,
-  //                   height: 80,
-  //                   width: 80,
-  //                 ),
-  //               )
-  //             : Icon(
-  //                 Icons.camera_alt,
-  //               ),
-  //       ),
-  //     ),
-  //   );
-  // }
+  Widget profilePicture(BuildContext context) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: GestureDetector(
+        onTap: openFilePicker,
+        child: CircleAvatar(
+          radius: 50,
+          backgroundColor: myGrey,
+          child: _image != null
+              ? ClipOval(
+                  child: Image.file(
+                    _image!,
+                    fit: BoxFit.cover,
+                    height: 100,
+                    width: 100,
+                  ),
+                )
+              : Icon(
+                  Icons.camera_alt,
+                ),
+        ),
+      ),
+    );
+  }
 
-  // Future<void> openFilePicker() async {
-  //   var image = await pickImageFromGalleryOrCamera(context);
-  //   if (image == null) return;
+  Future<void> openFilePicker() async {
+    var image = await pickImageFromGalleryOrCamera(context);
+    if (image == null) return;
 
-  //   setState(() => _image = image);
-  // }
-  
+    setState(() => _image = image);
+    print('_image: $_image');
+  }
 }

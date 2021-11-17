@@ -49,6 +49,7 @@ dependencies:
   flutter_slidable: ^1.1.0
   quds_popup_menu: ^0.0.1+1
   image_picker: ^0.8.2
+  flutter_local_notifications: ^8.2.0
 
 
 dev_dependencies:

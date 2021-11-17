@@ -1,8 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/services/farmer_services.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/utils/image_piker.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/form_fields.dart';
@@ -23,6 +26,7 @@ class FarmerForm extends StatefulWidget {
 }
 
 class _FarmerFormState extends State<FarmerForm> {
+  File? _image;
   @override
   Widget build(BuildContext context) {
     var loading = Provider.of<AuthProvider>(context).loading;
@@ -67,6 +71,7 @@ class _FarmerFormState extends State<FarmerForm> {
                       ],
                     ),
                   ),
+                  profilePicture(context),
                   Padding(
                     padding: EdgeInsets.symmetric(
                       vertical: dynamicHeight(context, .01),
@@ -242,6 +247,7 @@ class _FarmerFormState extends State<FarmerForm> {
                             farmerLName.text,
                             farmerNumber.text,
                             farmerCnic.text,
+                       
                           );
                         }
                       },
@@ -254,5 +260,38 @@ class _FarmerFormState extends State<FarmerForm> {
         ),
       ),
     );
+  }
+
+  Widget profilePicture(BuildContext context) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: GestureDetector(
+        onTap: openFilePicker,
+        child: CircleAvatar(
+          radius: 50,
+          backgroundColor: myGrey,
+          child: _image != null
+              ? ClipOval(
+                  child: Image.file(
+                    _image!,
+                    fit: BoxFit.cover,
+                    height: 100,
+                    width: 100,
+                  ),
+                )
+              : Icon(
+                  Icons.camera_alt,
+                ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> openFilePicker() async {
+    var image = await pickImageFromGalleryOrCamera(context);
+    if (image == null) return;
+
+    setState(() => _image = image);
+    print('_image: $_image');
   }
 }
