@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +29,10 @@ class SignUpPage extends StatefulWidget {
 }
 
 class _SignUpPageState extends State<SignUpPage> {
+
+  File? _image;
+  String? imageUrl;
+  
   @override
   Widget build(BuildContext context) {
     var loading = Provider.of<AuthProvider>(context).loading;
@@ -315,4 +321,37 @@ class _SignUpPageState extends State<SignUpPage> {
       ),
     );
   }
+
+  // Widget profilePicture(BuildContext context) {
+  //   return Align(
+  //     alignment: Alignment.topCenter,
+  //     child: GestureDetector(
+  //       onTap: openFilePicker,
+  //       child: CircleAvatar(
+  //         radius: 40,
+  //         backgroundColor: AppColors.greyColor,
+  //         child: _image != null
+  //             ? ClipOval(
+  //                 child: Image.file(
+  //                   _image!,
+  //                   fit: BoxFit.cover,
+  //                   height: 80,
+  //                   width: 80,
+  //                 ),
+  //               )
+  //             : Icon(
+  //                 Icons.camera_alt,
+  //               ),
+  //       ),
+  //     ),
+  //   );
+  // }
+
+  // Future<void> openFilePicker() async {
+  //   var image = await pickImageFromGalleryOrCamera(context);
+  //   if (image == null) return;
+
+  //   setState(() => _image = image);
+  // }
+  
 }
