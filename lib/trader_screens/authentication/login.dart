@@ -10,11 +10,6 @@ import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/form_fields.dart';
 import 'package:smart_agri/widgets/rich_text.dart';
 
-final _formKey = GlobalKey<FormState>();
-
-final email = TextEditingController();
-final password = TextEditingController();
-
 class LoginPage extends StatefulWidget {
   final dynamic name;
 
@@ -25,6 +20,11 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _formKey = GlobalKey<FormState>();
+
+  final email = TextEditingController();
+  final password = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     var loading = Provider.of<AuthProvider>(context).loading;
@@ -147,7 +147,12 @@ class _LoginPageState extends State<LoginPage> {
                                 return;
                               } else {
                                 AuthServices.signIn(
-                                    context, email.text, password.text);
+                                  context,
+                                  email.text,
+                                  password.text,
+                                );
+                                email.clear();
+                                password.clear();
                               }
                             },
                           ),
@@ -156,15 +161,16 @@ class _LoginPageState extends State<LoginPage> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             richTextWidget(
-                                context,
-                                "Don't have an account?  ",
-                                "Sign Up",
-                                dynamicWidth(context, .04),
-                                dynamicWidth(context, .05),
-                                const SignUpPage(),
-                                myWhite,
-                                myGreen,
-                                true),
+                              context,
+                              "Don't have an account?  ",
+                              "Sign Up",
+                              dynamicWidth(context, .04),
+                              dynamicWidth(context, .05),
+                              const SignUpPage(),
+                              myWhite,
+                              myGreen,
+                              true,
+                            ),
                           ],
                         ),
                       ],

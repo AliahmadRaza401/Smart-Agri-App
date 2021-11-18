@@ -1,3 +1,4 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/utils/app_route.dart';
@@ -15,6 +16,14 @@ class _AddUpdateState extends State<AddUpdate> {
   final itemName = TextEditingController();
   final itemPrice = TextEditingController();
   final itemUnit = TextEditingController();
+  dynamic itemCategory = "";
+
+  List<String> dropdownList = <String>[
+    'Crops',
+    'Fertilizers',
+    'Sprays',
+    'Cash',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -102,6 +111,26 @@ class _AddUpdateState extends State<AddUpdate> {
                               return null;
                             },
                             onChanged: (_) => setState(() {}),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: dynamicHeight(context, .01),
+                            ),
+                            child: DropdownSearch(
+                              mode: Mode.DIALOG,
+                              showSearchBox: true,
+                              showClearButton: true,
+                              items: dropdownList,
+                              label: "Category",
+                              hint: "Select Category",
+                              onChanged: (value) {
+                                setState(
+                                      () {
+                                    itemCategory = value;
+                                  },
+                                );
+                              },
+                            ),
                           ),
                           SizedBox(
                             height: dynamicHeight(context, .02),

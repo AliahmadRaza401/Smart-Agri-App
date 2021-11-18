@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'dart:io';
 
 import 'package:email_validator/email_validator.dart';
@@ -15,15 +13,6 @@ import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/form_fields.dart';
 import 'package:smart_agri/widgets/rich_text.dart';
 
-final _formKey = GlobalKey<FormState>();
-
-final fName = TextEditingController();
-final lName = TextEditingController();
-final number = TextEditingController();
-final password = TextEditingController();
-final cnic = TextEditingController();
-final cPassword = TextEditingController();
-
 class SignUpPage extends StatefulWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
@@ -34,6 +23,16 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
   File? _image;
   String? imageUrl;
+
+  final _formKey = GlobalKey<FormState>();
+
+  final fName = TextEditingController();
+  final lName = TextEditingController();
+  final number = TextEditingController();
+  final password = TextEditingController();
+  final cnic = TextEditingController();
+  final cPassword = TextEditingController();
+  final signUpEmail = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -199,7 +198,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                 child: inputTextField(
                                   context,
                                   "Email",
-                                  email,
+                                  signUpEmail,
                                   TextInputType.emailAddress,
                                   function: (value) {
                                     if (EmailValidator.validate(value)) {
@@ -287,13 +286,20 @@ class _SignUpPageState extends State<SignUpPage> {
                               } else {
                                 AuthServices.signUp(
                                   context,
-                                  email.text,
+                                  signUpEmail.text,
                                   password.text,
                                   fName.text,
                                   lName.text,
                                   number.text,
                                   cnic.text,
                                 );
+                                signUpEmail.clear();
+                                password.clear();
+                                cPassword.clear();
+                                fName.clear();
+                                lName.clear();
+                                number.clear();
+                                cnic.clear();
                               }
                             },
                           ),

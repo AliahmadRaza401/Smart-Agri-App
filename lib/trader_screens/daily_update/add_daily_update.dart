@@ -23,8 +23,10 @@ class _AddDailyUpdateState extends State<AddDailyUpdate> {
   dynamic itemCategory = "";
 
   List<String> dropdownList = <String>[
+    'crops',
     'Fertilizers',
     'Sprays',
+    'cash',
   ];
 
   @override
