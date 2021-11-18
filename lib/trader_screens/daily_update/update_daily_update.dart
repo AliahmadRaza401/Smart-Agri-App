@@ -1,3 +1,4 @@
+import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/utils/app_route.dart';
@@ -6,15 +7,16 @@ import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 
 class UpdateDailyUpdate extends StatefulWidget {
-  final String docsId, itemName, price, unit;
+  final String docsId, itemName, price, unit, category;
 
-  const UpdateDailyUpdate(
-      {Key? key,
-      required this.docsId,
-      required this.itemName,
-      required this.price,
-      required this.unit})
-      : super(key: key);
+  const UpdateDailyUpdate({
+    Key? key,
+    required this.docsId,
+    required this.itemName,
+    required this.price,
+    required this.unit,
+    required this.category,
+  }) : super(key: key);
 
   @override
   _UpdateDailyUpdateState createState() => _UpdateDailyUpdateState();
@@ -25,6 +27,14 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
   final itemName = TextEditingController();
   final itemPrice = TextEditingController();
   final itemUnit = TextEditingController();
+  dynamic itemCategory = "";
+
+  List<String> dropdownList = <String>[
+    'Crops',
+    'Fertilizers',
+    'Sprays',
+    'Cash',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -54,7 +64,7 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                     child: Column(
                       children: <Widget>[
                         Text(
-                          "update Today Update",
+                          "Update Today Update",
                           textAlign: TextAlign.center,
                           style: TextStyle(
                             fontSize: dynamicWidth(context, .046),
@@ -114,6 +124,27 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                             return null;
                           },
                           onChanged: (_) => setState(() {}),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: dynamicHeight(context, .01),
+                          ),
+                          child: DropdownSearch(
+                            mode: Mode.DIALOG,
+                            showSearchBox: true,
+                            showClearButton: true,
+                            items: dropdownList,
+                            label: "Category",
+                            hint: "Select Category",
+                            selectedItem: widget.category,
+                            onChanged: (value) {
+                              setState(
+                                () {
+                                  itemCategory = value;
+                                },
+                              );
+                            },
+                          ),
                         ),
                         SizedBox(
                           height: dynamicHeight(context, .02),

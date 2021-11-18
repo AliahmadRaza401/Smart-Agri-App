@@ -10,6 +10,7 @@ import 'package:smart_agri/widgets/add_amount_dialog.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class FarmerDetails extends StatefulWidget {
   final String userName, fName, lName, mNumber, fCNIC, password;
@@ -33,6 +34,7 @@ class FarmerDetails extends StatefulWidget {
 class _FarmerDetailsState extends State<FarmerDetails> {
   int netBalance = 0;
   late DocumentSnapshot snapshot;
+
   @override
   void initState() {
     super.initState();
@@ -69,7 +71,13 @@ class _FarmerDetailsState extends State<FarmerDetails> {
         ),
         actions: [
           InkWell(
-            onTap: () {},
+            onTap: () async {
+              print("hi");
+              var number = widget.mNumber;
+              await canLaunch("tel:$number")
+                  ? await launch("tel:$number")
+                  : throw 'Could not launch $number';
+            },
             child: Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: dynamicWidth(context, .04),

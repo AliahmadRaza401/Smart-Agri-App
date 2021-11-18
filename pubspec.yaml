@@ -51,6 +51,7 @@ dependencies:
   image_picker: ^0.8.2
   flutter_local_notifications: ^8.2.0
   dropdown_search: ^1.0.3
+  url_launcher: ^6.0.13
 
 
 dev_dependencies:

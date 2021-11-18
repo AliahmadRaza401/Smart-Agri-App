@@ -159,6 +159,7 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                                           price: data['itemPrice'],
                                           unit: data['itemUnit'],
                                           docsId: id,
+                                          category: "category",
                                         ),
                                       );
                                     },
