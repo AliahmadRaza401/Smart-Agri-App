@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/services/farmer_services.dart';
@@ -247,7 +248,7 @@ class _FarmerFormState extends State<FarmerForm> {
                             farmerLName.text,
                             farmerNumber.text,
                             farmerCnic.text,
-                       
+                            _image,
                           );
                         }
                       },

@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_agri/services/dailyupdate_services.dart';
 import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/utils/image_piker.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/form_fields.dart';
@@ -21,7 +25,7 @@ class _AddDailyUpdateState extends State<AddDailyUpdate> {
   final itemPrice = TextEditingController();
   final itemUnit = TextEditingController();
   dynamic itemCategory = "";
-
+  File? _image;
   List<String> dropdownList = <String>[
     'crops',
     'Fertilizers',
@@ -72,6 +76,7 @@ class _AddDailyUpdateState extends State<AddDailyUpdate> {
                       ],
                     ),
                   ),
+                  profilePicture(context),
                   Padding(
                     padding: EdgeInsets.symmetric(
                       vertical: dynamicHeight(context, .01),
@@ -186,11 +191,12 @@ class _AddDailyUpdateState extends State<AddDailyUpdate> {
                           print(itemName.text + itemPrice.text + itemUnit.text);
                           return;
                         } else {
-                          FirebaseServices.addDailyItemToDB(
+                          DailyUpdateServices.addDailyItemToDB(
                             context,
                             itemName.text,
                             itemPrice.text,
                             itemUnit.text,
+                            _image,
                           );
                         }
                       },
@@ -203,5 +209,38 @@ class _AddDailyUpdateState extends State<AddDailyUpdate> {
         ),
       ),
     );
+  }
+
+  Widget profilePicture(BuildContext context) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: GestureDetector(
+        onTap: openFilePicker,
+        child: CircleAvatar(
+          radius: 50,
+          backgroundColor: myGrey,
+          child: _image != null
+              ? ClipOval(
+                  child: Image.file(
+                    _image!,
+                    fit: BoxFit.cover,
+                    height: 100,
+                    width: 100,
+                  ),
+                )
+              : Icon(
+                  Icons.camera_alt,
+                ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> openFilePicker() async {
+    var image = await pickImageFromGalleryOrCamera(context);
+    if (image == null) return;
+
+    setState(() => _image = image);
+    print('_image: $_image');
   }
 }

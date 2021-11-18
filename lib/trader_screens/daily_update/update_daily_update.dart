@@ -1,5 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_agri/services/dailyupdate_services.dart';
 import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
@@ -157,7 +158,7 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                     children: [
                       button(context, "UPDATE", () {
                         if (_formKey.currentState!.validate()) {
-                          FirebaseServices.updateDailyItemToDB(
+                          DailyUpdateServices.updateDailyItemToDB(
                               context,
                               widget.docsId,
                               itemName.text,

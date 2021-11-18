@@ -137,12 +137,12 @@ class _FarmersState extends State<Farmers> {
                               horizontal: dynamicWidth(context, .04),
                             ),
                             child: farmerCard(
-                              context,
-                              data['userName'],
-                              data['mobileNumber'],
-                              "80,000",
-                              "30,000",
-                            ),
+                                context,
+                                data['userName'],
+                                data['mobileNumber'],
+                                "80,000",
+                                "30,000",
+                                data['image']['url']),
                           ),
                         );
                       },

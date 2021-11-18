@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_agri/services/dailyupdate_services.dart';
 import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/utils/image_piker.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 
@@ -19,7 +23,7 @@ class _AddUpdateState extends State<AddUpdate> {
   final itemPrice = TextEditingController();
   final itemUnit = TextEditingController();
   dynamic itemCategory = "";
-
+  File? _image;
   List<String> dropdownList = <String>[
     'Crops',
     'Fertilizers',
@@ -65,6 +69,7 @@ class _AddUpdateState extends State<AddUpdate> {
                         SizedBox(
                           height: dynamicHeight(context, .02),
                         ),
+                        profilePicture(context),
                         TextFormField(
                           controller: itemName,
                           keyboardType: TextInputType.text,
@@ -126,7 +131,7 @@ class _AddUpdateState extends State<AddUpdate> {
                             hint: "Select Category",
                             onChanged: (value) {
                               setState(
-                                    () {
+                                () {
                                   itemCategory = value;
                                 },
                               );
@@ -144,11 +149,12 @@ class _AddUpdateState extends State<AddUpdate> {
                     children: [
                       button(context, "ADD", () {
                         if (_formKey.currentState!.validate()) {
-                          FirebaseServices.addDailyItemToDB(
+                          DailyUpdateServices.addDailyItemToDB(
                             context,
                             itemName.text,
                             itemPrice.text,
                             itemUnit.text,
+                            _image,
                           );
                         }
                       },
@@ -181,5 +187,38 @@ class _AddUpdateState extends State<AddUpdate> {
         ],
       ),
     );
+  }
+
+  Widget profilePicture(BuildContext context) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: GestureDetector(
+        onTap: openFilePicker,
+        child: CircleAvatar(
+          radius: 50,
+          backgroundColor: myGrey,
+          child: _image != null
+              ? ClipOval(
+                  child: Image.file(
+                    _image!,
+                    fit: BoxFit.cover,
+                    height: 100,
+                    width: 100,
+                  ),
+                )
+              : Icon(
+                  Icons.camera_alt,
+                ),
+        ),
+      ),
+    );
+  }
+
+  Future<void> openFilePicker() async {
+    var image = await pickImageFromGalleryOrCamera(context);
+    if (image == null) return;
+
+    setState(() => _image = image);
+    print('_image: $_image');
   }
 }

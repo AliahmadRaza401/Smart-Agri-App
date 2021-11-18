@@ -292,6 +292,7 @@ class _SignUpPageState extends State<SignUpPage> {
                                   lName.text,
                                   number.text,
                                   cnic.text,
+                                  _image,
                                 );
                                 signUpEmail.clear();
                                 password.clear();

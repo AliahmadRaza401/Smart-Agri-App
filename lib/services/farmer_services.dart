@@ -1,9 +1,13 @@
+// ignore_for_file: avoid_print, prefer_typing_uninitialized_variables
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/trader_screens/farmers/farmers.dart';
 import 'package:smart_agri/utils/app_route.dart';
@@ -14,16 +18,24 @@ class FarmerServices {
   static FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
 // add farmer in DB
-  static addFarmerToDB(BuildContext context, userName, password, firstName,
-      lastName, mobileNumber, cnic, ) async {
+  static addFarmerToDB(
+    BuildContext context,
+    userName,
+    password,
+    firstName,
+    lastName,
+    mobileNumber,
+    cnic,
+    imageFile,
+  ) async {
     AuthProvider authProvider =
         Provider.of<AuthProvider>(context, listen: false);
     User? user = _auth.currentUser;
-
     authProvider.isLoading(true);
 
     try {
       print(firstName);
+      var image = await FirebaseServices.imgeUpload(imageFile, cnic);
       firebaseFirestore.collection("farmers").add({
         'firstName': firstName,
         'lastName': lastName,
@@ -31,8 +43,11 @@ class FarmerServices {
         'mobileNumber': mobileNumber,
         'userName': userName,
         'password': password,
-     
         'traderId': user!.uid,
+        'image': {
+          'name': cnic,
+          'url': image,
+        },
       });
 
       authProvider.isLoading(false);

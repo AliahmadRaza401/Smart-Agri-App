@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_agri/model/user_model.dart';
+import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/trader_screens/authentication/login.dart';
 import 'package:smart_agri/utils/app_route.dart';
@@ -71,7 +72,7 @@ class AuthServices {
 
   // SignUp-----------------------------------------
   static void signUp(BuildContext context, String email, String password,
-      firstName, lastName, mobilenumber, cnic) async {
+      firstName, lastName, mobilenumber, cnic, imageFile) async {
     final _auth = FirebaseAuth.instance;
     AuthProvider _authProvider =
         Provider.of<AuthProvider>(context, listen: false);
@@ -80,14 +81,8 @@ class AuthServices {
       await _auth
           .createUserWithEmailAndPassword(email: email, password: password)
           .then((value) => {
-                Fluttertoast.showToast(
-                  msg: "SignUp Successfully!",
-                  backgroundColor: myGreen,
-                  textColor: myWhite,
-                  gravity: ToastGravity.CENTER,
-                ),
-                postDetailsToFirestore(
-                    context, firstName, lastName, mobilenumber, cnic),
+                postDetailsToFirestore(context, firstName, lastName,
+                    mobilenumber, cnic, imageFile),
                 _authProvider.isLoading(false),
               })
           .catchError((e) {
@@ -132,8 +127,8 @@ class AuthServices {
     }
   }
 
-  static postDetailsToFirestore(
-      BuildContext context, firstName, lastName, mobileNumber, cnic) async {
+  static postDetailsToFirestore(BuildContext context, firstName, lastName,
+      mobileNumber, cnic, imageFile) async {
     // calling our firestore
     // calling our user model
     // sending these values
@@ -151,10 +146,18 @@ class AuthServices {
     userModel.mobileNumber = mobileNumber;
     userModel.cnic = cnic;
 
-    await firebaseFirestore
-        .collection("users")
-        .doc(user.uid)
-        .set(userModel.toMap());
+    var image = await FirebaseServices.imgeUpload(imageFile, cnic);
+    print('image: $image');
+
+    await firebaseFirestore.collection("users").doc(user.uid).set({
+      'uid': user.uid,
+      'email': user.email,
+      'firstName': firstName,
+      'secondName': lastName,
+      'mobileNumber': mobileNumber,
+      'cnic': cnic,
+      'image': {'name': cnic, 'url': image}
+    });
     Fluttertoast.showToast(
       msg: "Account created successfully :) ",
       backgroundColor: myGreen,
