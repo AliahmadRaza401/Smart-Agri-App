@@ -207,7 +207,7 @@ Widget farmerCard(context, userName, number, debit, credit) {
   );
 }
 
-Widget dailyUpdateCard(context, title, date, price, unit) {
+Widget dailyUpdateCard(context, title, date, price, unit, category) {
   return Stack(
     children: [
       Center(
@@ -238,7 +238,7 @@ Widget dailyUpdateCard(context, title, date, price, unit) {
               Row(
                 children: [
                   Text(
-                    title ?? "",
+                    "$title ~ $category",
                     style: TextStyle(
                       color: myBlack,
                       fontSize: dynamicWidth(context, .052),

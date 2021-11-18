@@ -228,6 +228,7 @@ class _HomeState extends State<Home> {
                                           data['date'],
                                           data['itemPrice'],
                                           data['itemUnit'],
+                                          "",
                                         ),
                                       ),
                                     );

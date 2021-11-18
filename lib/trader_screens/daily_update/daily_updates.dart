@@ -6,6 +6,8 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/trader_screens/daily_update/add_daily_update.dart';
 import 'package:smart_agri/trader_screens/daily_update/update_daily_update.dart';
+import 'package:smart_agri/trader_screens/search.dart';
+import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/box_widgets.dart';
@@ -37,6 +39,27 @@ class _DailyUpdatesState extends State<DailyUpdates> {
         iconTheme: const IconThemeData(
           color: myWhite,
         ),
+        actions: [
+          InkWell(
+            onTap: () {
+              AppRoutes.push(
+                context,
+                const SearchPage(
+                  searchType: "DailyUpdate",
+                ),
+              );
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: dynamicWidth(context, .04),
+              ),
+              child: const Icon(
+                Icons.search_rounded,
+                color: myWhite,
+              ),
+            ),
+          )
+        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
@@ -169,6 +192,7 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                                   data['date'],
                                   data['itemPrice'],
                                   data['itemUnit'],
+                                  "",
                                 ),
                               ),
                             ),

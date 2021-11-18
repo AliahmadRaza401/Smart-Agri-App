@@ -9,6 +9,7 @@ import 'package:smart_agri/widgets/box_widgets.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
 
+import '../search.dart';
 import 'farmer_form.dart';
 
 class Farmers extends StatefulWidget {
@@ -41,6 +42,27 @@ class _FarmersState extends State<Farmers> {
         iconTheme: const IconThemeData(
           color: myWhite,
         ),
+        actions: [
+          InkWell(
+            onTap: () {
+              AppRoutes.push(
+                context,
+                const SearchPage(
+                  searchType: "Farmer",
+                ),
+              );
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: dynamicWidth(context, .04),
+              ),
+              child: const Icon(
+                Icons.search_rounded,
+                color: myWhite,
+              ),
+            ),
+          )
+        ],
       ),
       body: Column(
         children: [
