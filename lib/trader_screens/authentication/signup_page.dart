@@ -35,6 +35,19 @@ class _SignUpPageState extends State<SignUpPage> {
   final signUpEmail = TextEditingController();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    signUpEmail.clear();
+    password.clear();
+    cPassword.clear();
+    fName.clear();
+    lName.clear();
+    number.clear();
+    cnic.clear();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var loading = Provider.of<AuthProvider>(context).loading;
 
@@ -294,13 +307,6 @@ class _SignUpPageState extends State<SignUpPage> {
                                   cnic.text,
                                   _image,
                                 );
-                                signUpEmail.clear();
-                                password.clear();
-                                cPassword.clear();
-                                fName.clear();
-                                lName.clear();
-                                number.clear();
-                                cnic.clear();
                               }
                             },
                           ),

@@ -2,7 +2,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -49,9 +48,9 @@ class FirebaseServices {
     static Future<String> imgeUpload(imageFile, name) async {
     var image;
     print('imageFile: $imageFile');
-    FirebaseStorage storage = FirebaseStorage.instance;
-    Reference ref = storage.ref().child(name);
-    UploadTask uploadTask = ref.putFile(imageFile);
+    // FirebaseStorage storage = FirebaseStorage.instance;
+    // Reference ref = storage.ref().child(name);
+    // UploadTask uploadTask = ref.putFile(imageFile);
     await uploadTask.then((res) {
       image = res.ref.getDownloadURL();
       print('image: $image');

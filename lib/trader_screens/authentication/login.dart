@@ -26,6 +26,14 @@ class _LoginPageState extends State<LoginPage> {
   final password = TextEditingController();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    email.clear();
+    password.clear();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var loading = Provider.of<AuthProvider>(context).loading;
     return SafeArea(
@@ -151,8 +159,6 @@ class _LoginPageState extends State<LoginPage> {
                                   email.text,
                                   password.text,
                                 );
-                                email.clear();
-                                password.clear();
                               }
                             },
                           ),
