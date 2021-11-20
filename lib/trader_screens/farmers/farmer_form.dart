@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/services/farmer_services.dart';
@@ -9,6 +8,7 @@ import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/utils/image_piker.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
+import 'package:smart_agri/widgets/essential_widgets.dart';
 import 'package:smart_agri/widgets/form_fields.dart';
 
 final _formKey = GlobalKey<FormState>();
@@ -28,6 +28,7 @@ class FarmerForm extends StatefulWidget {
 
 class _FarmerFormState extends State<FarmerForm> {
   File? _image;
+
   @override
   Widget build(BuildContext context) {
     var loading = Provider.of<AuthProvider>(context).loading;
@@ -240,16 +241,20 @@ class _FarmerFormState extends State<FarmerForm> {
                         if (!_formKey.currentState!.validate()) {
                           return;
                         } else {
-                          FarmerServices.addFarmerToDB(
-                            context,
-                            userName.text,
-                            farmerPassword.text,
-                            farmerFName.text,
-                            farmerLName.text,
-                            farmerNumber.text,
-                            farmerCnic.text,
-                            _image,
-                          );
+                          if (_image != null) {
+                            FarmerServices.addFarmerToDB(
+                              context,
+                              userName.text,
+                              farmerPassword.text,
+                              farmerFName.text,
+                              farmerLName.text,
+                              farmerNumber.text,
+                              farmerCnic.text,
+                              _image,
+                            );
+                          } else {
+                            oopsAlert(context, "Add image");
+                          }
                         }
                       },
                     ),
@@ -280,7 +285,7 @@ class _FarmerFormState extends State<FarmerForm> {
                     width: 100,
                   ),
                 )
-              : Icon(
+              : const Icon(
                   Icons.camera_alt,
                 ),
         ),

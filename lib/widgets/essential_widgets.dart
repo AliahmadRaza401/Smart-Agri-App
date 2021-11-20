@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 
+import 'app_buttons.dart';
 import 'dynamic_size.dart';
 
 Widget rowText(context, text1, page, text2) {
@@ -233,6 +234,47 @@ Widget farmerRecordCardHeading(
           ],
         ),
       ],
+    ),
+  );
+}
+
+Widget oopsAlert(context, message) {
+  return AlertDialog(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(25),
+    ),
+    content: Padding(
+      padding: const EdgeInsets.all(25.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(
+            'OOPS!',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 20,
+              color: myRed,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          SizedBox(height: 30),
+          Text(
+            message,
+            style: TextStyle(fontSize: 18),
+            textAlign: TextAlign.center,
+          ),
+          SizedBox(height: 30),
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.06,
+            width: MediaQuery.of(context).size.width * 0.4,
+            child: NormalButton(
+              buttonText: "OK",
+              onTap: () => Navigator.pop(context),
+            ),
+          )
+        ],
+      ),
     ),
   );
 }

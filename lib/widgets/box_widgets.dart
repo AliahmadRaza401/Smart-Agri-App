@@ -55,6 +55,7 @@ Widget balanceBox(context, title, amount, color) {
 }
 
 Widget farmerCard(context, userName, number, debit, credit, image) {
+  print(image);
   return Center(
     child: Container(
       height: dynamicHeight(context, .14),
@@ -123,17 +124,21 @@ Widget farmerCard(context, userName, number, debit, credit, image) {
                 ),
               ),
               CircleAvatar(
-                  radius: dynamicWidth(context, .06),
-                  backgroundColor: myGreen,
-                  child: image != null
-                      ? Image.network(image)
-                      : CircularProgressIndicator()
-                  //  Icon(
-                  //   Icons.person,
-                  //   size: dynamicWidth(context, .08),
-                  //   color: myWhite,
-                  // ),
-                  ),
+                radius: dynamicWidth(context, .06),
+                backgroundColor: myGreen,
+                child: image != null
+                    ? ClipOval(
+                        child: Image.network(
+                          image,
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                    : Icon(
+                        Icons.person,
+                        size: dynamicWidth(context, .08),
+                        color: myWhite,
+                      ),
+              ),
               SizedBox(
                 width: dynamicWidth(context, .26),
                 height: dynamicHeight(context, .06),
