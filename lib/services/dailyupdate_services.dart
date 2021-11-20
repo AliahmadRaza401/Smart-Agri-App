@@ -27,7 +27,7 @@ class DailyUpdateServices {
 
     try {
       print(name);
-      var image = await FirebaseServices.imgeUpload(imageFile, now.toString());
+      var image = await FirebaseServices.imageUpload(imageFile, now.toString());
       print('image: $image');
       firebaseFirestore.collection("dailyUpdate").add({
         'itemName': name,

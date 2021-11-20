@@ -35,7 +35,7 @@ class FarmerServices {
 
     try {
       print(firstName);
-      var image = await FirebaseServices.imgeUpload(imageFile, cnic);
+      var image = await FirebaseServices.imageUpload(imageFile, cnic);
       firebaseFirestore.collection("farmers").add({
         'firstName': firstName,
         'lastName': lastName,

@@ -146,7 +146,7 @@ class AuthServices {
     userModel.mobileNumber = mobileNumber;
     userModel.cnic = cnic;
 
-    var image = await FirebaseServices.imgeUpload(imageFile, cnic);
+    var image = await FirebaseServices.imageUpload(imageFile, cnic);
     print('image: $image');
 
     await firebaseFirestore.collection("users").doc(user.uid).set({
