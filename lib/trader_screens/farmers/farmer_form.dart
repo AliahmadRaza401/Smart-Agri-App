@@ -164,7 +164,7 @@ class _FarmerFormState extends State<FarmerForm> {
                             TextInputType.phone,
                             auth: false,
                             function: (value) {
-                              if (value!.isEmpty || value.length < 11) {
+                              if (value!.isEmpty || value.length < 10) {
                                 return 'Please enter a valid Number';
                               }
                               return null;

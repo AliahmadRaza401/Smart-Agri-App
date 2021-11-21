@@ -4,15 +4,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:smart_agri/services/firebase_services.dart';
-import 'package:smart_agri/trader_screens/daily_update/add_daily_update.dart';
 import 'package:smart_agri/trader_screens/daily_update/update_daily_update.dart';
-import 'package:smart_agri/trader_screens/search.dart';
-import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/box_widgets.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
+import 'package:smart_agri/widgets/form_fields.dart';
 
 class DailyUpdates extends StatefulWidget {
   const DailyUpdates({Key? key}) : super(key: key);
@@ -23,6 +21,9 @@ class DailyUpdates extends StatefulWidget {
 
 class _DailyUpdatesState extends State<DailyUpdates> {
   User? user = FirebaseAuth.instance.currentUser;
+
+  final searchQuery = TextEditingController();
+  String stream = "";
 
   @override
   Widget build(BuildContext context) {
@@ -39,33 +40,12 @@ class _DailyUpdatesState extends State<DailyUpdates> {
         iconTheme: const IconThemeData(
           color: myWhite,
         ),
-        actions: [
-          InkWell(
-            onTap: () {
-              AppRoutes.push(
-                context,
-                const SearchPage(
-                  searchType: "DailyUpdate",
-                ),
-              );
-            },
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: dynamicWidth(context, .04),
-              ),
-              child: const Icon(
-                Icons.search_rounded,
-                color: myWhite,
-              ),
-            ),
-          )
-        ],
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () {
           showDialog(
             context: context,
-            builder: (context) => AddUpdate(),
+            builder: (context) => const AddUpdate(),
           );
         },
         backgroundColor: myGreen,
@@ -87,8 +67,29 @@ class _DailyUpdatesState extends State<DailyUpdates> {
       body: Column(
         children: [
           Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: dynamicHeight(context, .02),
+            ),
+            child: SizedBox(
+              width: dynamicWidth(context, .9),
+              child: inputTextField(
+                context,
+                "Search",
+                searchQuery,
+                TextInputType.name,
+                auth: false,
+                inputAction: TextInputAction.done,
+                submitFunction: (value) {
+                  setState(() {
+                    stream = value;
+                  });
+                },
+              ),
+            ),
+          ),
+          Padding(
             padding: EdgeInsets.only(
-              top: dynamicHeight(context, .04),
+              top: dynamicHeight(context, .02),
               bottom: dynamicHeight(context, .02),
             ),
             child: Row(
@@ -107,10 +108,15 @@ class _DailyUpdatesState extends State<DailyUpdates> {
           ),
           Expanded(
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: FirebaseFirestore.instance
-                  .collection('dailyUpdate')
-                  .where("traderId", isEqualTo: user!.uid)
-                  .snapshots(),
+              stream: stream != ""
+                  ? FirebaseFirestore.instance
+                      .collection('dailyUpdate')
+                      .where("itemName", isEqualTo: stream.toLowerCase())
+                      .snapshots()
+                  : FirebaseFirestore.instance
+                      .collection('dailyUpdate')
+                      .where("traderId", isEqualTo: user!.uid)
+                      .snapshots(),
               builder: (_, snapshot) {
                 if (snapshot.hasError) {
                   return const Text('Oops! Something went wrong');
@@ -127,7 +133,7 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                     return noDataError(
                       context,
                       "assets/dailyUpdatesCartoon.png",
-                      const AddDailyUpdate(),
+                      const AddUpdate(),
                       dynamicHeight(context, .34),
                     );
                   } else {
@@ -139,62 +145,60 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                         itemCount: docs.length,
                         itemBuilder: (context, i) {
                           final data = docs[i].data();
-                          return Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: dynamicHeight(context, .006),
-                            ),
-                            child: Slidable(
-                              endActionPane: ActionPane(
-                                motion: const ScrollMotion(),
-                                children: [
-                                  SlidableAction(
-                                    flex: 2,
-                                    onPressed: (BuildContext context) {
-                                      var id =
-                                          snapshot.data!.docs[i].reference.id;
-                                      showDialog(
-                                        context: context,
-                                        builder: (context) => UpdateDailyUpdate(
-                                          itemName: data['itemName'],
-                                          price: data['itemPrice'],
-                                          unit: data['itemUnit'],
-                                          docsId: id,
-                                          category: "category",
-                                        ),
-                                      );
-                                    },
-                                    backgroundColor: myLiteGreen,
-                                    foregroundColor: myWhite,
-                                    icon: Icons.edit,
-                                    label: 'Edit',
-                                  ),
-                                  SlidableAction(
-                                    flex: 2,
-                                    onPressed: (BuildContext context) {
-                                      var id =
-                                          snapshot.data!.docs[i].reference.id;
-                                      FirebaseServices.deleteRecord(
-                                        context,
-                                        'dailyUpdate',
-                                        id,
-                                      );
-                                    },
-                                    backgroundColor: myRed,
-                                    foregroundColor: myWhite,
-                                    icon: Icons.delete,
-                                    label: 'Delete',
-                                  ),
-                                ],
-                              ),
-                              child: Center(
-                                child: dailyUpdateCard(
-                                  context,
-                                  data['itemName'],
-                                  data['date'],
-                                  data['itemPrice'],
-                                  data['itemUnit'],
-                                  "",
+                          return Slidable(
+                            endActionPane: ActionPane(
+                              motion: const ScrollMotion(),
+                              children: [
+                                SlidableAction(
+                                  onPressed: (BuildContext context) {
+                                    var id =
+                                        snapshot.data!.docs[i].reference.id;
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => UpdateDailyUpdate(
+                                        itemName: data['itemName'],
+                                        price: data['itemPrice'],
+                                        unit: data['itemUnit'],
+                                        docsId: id,
+                                        category: "category",
+                                      ),
+                                    );
+                                  },
+                                  backgroundColor: myLiteGreen,
+                                  foregroundColor: myWhite,
+                                  icon: Icons.edit,
+                                  label: 'Edit',
                                 ),
+                                SlidableAction(
+                                  onPressed: (BuildContext context) {
+                                    var id =
+                                        snapshot.data!.docs[i].reference.id;
+                                    FirebaseServices.deleteRecord(
+                                      context,
+                                      'dailyUpdate',
+                                      id,
+                                    );
+                                  },
+                                  backgroundColor: myRed,
+                                  foregroundColor: myWhite,
+                                  icon: Icons.delete,
+                                  label: 'Delete',
+                                ),
+                              ],
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: dynamicHeight(context, .012),
+                                horizontal: dynamicWidth(context, .04),
+                              ),
+                              child: dailyUpdateCard(
+                                context,
+                                data['itemName'],
+                                data['date'],
+                                data['itemPrice'],
+                                data['itemUnit'],
+                                "category",
+                                data['image']['url'],
                               ),
                             ),
                           );

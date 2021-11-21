@@ -3,13 +3,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_agri/model/user_model.dart';
-import 'package:smart_agri/trader_screens/daily_update/add_daily_update.dart';
 import 'package:smart_agri/trader_screens/daily_update/daily_updates.dart';
 import 'package:smart_agri/trader_screens/farmers/farmer_details.dart';
 import 'package:smart_agri/trader_screens/farmers/farmer_form.dart';
 import 'package:smart_agri/trader_screens/farmers/farmers.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/box_widgets.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
@@ -203,7 +203,7 @@ class _HomeState extends State<Home> {
                               return noDataError(
                                 context,
                                 "assets/dailyUpdatesCartoon.png",
-                                const AddDailyUpdate(),
+                                const AddUpdate(),
                                 dynamicHeight(context, .18),
                               );
                             } else {
@@ -219,17 +219,17 @@ class _HomeState extends State<Home> {
                                     final data = docs[i].data();
                                     return Padding(
                                       padding: EdgeInsets.symmetric(
-                                        vertical: dynamicHeight(context, .006),
+                                        vertical: dynamicHeight(context, .01),
+                                        horizontal: dynamicWidth(context, .04),
                                       ),
-                                      child: Center(
-                                        child: dailyUpdateCard(
-                                          context,
-                                          data['itemName'],
-                                          data['date'],
-                                          data['itemPrice'],
-                                          data['itemUnit'],
-                                          "",
-                                        ),
+                                      child: dailyUpdateCard(
+                                        context,
+                                        data['itemName'],
+                                        data['date'],
+                                        data['itemPrice'],
+                                        data['itemUnit'],
+                                        "category",
+                                        data['image']['url'],
                                       ),
                                     );
                                   },

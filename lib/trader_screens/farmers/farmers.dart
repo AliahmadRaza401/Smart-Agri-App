@@ -8,8 +8,8 @@ import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/box_widgets.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
+import 'package:smart_agri/widgets/form_fields.dart';
 
-import '../search.dart';
 import 'farmer_form.dart';
 
 class Farmers extends StatefulWidget {
@@ -21,6 +21,9 @@ class Farmers extends StatefulWidget {
 
 class _FarmersState extends State<Farmers> {
   User? user = FirebaseAuth.instance.currentUser;
+
+  final searchQuery = TextEditingController();
+  String stream = "";
 
   @override
   void initState() {
@@ -42,33 +45,33 @@ class _FarmersState extends State<Farmers> {
         iconTheme: const IconThemeData(
           color: myWhite,
         ),
-        actions: [
-          InkWell(
-            onTap: () {
-              AppRoutes.push(
-                context,
-                const SearchPage(
-                  searchType: "Farmer",
-                ),
-              );
-            },
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: dynamicWidth(context, .04),
-              ),
-              child: const Icon(
-                Icons.search_rounded,
-                color: myWhite,
-              ),
-            ),
-          )
-        ],
       ),
       body: Column(
         children: [
           Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: dynamicHeight(context, .02),
+            ),
+            child: SizedBox(
+              width: dynamicWidth(context, .9),
+              child: inputTextField(
+                context,
+                "Search",
+                searchQuery,
+                TextInputType.name,
+                auth: false,
+                inputAction: TextInputAction.done,
+                submitFunction: (value) {
+                  setState(() {
+                    stream = value;
+                  });
+                },
+              ),
+            ),
+          ),
+          Padding(
             padding: EdgeInsets.only(
-              top: dynamicHeight(context, .04),
+              top: dynamicHeight(context, .02),
               bottom: dynamicHeight(context, .02),
             ),
             child: Row(
@@ -87,10 +90,15 @@ class _FarmersState extends State<Farmers> {
           ),
           Flexible(
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
-              stream: FirebaseFirestore.instance
-                  .collection('farmers')
-                  .where("traderId", isEqualTo: user!.uid)
-                  .snapshots(),
+              stream: stream != ""
+                  ? FirebaseFirestore.instance
+                      .collection('farmers')
+                      .where("firstName", isEqualTo: stream.toLowerCase())
+                      .snapshots()
+                  : FirebaseFirestore.instance
+                      .collection('farmers')
+                      .where("traderId", isEqualTo: user!.uid)
+                      .snapshots(),
               builder: (_, snapshot) {
                 if (snapshot.hasError) {
                   return const Text('Oops! Something went wrong');

@@ -4,16 +4,22 @@ import 'package:smart_agri/utils/config.dart';
 import 'dynamic_size.dart';
 
 Widget inputTextField(context, label, myController, inputType,
-    {function, function2, password = false, auth = true}) {
+    {function,
+    function2,
+    password = false,
+    auth = true,
+    inputAction = "",
+    submitFunction = ""}) {
   return TextFormField(
     autovalidateMode: AutovalidateMode.onUserInteraction,
     validator: (function == "") ? () {} : function,
     controller: myController,
-    textInputAction: TextInputAction.next,
+    textInputAction: inputAction == "" ? TextInputAction.next : inputAction,
     keyboardType: inputType,
     obscureText: password == true ? obscureText : false,
     cursorColor: myGreen,
     cursorWidth: 2.0,
+    onFieldSubmitted: submitFunction == "" ? () {} : submitFunction,
     cursorHeight: dynamicHeight(context, .034),
     style: TextStyle(
       color: auth == true ? myWhite : myGreen,

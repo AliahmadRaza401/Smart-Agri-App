@@ -1,9 +1,7 @@
 import 'dart:io';
 
-import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_agri/services/dailyupdate_services.dart';
-import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/utils/image_piker.dart';
@@ -22,7 +20,7 @@ class _AddUpdateState extends State<AddUpdate> {
   final itemName = TextEditingController();
   final itemPrice = TextEditingController();
   final itemUnit = TextEditingController();
-  dynamic itemCategory = "";
+  String itemCategory = "";
   File? _image;
   List<String> dropdownList = <String>[
     'Crops',
@@ -122,20 +120,44 @@ class _AddUpdateState extends State<AddUpdate> {
                           padding: EdgeInsets.symmetric(
                             vertical: dynamicHeight(context, .01),
                           ),
-                          child: DropdownSearch(
-                            mode: Mode.DIALOG,
-                            showSearchBox: true,
-                            showClearButton: true,
-                            items: dropdownList,
-                            label: "Category",
-                            hint: "Select Category",
-                            onChanged: (value) {
-                              setState(
-                                () {
-                                  itemCategory = value;
+                          child: Container(
+                            width: dynamicWidth(context, .9),
+                            decoration: const BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                  width: .4,
+                                  color: myBlack,
+                                ),
+                              ),
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton<String>(
+                                // value: itemCategory,
+                                iconSize: 24,
+                                elevation: 9,
+                                onChanged: (String? value) async {
+                                  setState(
+                                    () {
+                                      itemCategory = value.toString();
+                                    },
+                                  );
                                 },
-                              );
-                            },
+                                hint: const Text("Select Category"),
+                                style: TextStyle(
+                                  color: myGreen,
+                                  fontSize: dynamicWidth(context, .04),
+                                ),
+                                // borderRadius: BorderRadius.circular(15),
+                                items: dropdownList
+                                    .map<DropdownMenuItem<String>>(
+                                        (String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
                           ),
                         ),
                         SizedBox(

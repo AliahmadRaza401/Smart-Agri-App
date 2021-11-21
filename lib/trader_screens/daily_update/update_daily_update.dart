@@ -161,7 +161,7 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                           DailyUpdateServices.updateDailyItemToDB(
                               context,
                               widget.docsId,
-                              itemName.text,
+                              itemName.text.toLowerCase(),
                               itemPrice.text,
                               itemUnit.text);
                         }
