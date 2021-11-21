@@ -39,231 +39,174 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: myGrey,
-      appBar: AppBar(
-        title: const Text(
-          "Profile",
-          style: TextStyle(
-            color: myWhite,
-          ),
-        ),
-        centerTitle: true,
-        iconTheme: const IconThemeData(
-          color: myWhite,
-        ),
-      ),
-      body: Center(
-        child: Column(
+      // backgroundColor: myGrey,
+      body: SizedBox(
+        width: dynamicWidth(context, 1),
+        height: dynamicHeight(context, 1),
+        child: Stack(
           children: [
-            Padding(
-              padding: EdgeInsets.only(
-                top: dynamicHeight(context, .06),
+            SizedBox(
+              width: dynamicWidth(context, 1),
+              height: dynamicHeight(context, .3),
+              child: Image.asset(
+                "assets/profile_bg.jpg",
+                fit: BoxFit.cover,
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircleAvatar(
-                    radius: dynamicWidth(context, .18),
-                    backgroundColor: myGreen,
-                    child: Icon(
-                      Icons.person,
+            ),
+            Positioned(
+              bottom: 0.0,
+              child: Container(
+                width: dynamicWidth(context, 1),
+                height: dynamicHeight(context, .7),
+                decoration: BoxDecoration(
+                  color: myGrey,
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(
+                      dynamicWidth(context, .1),
+                    ),
+                    topLeft: Radius.circular(
+                      dynamicWidth(context, .1),
+                    ),
+                  ),
+                ),
+                padding: EdgeInsets.all(
+                  dynamicWidth(context, .06),
+                ),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(
+                        top: dynamicHeight(context, .08),
+                        bottom: dynamicHeight(context, .006),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            loggedInUser.firstName.toString() +
+                                " " +
+                                loggedInUser.secondName.toString(),
+                            style: TextStyle(
+                              color: myGreen,
+                              fontWeight: FontWeight.bold,
+                              fontSize: dynamicWidth(context, .056),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: dynamicHeight(context, .004),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            loggedInUser.mobileNumber ?? "Mobile Number",
+                            style: TextStyle(
+                              color: myGreen,
+                              fontSize: dynamicWidth(context, .048),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: dynamicHeight(context, .004),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            loggedInUser.email ?? "Email",
+                            style: TextStyle(
+                              color: myGreen,
+                              fontSize: dynamicWidth(context, .048),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: dynamicHeight(context, .004),
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            loggedInUser.cnic ?? "CNIC",
+                            style: TextStyle(
+                              color: myGreen,
+                              fontSize: dynamicWidth(context, .048),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(
+                      height: dynamicHeight(context, .04),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: dynamicHeight(context, .01),
+                      ),
+                      child: profileButton(
+                        context,
+                        Icons.edit,
+                        "Edit Profile",
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: dynamicHeight(context, .01),
+                      ),
+                      child: profileButton(
+                        context,
+                        Icons.notifications,
+                        "Notifications",
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: dynamicHeight(context, .01),
+                      ),
+                      child: profileButton(context, Icons.logout, "LogOut",
+                          function: () {
+                        AuthServices.logOut(context);
+                      }),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: dynamicHeight(context, .14),
+                  ),
+                  child: Container(
+                    width: dynamicWidth(context, .32),
+                    height: dynamicHeight(context, .16),
+                    decoration: BoxDecoration(
                       color: myWhite,
-                      size: dynamicWidth(context, .26),
+                      borderRadius: BorderRadius.circular(
+                        dynamicWidth(context, .06),
+                      ),
+                      image: const DecorationImage(
+                        image: NetworkImage(
+                          "",
+                        ),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: dynamicHeight(context, .02),
-                horizontal: dynamicWidth(context, .06),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    loggedInUser.firstName.toString() +
-                        " " +
-                        loggedInUser.secondName.toString(),
-                    style: TextStyle(
-                      color: myGreen,
-                      fontWeight: FontWeight.bold,
-                      fontSize: dynamicWidth(context, .06),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: dynamicHeight(context, .01),
-                horizontal: dynamicWidth(context, .06),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "First Name",
-                        style: TextStyle(
-                          color: myGreen,
-                          fontWeight: FontWeight.bold,
-                          fontSize: dynamicWidth(context, .056),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: dynamicHeight(context, .01),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        loggedInUser.firstName ?? 'First Name',
-                        style: TextStyle(
-                          color: myBlack,
-                          fontSize: dynamicWidth(context, .048),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: dynamicHeight(context, .014),
-                horizontal: dynamicWidth(context, .06),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Last Name",
-                        style: TextStyle(
-                          color: myGreen,
-                          fontWeight: FontWeight.bold,
-                          fontSize: dynamicWidth(context, .056),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: dynamicHeight(context, .01),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        loggedInUser.secondName ?? "Last Name",
-                        style: TextStyle(
-                          color: myBlack,
-                          fontSize: dynamicWidth(context, .048),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: dynamicHeight(context, .01),
-                horizontal: dynamicWidth(context, .06),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "Mobile Number",
-                        style: TextStyle(
-                          color: myGreen,
-                          fontWeight: FontWeight.bold,
-                          fontSize: dynamicWidth(context, .056),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: dynamicHeight(context, .01),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        loggedInUser.mobileNumber ?? "Mobile Number",
-                        style: TextStyle(
-                          color: myBlack,
-                          fontSize: dynamicWidth(context, .048),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: dynamicHeight(context, .01),
-                horizontal: dynamicWidth(context, .06),
-              ),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        "CNIC",
-                        style: TextStyle(
-                          color: myGreen,
-                          fontWeight: FontWeight.bold,
-                          fontSize: dynamicWidth(context, .056),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: dynamicHeight(context, .01),
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        loggedInUser.cnic ?? "CNIC",
-                        style: TextStyle(
-                          color: myBlack,
-                          fontSize: dynamicWidth(context, .048),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: dynamicHeight(context, .04),
-                horizontal: dynamicWidth(context, .06),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  button(
-                    context,
-                    "Log Out",
-                    () {
-                      AuthServices.logOut(context);
-                    },
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
           ],
         ),

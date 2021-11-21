@@ -79,3 +79,42 @@ Widget redButton(
     ),
   );
 }
+
+Widget profileButton(context, icon, text, {function = ""}) {
+  return InkWell(
+    onTap: function == "" ? () {} : function,
+    child: Container(
+      width: dynamicWidth(context, .8),
+      height: dynamicHeight(context, .066),
+      decoration: BoxDecoration(
+        color: myWhite,
+        borderRadius: BorderRadius.circular(
+          dynamicWidth(context, .03),
+        ),
+      ),
+      padding: EdgeInsets.symmetric(
+        horizontal: dynamicWidth(context, .04),
+        vertical: dynamicWidth(context, .02),
+      ),
+      child: Row(
+        children: [
+          Icon(
+            icon,
+            color: myBlack,
+          ),
+          SizedBox(
+            width: dynamicWidth(context, .06),
+          ),
+          Text(
+            text,
+            style: TextStyle(
+              color: myBlack,
+              fontWeight: FontWeight.w500,
+              fontSize: dynamicWidth(context, .048),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
