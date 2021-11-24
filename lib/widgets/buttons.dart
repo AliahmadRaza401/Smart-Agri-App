@@ -6,7 +6,7 @@ import 'dynamic_size.dart';
 Widget button(context, text, function,
     {width = "", height = "", fontSize = "", color = "", btnColor = ""}) {
   return InkWell(
-    onTap: function,
+    onTap: function == "" ? () {} : function,
     child: Container(
       width: width == "" ? dynamicWidth(context, .8) : width,
       height: height == "" ? dynamicHeight(context, .064) : height,

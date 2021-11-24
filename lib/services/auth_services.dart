@@ -32,7 +32,10 @@ class AuthServices {
                   textColor: myWhite,
                   gravity: ToastGravity.CENTER,
                 ),
-                AppRoutes.push(context, const BottomNav()),
+                AppRoutes.push(
+                  context,
+                  const BottomNav(),
+                ),
                 userLoggedIn(true),
                 _authProvider.isLoading(false),
               });

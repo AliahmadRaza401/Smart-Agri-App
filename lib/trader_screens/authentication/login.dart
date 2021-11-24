@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,10 +26,25 @@ class _LoginPageState extends State<LoginPage> {
   final email = TextEditingController();
   final password = TextEditingController();
 
+  List<dynamic> farmerData = [];
+
+  getData() async {
+    FirebaseFirestore.instance
+        .collection("farmers")
+        .get()
+        .then((querySnapshot) {
+      for (var result in querySnapshot.docs) {
+        print(result.data());
+      }
+    });
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    getData();
+    print(farmerData);
     email.clear();
     password.clear();
   }
@@ -51,7 +67,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Container(
           width: dynamicWidth(context, 1),
           height: dynamicHeight(context, 1),
-          color: myBlack.withOpacity(0.6),
+          color: myBlack.withOpacity(0.7),
           child: Scaffold(
             backgroundColor: noColor,
             appBar: AppBar(
@@ -72,6 +88,7 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(
+                            top: dynamicHeight(context, .04),
                             bottom: dynamicHeight(context, .1),
                           ),
                           child: Row(
@@ -163,22 +180,24 @@ class _LoginPageState extends State<LoginPage> {
                             },
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            richTextWidget(
-                              context,
-                              "Don't have an account?  ",
-                              "Sign Up",
-                              dynamicWidth(context, .04),
-                              dynamicWidth(context, .05),
-                              const SignUpPage(),
-                              myWhite,
-                              myGreen,
-                              true,
-                            ),
-                          ],
-                        ),
+                        widget.name == "trader"
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  richTextWidget(
+                                    context,
+                                    "Don't have an account?  ",
+                                    "Sign Up",
+                                    dynamicWidth(context, .04),
+                                    dynamicWidth(context, .05),
+                                    const SignUpPage(),
+                                    myWhite,
+                                    myGreen,
+                                    true,
+                                  ),
+                                ],
+                              )
+                            : const SizedBox(),
                       ],
                     ),
                   ),

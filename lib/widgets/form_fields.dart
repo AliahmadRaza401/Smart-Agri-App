@@ -19,7 +19,7 @@ Widget inputTextField(context, label, myController, inputType,
     obscureText: password == true ? obscureText : false,
     cursorColor: myGreen,
     cursorWidth: 2.0,
-    onFieldSubmitted: submitFunction == "" ? () {} : submitFunction,
+    onFieldSubmitted: submitFunction == "" ? (value) {} : submitFunction,
     cursorHeight: dynamicHeight(context, .034),
     style: TextStyle(
       color: auth == true ? myWhite : myGreen,
