@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class FarmerHomeScreen extends StatefulWidget {
-  const FarmerHomeScreen({Key? key}) : super(key: key);
+  final dynamic farmerId;
+
+  const FarmerHomeScreen({Key? key, this.farmerId}) : super(key: key);
 
   @override
   _FarmerHomeScreenState createState() => _FarmerHomeScreenState();
@@ -10,9 +12,14 @@ class FarmerHomeScreen extends StatefulWidget {
 class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: Text("Ali You are in Farmer Home Screen. Ok?"),
+        child: Text(
+          "Ali You are in Farmer Home Screen. Ok?\nFarmer Id = " +
+              widget.farmerId.toString() +
+              "\nNow Use this id to get all data of that document. ok?"
+                  "\nAsh Kro!!!",
+        ),
       ),
     );
   }

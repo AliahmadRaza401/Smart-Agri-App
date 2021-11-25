@@ -30,48 +30,44 @@ class _LoginPageState extends State<LoginPage> {
   final password = TextEditingController();
   final fUsername = TextEditingController();
 
-  List<dynamic> farmerData = [];
-
-  getData() async {
+  loginCheck() async {
+    dynamic check, id;
     await FirebaseFirestore.instance
         .collection("farmers")
         .get()
         .then((querySnapshot) {
       for (var result in querySnapshot.docs) {
-        farmerData.add(result.data());
+        if (result.data()["userName"].toString() == fUsername.text.toString() &&
+            result.data()["password"].toString() == password.text.toString()) {
+          id = result.reference.id;
+          check = true;
+          break;
+        } else {
+          check = false;
+        }
+      }
+      if (check == true) {
+        AppRoutes.push(
+          context,
+          FarmerHomeScreen(
+            farmerId: id,
+          ),
+        );
+      } else if (check == false) {
+        Fluttertoast.showToast(
+          msg: "Invalid UserName or Password\nTry Again!!",
+          backgroundColor: myGreen,
+          textColor: myWhite,
+          gravity: ToastGravity.CENTER,
+        );
       }
     });
-  }
-
-  loginCheck() {
-    dynamic check;
-    for (int i = 0; i < farmerData.length; i++) {
-      if (farmerData[i]["userName"].toString() == fUsername.text.toString() &&
-          farmerData[i]["password"].toString() == password.text.toString()) {
-        check = true;
-        break;
-      } else {
-        check = false;
-      }
-    }
-    if (check == true) {
-      AppRoutes.push(context, const FarmerHomeScreen());
-    } else if (check == false) {
-      print(farmerData[0].toString());
-      Fluttertoast.showToast(
-        msg: "Invalid UserName or Password\nTry Again!!",
-        backgroundColor: myGreen,
-        textColor: myWhite,
-        gravity: ToastGravity.CENTER,
-      );
-    }
   }
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getData();
 
     email.clear();
     password.clear();
