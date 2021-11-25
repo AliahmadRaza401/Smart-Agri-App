@@ -10,6 +10,10 @@ class FarmerHomeScreen extends StatefulWidget {
 class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return const Scaffold(
+      body: Center(
+        child: Text("Ali You are in Farmer Home Screen. Ok?"),
+      ),
+    );
   }
 }

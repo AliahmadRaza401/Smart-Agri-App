@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_agri/farmer_screens/farmer_home_screen.dart';
 import 'package:smart_agri/services/auth_services.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/trader_screens/authentication/signup_page.dart';
+import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
@@ -25,18 +28,43 @@ class _LoginPageState extends State<LoginPage> {
 
   final email = TextEditingController();
   final password = TextEditingController();
+  final fUsername = TextEditingController();
 
   List<dynamic> farmerData = [];
 
   getData() async {
-    FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection("farmers")
         .get()
         .then((querySnapshot) {
       for (var result in querySnapshot.docs) {
-        print(result.data());
+        farmerData.add(result.data());
       }
     });
+  }
+
+  loginCheck() {
+    dynamic check;
+    for (int i = 0; i < farmerData.length; i++) {
+      if (farmerData[i]["userName"].toString() == fUsername.text.toString() &&
+          farmerData[i]["password"].toString() == password.text.toString()) {
+        check = true;
+        break;
+      } else {
+        check = false;
+      }
+    }
+    if (check == true) {
+      AppRoutes.push(context, const FarmerHomeScreen());
+    } else if (check == false) {
+      print(farmerData[0].toString());
+      Fluttertoast.showToast(
+        msg: "Invalid UserName or Password\nTry Again!!",
+        backgroundColor: myGreen,
+        textColor: myWhite,
+        gravity: ToastGravity.CENTER,
+      );
+    }
   }
 
   @override
@@ -44,7 +72,7 @@ class _LoginPageState extends State<LoginPage> {
     // TODO: implement initState
     super.initState();
     getData();
-    print(farmerData);
+
     email.clear();
     password.clear();
   }
@@ -115,16 +143,28 @@ class _LoginPageState extends State<LoginPage> {
                               Flexible(
                                 child: inputTextField(
                                   context,
-                                  "Email",
-                                  email,
-                                  TextInputType.emailAddress,
-                                  function: (value) {
-                                    if (EmailValidator.validate(value)) {
-                                    } else {
-                                      return "Enter Valid Email";
-                                    }
-                                    return null;
-                                  },
+                                  widget.name == "trader"
+                                      ? "Email"
+                                      : "UserName",
+                                  widget.name == "trader" ? email : fUsername,
+                                  widget.name == "trader"
+                                      ? TextInputType.emailAddress
+                                      : TextInputType.name,
+                                  function: widget.name == "trader"
+                                      ? (value) {
+                                          if (EmailValidator.validate(value)) {
+                                          } else {
+                                            return "Enter Valid Email";
+                                          }
+                                          return null;
+                                        }
+                                      : (value) {
+                                          if (value.toString().isNotEmpty) {
+                                          } else {
+                                            return "Enter Valid UserName";
+                                          }
+                                          return null;
+                                        },
                                 ),
                               ),
                             ],
@@ -171,11 +211,13 @@ class _LoginPageState extends State<LoginPage> {
                               if (!_formKey.currentState!.validate()) {
                                 return;
                               } else {
-                                AuthServices.signIn(
-                                  context,
-                                  email.text,
-                                  password.text,
-                                );
+                                widget.name == "trader"
+                                    ? AuthServices.signIn(
+                                        context,
+                                        email.text,
+                                        password.text,
+                                      )
+                                    : loginCheck();
                               }
                             },
                           ),
