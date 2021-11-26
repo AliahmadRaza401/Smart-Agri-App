@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/services/farmer_services.dart';
@@ -29,10 +30,13 @@ class FarmerForm extends StatefulWidget {
 class _FarmerFormState extends State<FarmerForm> {
   File? _image;
 
+
+
+
+
   @override
   Widget build(BuildContext context) {
     var loading = Provider.of<AuthProvider>(context).loading;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(

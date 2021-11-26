@@ -1,3 +1,5 @@
+// ignore_for_file: unused_local_variable, avoid_function_literals_in_foreach_calls
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -29,6 +31,39 @@ class _FarmersState extends State<Farmers> {
   void initState() {
     super.initState();
   }
+
+  // addAmount(farmerId) async {
+  //   print("hy");
+  //   QuerySnapshot snap = await FirebaseFirestore.instance
+  //       .collection('farmers')
+  //       .doc(farmerId)
+  //       .collection('balance')
+  //       .get();
+
+  //   for (int i = 0; i < snap.docs.length; i++) {
+  //     var a = snap.docs[i].data();
+  //     var b = a['name'] == null ? "sdf" : "asdf";
+  //     print('a: ${a['name'] ?? "vnnbm"}');
+  //   }
+
+  //   // snap.docs.forEach((document) {
+  //   //   print(document.data());
+
+  //   //   var credit = 0;
+  //   //   var dabit = 0;
+  //   //   if (document[0].data()!['type'] == 'credit') {
+  //   //     print("credit type DAta");
+  //   //     setState(() {
+  //   //       credit = document.data()['credit'];
+  //   //     });
+  //   //   } else {
+  //   //       print("dabit type DAta");
+  //   //     setState(() {
+  //   //       credit = document.data()!['dabit'];
+  //   //     });
+  //   //   }
+  //   // });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -124,6 +159,8 @@ class _FarmersState extends State<Farmers> {
                       itemCount: docs.length,
                       itemBuilder: (_, i) {
                         final data = docs[i].data();
+                        print('docs[i]: ${docs[i].id}');
+                        // addAmount(docs[i].id);
                         return InkWell(
                           onTap: () {
                             AppRoutes.push(
