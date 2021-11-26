@@ -3,7 +3,6 @@ import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_agri/farmer_screens/farmer_home_screen.dart';
 import 'package:smart_agri/services/auth_services.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/trader_screens/authentication/signup_page.dart';
@@ -11,6 +10,7 @@ import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
+import 'package:smart_agri/widgets/farmer_bottom_nav.dart';
 import 'package:smart_agri/widgets/form_fields.dart';
 import 'package:smart_agri/widgets/rich_text.dart';
 
@@ -49,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
       if (check == true) {
         AppRoutes.push(
           context,
-          FarmerHomeScreen(
+          FarmerBottomNav(
             farmerId: id,
           ),
         );

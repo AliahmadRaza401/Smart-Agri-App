@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
-import 'package:smart_agri/trader_screens/daily_update/daily_updates.dart';
-import 'package:smart_agri/trader_screens/farmers/farmers.dart';
-import 'package:smart_agri/trader_screens/home/home.dart';
+import 'package:smart_agri/farmer_screens/farmer_home_screen.dart';
 import 'package:smart_agri/trader_screens/notifications_screen/notification_page.dart';
 import 'package:smart_agri/trader_screens/profile/profile.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 
-class BottomNav extends StatefulWidget {
-  const BottomNav({Key? key}) : super(key: key);
+class FarmerBottomNav extends StatefulWidget {
+  final dynamic farmerId;
+
+  const FarmerBottomNav({Key? key, this.farmerId}) : super(key: key);
 
   @override
-  _BottomNavState createState() => _BottomNavState();
+  _FarmerBottomNavState createState() => _FarmerBottomNavState();
 }
 
-class _BottomNavState extends State<BottomNav> {
+class _FarmerBottomNavState extends State<FarmerBottomNav> {
   int currentPage = 0;
 
   @override
@@ -33,26 +33,6 @@ class _BottomNavState extends State<BottomNav> {
             icon: const Icon(Icons.home),
             title: Text(
               "Home",
-              style: TextStyle(
-                fontSize: dynamicWidth(context, .036),
-              ),
-            ),
-            selectedColor: myGreen,
-          ),
-          SalomonBottomBarItem(
-            icon: const Icon(Icons.supervised_user_circle_rounded),
-            title: Text(
-              "Farmers",
-              style: TextStyle(
-                fontSize: dynamicWidth(context, .036),
-              ),
-            ),
-            selectedColor: myGreen,
-          ),
-          SalomonBottomBarItem(
-            icon: const Icon(Icons.calendar_today),
-            title: Text(
-              "Daily Updates",
               style: TextStyle(
                 fontSize: dynamicWidth(context, .036),
               ),
@@ -87,14 +67,12 @@ class _BottomNavState extends State<BottomNav> {
   _getPage(int page) {
     switch (page) {
       case 0:
-        return const Home();
+        return FarmerHomeScreen(
+          farmerId: widget.farmerId,
+        );
       case 1:
-        return const Farmers();
-      case 2:
-        return const DailyUpdates();
-      case 3:
         return const NotificationPage();
-      case 4:
+      case 2:
         return const Profile();
       default:
         return Column(
