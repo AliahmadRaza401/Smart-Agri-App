@@ -213,6 +213,10 @@ class _LoginPageState extends State<LoginPage> {
                                         email.text,
                                         password.text,
                                       )
+                                    // : AppRoutes.push(
+                                    //     context,
+                                    //     const FarmerBottomNav(),
+                                    //   );
                                     : loginCheck();
                               }
                             },
