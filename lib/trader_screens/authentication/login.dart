@@ -1,7 +1,5 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/services/auth_services.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
@@ -30,39 +28,39 @@ class _LoginPageState extends State<LoginPage> {
   final password = TextEditingController();
   final fUsername = TextEditingController();
 
-  loginCheck() async {
-    dynamic check, id;
-    await FirebaseFirestore.instance
-        .collection("farmers")
-        .get()
-        .then((querySnapshot) {
-      for (var result in querySnapshot.docs) {
-        if (result.data()["userName"].toString() == fUsername.text.toString() &&
-            result.data()["password"].toString() == password.text.toString()) {
-          id = result.reference.id;
-          check = true;
-          break;
-        } else {
-          check = false;
-        }
-      }
-      if (check == true) {
-        AppRoutes.push(
-          context,
-          FarmerBottomNav(
-            farmerId: id,
-          ),
-        );
-      } else if (check == false) {
-        Fluttertoast.showToast(
-          msg: "Invalid UserName or Password\nTry Again!!",
-          backgroundColor: myGreen,
-          textColor: myWhite,
-          gravity: ToastGravity.CENTER,
-        );
-      }
-    });
-  }
+  // loginCheck() async {
+  //   dynamic check, id;
+  //   await FirebaseFirestore.instance
+  //       .collection("farmers")
+  //       .get()
+  //       .then((querySnapshot) {
+  //     for (var result in querySnapshot.docs) {
+  //       if (result.data()["userName"].toString() == fUsername.text.toString() &&
+  //           result.data()["password"].toString() == password.text.toString()) {
+  //         id = result.reference.id;
+  //         check = true;
+  //         break;
+  //       } else {
+  //         check = false;
+  //       }
+  //     }
+  //     if (check == true) {
+  //       AppRoutes.push(
+  //         context,
+  //         FarmerBottomNav(
+  //           farmerId: id,
+  //         ),
+  //       );
+  //     } else if (check == false) {
+  //       Fluttertoast.showToast(
+  //         msg: "Invalid UserName or Password\nTry Again!!",
+  //         backgroundColor: myGreen,
+  //         textColor: myWhite,
+  //         gravity: ToastGravity.CENTER,
+  //       );
+  //     }
+  //   });
+  // }
 
   @override
   void initState() {
@@ -213,11 +211,11 @@ class _LoginPageState extends State<LoginPage> {
                                         email.text,
                                         password.text,
                                       )
-                                    // : AppRoutes.push(
-                                    //     context,
-                                    //     const FarmerBottomNav(),
-                                    //   );
-                                    : loginCheck();
+                                    : AppRoutes.push(
+                                        context,
+                                        const FarmerBottomNav(),
+                                      );
+                                // : loginCheck();
                               }
                             },
                           ),
