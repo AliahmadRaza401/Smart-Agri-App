@@ -89,6 +89,7 @@ class AuthServices {
                 _authProvider.isLoading(false),
               })
           .catchError((e) {
+        print(e);
         Fluttertoast.showToast(
           msg: e!.message,
           backgroundColor: myGreen,

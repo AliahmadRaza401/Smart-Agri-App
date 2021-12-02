@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.smart_agri">
-
+    <uses-permission android:name="android.permission.INTERNET"/> <!-- Add this -->
     <application
         android:icon="@mipmap/ic_launcher"
         android:label="Smart Agri"

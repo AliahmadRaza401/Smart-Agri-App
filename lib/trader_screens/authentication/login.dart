@@ -73,6 +73,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    print('name: ${widget.name}');
     var loading = Provider.of<AuthProvider>(context).loading;
     return SafeArea(
       child: Container(
@@ -205,6 +206,7 @@ class _LoginPageState extends State<LoginPage> {
                               if (!_formKey.currentState!.validate()) {
                                 return;
                               } else {
+                                print("Role ${widget.name}");
                                 widget.name == "trader"
                                     ? AuthServices.signIn(
                                         context,
