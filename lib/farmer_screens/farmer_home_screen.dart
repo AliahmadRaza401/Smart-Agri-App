@@ -18,38 +18,29 @@ class FarmerHomeScreen extends StatefulWidget {
 }
 
 class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
-  // User? user = FirebaseAuth.instance.currentUser;
-  // FarmerModel loggedInUser = FarmerModel();
-  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+  dynamic farmerName;
 
   @override
   void initState() {
     super.initState();
     getFarmerData();
-    // getUserData();
   }
 
-  getFarmerData(){
-    DocumentReference docRef = _firebaseFirestore.collection("farmers").doc("SF");
-
-
-
-        // _firebaseFirestore
-        // .collection("farmers")
-        // .doc(widget.farmerId.toString())
-        // .get()
-        // .then((docRef) => { print(docRef.data()) });
+  getFarmerData() {
+    FirebaseFirestore.instance
+        .collection("farmers")
+        .doc(widget.farmerId)
+        .get()
+        .then(
+          (value) => {
+            setState(
+              () {
+                farmerName = value.data()!["firstName"];
+              },
+            ),
+          },
+        );
   }
-
-  // getUserData() {
-  //   _firebaseFirestore.collection('users').doc(user!.uid).get().then(
-  //         (value) => {
-  //           setState(() {
-  //             loggedInUser = FarmerModel.fromMap(value.data());
-  //           }),
-  //         },
-  //       );
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -146,8 +137,7 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                                 ],
                               ),
                               Text(
-                                "",
-                                // loggedInUser.firstName ?? '',
+                                farmerName ?? '',
                                 style: TextStyle(
                                   color: myWhite,
                                   fontSize: dynamicWidth(context, .05),
@@ -157,7 +147,9 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                             ],
                           ),
                           Text(
-                            DateFormat.yMMMEd().format(DateTime.now()).toString(),
+                            DateFormat.yMMMEd()
+                                .format(DateTime.now())
+                                .toString(),
                             style: TextStyle(
                               color: myWhite,
                               fontSize: dynamicWidth(context, .04),
@@ -198,7 +190,7 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                       StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                         stream: FirebaseFirestore.instance
                             .collection('dailyUpdate')
-                            .where("traderId", isEqualTo: "PBAPykSqJzXYBr63jMgKXibC4F53")
+                            .where("traderId", isEqualTo: widget.farmerId)
                             .snapshots(),
                         builder: (_, snapshot) {
                           if (snapshot.hasError) {

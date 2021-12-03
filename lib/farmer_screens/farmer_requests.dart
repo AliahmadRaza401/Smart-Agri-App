@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_agri/farmer_screens/add_request.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
@@ -32,7 +33,7 @@ class _FarmerRequestsState extends State<FarmerRequests> {
         onPressed: () {
           showDialog(
             context: context,
-            builder: (context) => const AddUpdate(),
+            builder: (context) => const AddRequest(),
           );
         },
         backgroundColor: myGreen,
@@ -51,7 +52,7 @@ class _FarmerRequestsState extends State<FarmerRequests> {
           color: myWhite,
         ),
       ),
-      body: Text("data"),
+      // body: Text("data"),
     );
   }
 }

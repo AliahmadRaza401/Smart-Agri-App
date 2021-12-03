@@ -1,48 +1,58 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_agri/model/farmer_model.dart';
-import 'package:smart_agri/model/user_model.dart';
 import 'package:smart_agri/services/auth_services.dart';
 import 'package:smart_agri/utils/config.dart';
-import 'package:smart_agri/widgets/buttons.dart';
-import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 
 class FarmerProfile extends StatefulWidget {
-  const FarmerProfile({Key? key}) : super(key: key);
+  final dynamic farmerId;
+
+  const FarmerProfile({Key? key, this.farmerId}) : super(key: key);
 
   @override
   _FarmerProfileState createState() => _FarmerProfileState();
 }
 
 class _FarmerProfileState extends State<FarmerProfile> {
-  FarmerModel loggedInFarmer = FarmerModel();
-  final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  User? user = FirebaseAuth.instance.currentUser;
+  dynamic farmerFName, farmerLName, farmerNo, farmerCNIC, image = "";
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    getUserData();
+    getFarmerProfile();
+
+    print("object");
   }
 
-  getUserData() async {
-    await _firebaseFirestore.collection('farmers').doc(user!.uid).get().then(
+  getFarmerProfile() {
+    print("object2");
+    FirebaseFirestore.instance
+        .collection("farmers")
+        .doc(widget.farmerId)
+        .get()
+        .then(
           (value) => {
-        setState(() {
-          loggedInFarmer = FarmerModel.fromMap(value.data());
-        }),
-      },
-    );
+          print(value.data()),
+            setState(
+              () {
+
+                print(value.data());
+                farmerFName = value.data()!["firstName"];
+                farmerLName = value.data()!["lastName"];
+                farmerNo = value.data()!["mobileNumber"];
+                farmerCNIC = value.data()!["cnic"];
+                image = value.data()!["image"]["url"];
+              },
+            ),
+          },
+        );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // backgroundColor: myGrey,
       body: SizedBox(
         width: dynamicWidth(context, 1),
         height: dynamicHeight(context, 1),
@@ -86,9 +96,9 @@ class _FarmerProfileState extends State<FarmerProfile> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            loggedInFarmer.firstName.toString() +
+                            farmerFName.toString() +
                                 " " +
-                                loggedInFarmer.secondName.toString(),
+                                farmerLName.toString(),
                             style: TextStyle(
                               color: myGreen,
                               fontWeight: FontWeight.bold,
@@ -106,7 +116,7 @@ class _FarmerProfileState extends State<FarmerProfile> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            loggedInFarmer.mobileNumber ?? "Mobile Number",
+                            farmerNo.toString(),
                             style: TextStyle(
                               color: myGreen,
                               fontSize: dynamicWidth(context, .048),
@@ -123,7 +133,7 @@ class _FarmerProfileState extends State<FarmerProfile> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            loggedInFarmer.cnic ?? "CNIC",
+                            farmerCNIC.toString(),
                             style: TextStyle(
                               color: myGreen,
                               fontSize: dynamicWidth(context, .048),
@@ -161,8 +171,8 @@ class _FarmerProfileState extends State<FarmerProfile> {
                       ),
                       child: profileButton(context, Icons.logout, "LogOut",
                           function: () {
-                            AuthServices.logOut(context);
-                          }),
+                        AuthServices.logOut(context);
+                      }),
                     ),
                   ],
                 ),
@@ -183,9 +193,9 @@ class _FarmerProfileState extends State<FarmerProfile> {
                       borderRadius: BorderRadius.circular(
                         dynamicWidth(context, .06),
                       ),
-                      image: const DecorationImage(
+                      image: DecorationImage(
                         image: NetworkImage(
-                          "",
+                          image.toString(),
                         ),
                         fit: BoxFit.cover,
                       ),
