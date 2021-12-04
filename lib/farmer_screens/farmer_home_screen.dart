@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:smart_agri/trader_screens/daily_update/daily_updates.dart';
+import 'package:smart_agri/farmer_screens/farmer_daily_updates.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/box_widgets.dart';
@@ -18,7 +18,7 @@ class FarmerHomeScreen extends StatefulWidget {
 }
 
 class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
-  dynamic farmerName;
+  dynamic farmerName, traderId;
 
   @override
   void initState() {
@@ -36,6 +36,7 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
             setState(
               () {
                 farmerName = value.data()!["firstName"];
+                traderId = value.data()!["traderId"];
               },
             ),
           },
@@ -184,13 +185,16 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                       rowText(
                         context,
                         "Recent Updates",
-                        const DailyUpdates(),
+                        FarmerDailyUpdates(
+                          farmerId: widget.farmerId,
+                          traderId: traderId,
+                        ),
                         "See All",
                       ),
                       StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                         stream: FirebaseFirestore.instance
                             .collection('dailyUpdate')
-                            .where("traderId", isEqualTo: widget.farmerId)
+                            .where("traderId", isEqualTo: traderId)
                             .snapshots(),
                         builder: (_, snapshot) {
                           if (snapshot.hasError) {
@@ -209,6 +213,7 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                                 "assets/dailyUpdatesCartoon.png",
                                 const AddUpdate(),
                                 dynamicHeight(context, .18),
+                                farmer: true,
                               );
                             } else {
                               return Padding(

@@ -51,7 +51,7 @@ Widget rowText(context, text1, page, text2) {
   );
 }
 
-Widget noDataError(context, image, page, imageSize) {
+Widget noDataError(context, image, page, imageSize, {farmer = false}) {
   return Column(
     mainAxisAlignment: MainAxisAlignment.center,
     children: [
@@ -67,10 +67,10 @@ Widget noDataError(context, image, page, imageSize) {
       ),
       InkWell(
         onTap: () {
-          AppRoutes.push(context, page);
+          farmer == false ? AppRoutes.push(context, page) : null;
         },
         child: Text(
-          "Nothing To Show!!\nTap to Add",
+          farmer == false ? "Nothing To Show!!\nTap to Add" : "Nothing To Show!!",
           style: TextStyle(
             color: myGreen,
             fontSize: dynamicWidth(context, .042),
