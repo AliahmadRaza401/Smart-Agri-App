@@ -5,6 +5,7 @@ import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/botton_nav.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
+import 'package:smart_agri/widgets/farmer_bottom_nav.dart';
 
 import '../services/auth_services.dart';
 
@@ -80,13 +81,24 @@ class _ChoiceState extends State<Choice> {
                   padding: EdgeInsets.symmetric(
                     vertical: dynamicHeight(context, .02),
                   ),
-                  child: button(context, "Login as Farmer", () {
-                    AppRoutes.push(
-                      context,
-                      const LoginPage(
-                        name: "farmer",
-                      ),
-                    );
+                  child: button(context, "Login as Farmer", () async {
+                    bool farmerLogedIn = await AuthServices.getFarmerLoggedIn();
+                    if (farmerLogedIn) {
+                      var id = await AuthServices.getFarmerID();
+                      AppRoutes.replace(
+                        context,
+                        FarmerBottomNav(
+                          farmerId: id,
+                        ),
+                      );
+                    } else {
+                      AppRoutes.push(
+                        context,
+                        const LoginPage(
+                          name: "farmer",
+                        ),
+                      );
+                    }
                   }),
                 ),
               ],

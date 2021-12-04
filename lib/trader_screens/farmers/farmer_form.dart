@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:smart_agri/services/farmer_services.dart';
+import 'package:smart_agri/services/farmer_services_trader.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/utils/image_piker.dart';
@@ -246,7 +246,7 @@ class _FarmerFormState extends State<FarmerForm> {
                           return;
                         } else {
                           if (_image != null) {
-                            FarmerServices.addFarmerToDB(
+                            FarmerServicesTrader.addFarmerToDB(
                               context,
                               userName.text,
                               farmerPassword.text,

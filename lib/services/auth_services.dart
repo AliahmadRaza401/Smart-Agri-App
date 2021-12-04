@@ -32,7 +32,7 @@ class AuthServices {
                   textColor: myWhite,
                   gravity: ToastGravity.CENTER,
                 ),
-                AppRoutes.push(
+                AppRoutes.replace(
                   context,
                   const BottomNav(),
                 ),
@@ -192,4 +192,32 @@ class AuthServices {
     bool? boolValue = prefs.getBool('userLoggedIn');
     return boolValue;
   }
+
+    // Farmer Logged
+  static farmerLoggedIn(value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('farmerLoggedIn', value);
+  }
+
+// get Farmer LoggedIn value
+  static getFarmerLoggedIn() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool? boolValue = prefs.getBool('farmerLoggedIn');
+    return boolValue;
+  }
+
+// save FarmerId
+  static saveFarmerID(String value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('farmerID', value);
+  }
+
+  // get Farmer LoggedIn value
+  static getFarmerID() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? value = prefs.getString('farmerID');
+    return value;
+  }
+
+
 }

@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:smart_agri/services/farmer_services.dart';
+import 'package:smart_agri/services/farmer_services_trader.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
@@ -216,7 +216,7 @@ class _AddAmountState extends State<AddAmount> {
                           "ADD",
                           () {
                             if (_formKey.currentState!.validate()) {
-                              FarmerServices.addFarmerAmount(
+                              FarmerServicesTrader.addFarmerAmount(
                                   context,
                                   widget.farmerId,
                                   itemName.text,

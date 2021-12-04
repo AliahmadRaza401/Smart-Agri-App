@@ -40,6 +40,7 @@ class _LoginPageState extends State<LoginPage> {
         if (result.data()["userName"].toString() == fUsername.text.toString() &&
             result.data()["password"].toString() == password.text.toString()) {
           id = result.reference.id;
+          AuthServices.saveFarmerID(id);
           check = true;
           break;
         } else {
@@ -47,7 +48,8 @@ class _LoginPageState extends State<LoginPage> {
         }
       }
       if (check == true) {
-        AppRoutes.push(
+        AuthServices.farmerLoggedIn(true);
+        AppRoutes.replace(
           context,
           FarmerBottomNav(
             farmerId: id,

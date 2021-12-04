@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_agri/farmer_screens/services/farmer_services.dart';
 import 'package:smart_agri/services/auth_services.dart';
+import 'package:smart_agri/services/farmer_services_trader.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
@@ -27,27 +29,18 @@ class _FarmerProfileState extends State<FarmerProfile> {
   }
 
   getFarmerProfile() {
-    print("object2");
-    FirebaseFirestore.instance
-        .collection("farmers")
-        .doc(widget.farmerId)
-        .get()
-        .then(
-          (value) => {
-          print(value.data()),
-            setState(
-              () {
-
-                print(value.data());
-                farmerFName = value.data()!["firstName"];
-                farmerLName = value.data()!["lastName"];
-                farmerNo = value.data()!["mobileNumber"];
-                farmerCNIC = value.data()!["cnic"];
-                image = value.data()!["image"]["url"];
-              },
-            ),
-          },
-        );
+    var value = FarmerServices.getFarmerProfileByID(widget.farmerId);
+    print('value: $value');
+    setState(
+      () {
+        print(value.data());
+        farmerFName = value.data()!["firstName"];
+        farmerLName = value.data()!["lastName"];
+        farmerNo = value.data()!["mobileNumber"];
+        farmerCNIC = value.data()!["cnic"];
+        image = value.data()!["image"]["url"];
+      },
+    );
   }
 
   @override

@@ -10,7 +10,7 @@ import 'package:smart_agri/trader_screens/farmers/farmers.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 
-class FarmerServices {
+class FarmerServicesTrader {
   static final _auth = FirebaseAuth.instance;
   static FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
