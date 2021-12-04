@@ -9,9 +9,9 @@ import 'package:smart_agri/widgets/essential_widgets.dart';
 
 class FarmerServices {
   static getFarmerProfileByID(farmerId) {
-    var responce =
+    var response =
         FirebaseFirestore.instance.collection("farmers").doc(farmerId).get();
-    return responce;
+    return response;
   }
 
   static sendRequest(

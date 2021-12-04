@@ -73,7 +73,9 @@ class _FarmerBottomNavState extends State<FarmerBottomNav> {
           farmerId: widget.farmerId,
         );
       case 1:
-        return const FarmerRequests();
+        return FarmerRequests(
+          farmerId: widget.farmerId,
+        );
       case 2:
         return FarmerProfile(
           farmerId: widget.farmerId,

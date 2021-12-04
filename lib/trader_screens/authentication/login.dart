@@ -121,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                "Login",
+                                "Login as " + widget.name.toString(),
                                 style: TextStyle(
                                   color: myGreen,
                                   fontSize: dynamicWidth(context, .1),

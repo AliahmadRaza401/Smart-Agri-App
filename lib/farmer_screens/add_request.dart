@@ -6,7 +6,9 @@ import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 
 class AddRequest extends StatefulWidget {
-  const AddRequest({Key? key}) : super(key: key);
+  final dynamic farmerId, traderId;
+
+  const AddRequest({Key? key, this.farmerId, this.traderId}) : super(key: key);
 
   @override
   State<AddRequest> createState() => _AddRequestState();
@@ -15,6 +17,7 @@ class AddRequest extends StatefulWidget {
 class _AddRequestState extends State<AddRequest> {
   final _formKey = GlobalKey<FormState>();
   final itemName = TextEditingController();
+  final itemQuantity = TextEditingController();
   String itemCategory = "", selectedUnit = "";
   List<String> dropdownList = <String>[
     "Select Category",
@@ -129,6 +132,20 @@ class _AddRequestState extends State<AddRequest> {
                             ),
                           ),
                         ),
+                        TextFormField(
+                          controller: itemQuantity,
+                          keyboardType: TextInputType.text,
+                          decoration: const InputDecoration(
+                            hintText: "item Quantity",
+                          ),
+                          validator: (text) {
+                            if (text == null || text.isEmpty) {
+                              return 'Required!';
+                            }
+                            return null;
+                          },
+                          onChanged: (_) => setState(() {}),
+                        ),
                         Padding(
                           padding: EdgeInsets.symmetric(
                             vertical: dynamicHeight(context, .01),
@@ -174,6 +191,7 @@ class _AddRequestState extends State<AddRequest> {
                             ),
                           ),
                         ),
+
                         SizedBox(
                           height: dynamicHeight(context, .02),
                         ),
@@ -185,15 +203,15 @@ class _AddRequestState extends State<AddRequest> {
                     children: [
                       button(context, "ADD", () {
                         if (_formKey.currentState!.validate()) {
-                          // FarmerServices.sendRequest(
-                          //   context,
-                          //   farmerId,
-                          //   traderId,
-                          //   itemName,
-                          //   category,
-                          //   unit,
-                          //   quantity,
-                          // );
+                          FarmerServices.sendRequest(
+                            context,
+                            widget.farmerId,
+                            widget.traderId,
+                            itemName.text,
+                            itemCategory,
+                            selectedUnit,
+                            itemQuantity.text,
+                          );
                         }
                       },
                           width: dynamicWidth(context, .3),

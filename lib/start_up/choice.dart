@@ -71,7 +71,7 @@ class _ChoiceState extends State<Choice> {
                       AppRoutes.push(
                         context,
                         const LoginPage(
-                          name: "trader",
+                          name: "Trader",
                         ),
                       );
                     }
@@ -82,8 +82,9 @@ class _ChoiceState extends State<Choice> {
                     vertical: dynamicHeight(context, .02),
                   ),
                   child: button(context, "Login as Farmer", () async {
-                    bool farmerLogedIn = await AuthServices.getFarmerLoggedIn();
-                    if (farmerLogedIn) {
+                    dynamic farmerLoggedIn =
+                        await AuthServices.getFarmerLoggedIn();
+                    if (farmerLoggedIn.toString() == "") {
                       var id = await AuthServices.getFarmerID();
                       AppRoutes.replace(
                         context,
@@ -95,7 +96,7 @@ class _ChoiceState extends State<Choice> {
                       AppRoutes.push(
                         context,
                         const LoginPage(
-                          name: "farmer",
+                          name: "Farmer",
                         ),
                       );
                     }
