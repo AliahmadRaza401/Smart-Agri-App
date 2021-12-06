@@ -3,7 +3,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_agri/farmer_screens/add_request.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
+import 'package:smart_agri/widgets/essential_widgets.dart';
 
 class FarmerRequests extends StatefulWidget {
   final dynamic farmerId;
@@ -15,7 +17,7 @@ class FarmerRequests extends StatefulWidget {
 }
 
 class _FarmerRequestsState extends State<FarmerRequests> {
-  dynamic traderId;
+  dynamic traderId, farmerImage, farmerName, farmerNumber;
 
   @override
   void initState() {
@@ -33,6 +35,9 @@ class _FarmerRequestsState extends State<FarmerRequests> {
             setState(
               () {
                 traderId = value.data()!["traderId"];
+                farmerName = value.data()!["firstName"];
+                farmerImage = value.data()!["image"]["src"];
+                farmerNumber = value.data()!["mobileNumber"];
               },
             ),
           },
@@ -62,6 +67,9 @@ class _FarmerRequestsState extends State<FarmerRequests> {
             builder: (context) => AddRequest(
               farmerId: widget.farmerId,
               traderId: traderId,
+              farmerName: farmerName,
+              farmerImage: farmerImage,
+              farmerNumber: farmerNumber,
             ),
           );
         },
@@ -81,7 +89,66 @@ class _FarmerRequestsState extends State<FarmerRequests> {
           color: myWhite,
         ),
       ),
-      // body: Text("data"),
+      body: Center(
+        child: SizedBox(
+          height: dynamicHeight(context, .8),
+          width: dynamicWidth(context, 1),
+          child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
+            stream: FirebaseFirestore.instance
+                .collection('request')
+                .where("traderId", isEqualTo: traderId)
+                .snapshots(),
+            builder: (_, snapshot) {
+              if (snapshot.hasError) {
+                return const Text('Oops! Something went wrong');
+              }
+              if (!snapshot.hasData) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              if (snapshot.hasData) {
+                final docs = snapshot.data!.docs;
+
+                if (docs.isEmpty) {
+                  return noDataError(
+                    context,
+                    "assets/dailyUpdatesCartoon.png",
+                    const AddUpdate(),
+                    dynamicHeight(context, .34),
+                    farmer: true,
+                  );
+                } else {
+                  return Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: dynamicWidth(context, .02),
+                    ),
+                    child: ListView.builder(
+                      itemCount: docs.length,
+                      itemBuilder: (context, i) {
+                        final data = docs[i].data();
+                        return farmerRequestCard(
+                          context,
+                          "image",
+                          "number",
+                          data["itemName"].toString(),
+                          data["category"].toString(),
+                          data["quantity"].toString(),
+                          data["unit"].toString(),
+                          data["status"].toString(),
+                        );
+                      },
+                    ),
+                  );
+                }
+              }
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            },
+          ),
+        ),
+      ),
     );
   }
 }

@@ -1,8 +1,8 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/widgets/buttons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'app_buttons.dart';
 import 'dynamic_size.dart';
@@ -70,7 +70,9 @@ Widget noDataError(context, image, page, imageSize, {farmer = false}) {
           farmer == false ? AppRoutes.push(context, page) : null;
         },
         child: Text(
-          farmer == false ? "Nothing To Show!!\nTap to Add" : "Nothing To Show!!",
+          farmer == false
+              ? "Nothing To Show!!\nTap to Add"
+              : "Nothing To Show!!",
           style: TextStyle(
             color: myGreen,
             fontSize: dynamicWidth(context, .042),
@@ -274,6 +276,198 @@ Widget oopsAlert(context, message) {
             ),
           )
         ],
+      ),
+    ),
+  );
+}
+
+Widget farmerRequestCard(
+    context, image, number, name, category, quantity, unit, status) {
+  return Padding(
+    padding: EdgeInsets.symmetric(
+      horizontal: dynamicWidth(context, .05),
+      vertical: dynamicHeight(context, .01),
+    ),
+    child: Expanded(
+      child: Container(
+        width: dynamicWidth(context, .9),
+        decoration: BoxDecoration(
+          color: greenLite,
+          borderRadius: BorderRadius.circular(
+            dynamicWidth(context, .04),
+          ),
+        ),
+        padding: EdgeInsets.all(
+          dynamicWidth(context, .04),
+        ),
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CircleAvatar(
+                  radius: dynamicWidth(context, .08),
+                  backgroundColor: myWhite,
+                  backgroundImage: NetworkImage(image),
+                ),
+                SizedBox(
+                  width: dynamicWidth(context, .46),
+                  child: Text(
+                    name,
+                    style: TextStyle(
+                      color: myBlack,
+                      fontWeight: FontWeight.bold,
+                      fontSize: dynamicWidth(context, .04),
+                    ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: () {
+                    launch(number);
+                  },
+                  icon: Icon(
+                    Icons.call,
+                    color: myBlack,
+                    size: dynamicWidth(context, .08),
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: dynamicHeight(context, .03),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        "Item Name ",
+                        style: TextStyle(
+                          color: myBlack,
+                          fontSize: dynamicWidth(context, .046),
+                        ),
+                      ),
+                      SizedBox(
+                        height: dynamicHeight(context, .006),
+                      ),
+                      Text(
+                        "Category ",
+                        style: TextStyle(
+                          color: myBlack,
+                          fontSize: dynamicWidth(context, .046),
+                        ),
+                      ),
+                      SizedBox(
+                        height: dynamicHeight(context, .006),
+                      ),
+                      Text(
+                        "Quantity/Unit ",
+                        style: TextStyle(
+                          color: myBlack,
+                          fontSize: dynamicWidth(context, .046),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        "   :   ",
+                        style: TextStyle(
+                          color: myBlack,
+                          fontWeight: FontWeight.bold,
+                          fontSize: dynamicWidth(context, .046),
+                        ),
+                      ),
+                      SizedBox(
+                        height: dynamicHeight(context, .006),
+                      ),
+                      Text(
+                        "   :   ",
+                        style: TextStyle(
+                          color: myBlack,
+                          fontWeight: FontWeight.bold,
+                          fontSize: dynamicWidth(context, .046),
+                        ),
+                      ),
+                      SizedBox(
+                        height: dynamicHeight(context, .006),
+                      ),
+                      Text(
+                        "   :   ",
+                        style: TextStyle(
+                          color: myBlack,
+                          fontWeight: FontWeight.bold,
+                          fontSize: dynamicWidth(context, .046),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: TextStyle(
+                          color: myBlack,
+                          fontSize: dynamicWidth(context, .046),
+                        ),
+                      ),
+                      SizedBox(
+                        height: dynamicHeight(context, .006),
+                      ),
+                      Text(
+                        category,
+                        style: TextStyle(
+                          color: myBlack,
+                          fontSize: dynamicWidth(context, .046),
+                        ),
+                      ),
+                      SizedBox(
+                        height: dynamicHeight(context, .006),
+                      ),
+                      Text(
+                        quantity + "/" + unit,
+                        style: TextStyle(
+                          color: myBlack,
+                          fontSize: dynamicWidth(context, .046),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                button(
+                  context,
+                  "Decline",
+                  () {},
+                  btnColor: myRed,
+                  color: myWhite,
+                  height: dynamicHeight(context, .046),
+                  width: dynamicWidth(context, .36),
+                  fontSize: dynamicWidth(context, .044),
+                ),
+                button(
+                  context,
+                  "Accept",
+                  () {},
+                  btnColor: myGreen,
+                  color: myWhite,
+                  height: dynamicHeight(context, .046),
+                  width: dynamicWidth(context, .36),
+                  fontSize: dynamicWidth(context, .044),
+                )
+              ],
+            ),
+          ],
+        ),
       ),
     ),
   );

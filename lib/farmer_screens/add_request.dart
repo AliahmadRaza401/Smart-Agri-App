@@ -6,9 +6,9 @@ import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 
 class AddRequest extends StatefulWidget {
-  final dynamic farmerId, traderId;
+  final dynamic farmerId, traderId, farmerImage, farmerName, farmerNumber;
 
-  const AddRequest({Key? key, this.farmerId, this.traderId}) : super(key: key);
+  const AddRequest({Key? key, this.farmerId, this.traderId, this.farmerImage, this.farmerName, this.farmerNumber}) : super(key: key);
 
   @override
   State<AddRequest> createState() => _AddRequestState();
@@ -207,6 +207,9 @@ class _AddRequestState extends State<AddRequest> {
                             context,
                             widget.farmerId,
                             widget.traderId,
+                            widget.farmerName,
+                            widget.farmerImage,
+                            widget.farmerNumber,
                             itemName.text,
                             itemCategory,
                             selectedUnit,
