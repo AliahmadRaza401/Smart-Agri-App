@@ -52,7 +52,7 @@ class _BottomNavState extends State<BottomNav> {
           SalomonBottomBarItem(
             icon: const Icon(Icons.calendar_today),
             title: Text(
-              "Daily Updates",
+              "Updates",
               style: TextStyle(
                 fontSize: dynamicWidth(context, .036),
               ),
@@ -62,7 +62,7 @@ class _BottomNavState extends State<BottomNav> {
           SalomonBottomBarItem(
             icon: const Icon(Icons.notifications),
             title: Text(
-              "Notifications",
+              "Requests",
               style: TextStyle(
                 fontSize: dynamicWidth(context, .036),
               ),

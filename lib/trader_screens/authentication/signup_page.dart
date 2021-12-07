@@ -10,6 +10,7 @@ import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/utils/image_piker.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
+import 'package:smart_agri/widgets/essential_widgets.dart';
 import 'package:smart_agri/widgets/form_fields.dart';
 import 'package:smart_agri/widgets/rich_text.dart';
 
@@ -297,16 +298,25 @@ class _SignUpPageState extends State<SignUpPage> {
                               if (!_formKey.currentState!.validate()) {
                                 return;
                               } else {
-                                AuthServices.signUp(
-                                  context,
-                                  signUpEmail.text,
-                                  password.text,
-                                  fName.text,
-                                  lName.text,
-                                  number.text,
-                                  cnic.text,
-                                  _image,
-                                );
+                                if (_image != null) {
+                                  AuthServices.signUp(
+                                    context,
+                                    signUpEmail.text,
+                                    password.text,
+                                    fName.text,
+                                    lName.text,
+                                    number.text,
+                                    cnic.text,
+                                    _image,
+                                  );
+                                } else {
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return oopsAlert(context, "Add image");
+                                    },
+                                  );
+                                }
                               }
                             },
                           ),

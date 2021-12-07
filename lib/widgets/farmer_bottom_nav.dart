@@ -3,8 +3,6 @@ import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'package:smart_agri/farmer_screens/farmer_home_screen.dart';
 import 'package:smart_agri/farmer_screens/farmer_profile.dart';
 import 'package:smart_agri/farmer_screens/farmer_requests.dart';
-import 'package:smart_agri/trader_screens/notifications_screen/notification_page.dart';
-import 'package:smart_agri/trader_screens/profile/profile.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 

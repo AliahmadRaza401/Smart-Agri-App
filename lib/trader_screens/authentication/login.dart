@@ -55,6 +55,7 @@ class _LoginPageState extends State<LoginPage> {
             farmerId: id,
           ),
         );
+
       } else if (check == false) {
         Fluttertoast.showToast(
           msg: "Invalid UserName or Password\nTry Again!!",
@@ -141,14 +142,14 @@ class _LoginPageState extends State<LoginPage> {
                               Flexible(
                                 child: inputTextField(
                                   context,
-                                  widget.name == "trader"
+                                  widget.name == "Trader"
                                       ? "Email"
                                       : "UserName",
-                                  widget.name == "trader" ? email : fUsername,
-                                  widget.name == "trader"
+                                  widget.name == "Trader" ? email : fUsername,
+                                  widget.name == "Trader"
                                       ? TextInputType.emailAddress
                                       : TextInputType.name,
-                                  function: widget.name == "trader"
+                                  function: widget.name == "Trader"
                                       ? (value) {
                                           if (EmailValidator.validate(value)) {
                                           } else {
@@ -209,7 +210,7 @@ class _LoginPageState extends State<LoginPage> {
                               if (!_formKey.currentState!.validate()) {
                                 return;
                               } else {
-                                widget.name == "trader"
+                                widget.name == "Trader"
                                     ? AuthServices.signIn(
                                         context,
                                         email.text,
@@ -220,7 +221,7 @@ class _LoginPageState extends State<LoginPage> {
                             },
                           ),
                         ),
-                        widget.name == "trader"
+                        widget.name == "Trader"
                             ? Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [

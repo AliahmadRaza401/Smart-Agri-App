@@ -5,8 +5,6 @@ import 'package:smart_agri/model/user_model.dart';
 import 'package:smart_agri/services/auth_services.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
-import 'package:smart_agri/widgets/buttons.dart';
-import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 
 class Profile extends StatefulWidget {
@@ -21,6 +19,8 @@ class _ProfileState extends State<Profile> {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   User? user = FirebaseAuth.instance.currentUser;
 
+  String? userImage;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -32,6 +32,9 @@ class _ProfileState extends State<Profile> {
     await _firebaseFirestore.collection('users').doc(user!.uid).get().then(
           (value) => {
             setState(() {
+              userImage = value.data()!['image']['url'].toString();
+
+              print("object + $userImage");
               loggedInUser = UserModel.fromMap(value.data());
             }),
           },
@@ -199,9 +202,9 @@ class _ProfileState extends State<Profile> {
                       borderRadius: BorderRadius.circular(
                         dynamicWidth(context, .06),
                       ),
-                      image: const DecorationImage(
+                      image: DecorationImage(
                         image: NetworkImage(
-                          "",
+                          "$userImage",
                         ),
                         fit: BoxFit.cover,
                       ),

@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/services/farmer_services_trader.dart';
@@ -29,10 +28,6 @@ class FarmerForm extends StatefulWidget {
 
 class _FarmerFormState extends State<FarmerForm> {
   File? _image;
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -257,7 +252,12 @@ class _FarmerFormState extends State<FarmerForm> {
                               _image,
                             );
                           } else {
-                            oopsAlert(context, "Add image");
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return oopsAlert(context, "Add image");
+                              },
+                            );
                           }
                         }
                       },

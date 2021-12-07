@@ -8,6 +8,8 @@ import 'package:smart_agri/utils/image_piker.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 
+import 'essential_widgets.dart';
+
 class AddUpdate extends StatefulWidget {
   const AddUpdate({Key? key}) : super(key: key);
 
@@ -31,8 +33,6 @@ class _AddUpdateState extends State<AddUpdate> {
 
   @override
   Widget build(BuildContext context) {
-    // bool loading = Provider.of<HomeProvider>(context).isLoading;
-
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
@@ -132,7 +132,9 @@ class _AddUpdateState extends State<AddUpdate> {
                             ),
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
-                                // value: itemCategory,
+                                value: itemCategory == ""
+                                    ? dropdownList[0]
+                                    : itemCategory,
                                 iconSize: 24,
                                 elevation: 9,
                                 onChanged: (String? value) async {
@@ -169,22 +171,35 @@ class _AddUpdateState extends State<AddUpdate> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      button(context, "ADD", () {
-                        if (_formKey.currentState!.validate()) {
-                          DailyUpdateServices.addDailyItemToDB(
-                            context,
-                            itemName.text,
-                            itemPrice.text,
-                            itemUnit.text,
-                            _image,
-                          );
-                        }
-                      },
-                          width: dynamicWidth(context, .3),
-                          height: dynamicHeight(context, .056),
-                          fontSize: dynamicWidth(context, .042),
-                          color: myWhite,
-                          btnColor: myGreen),
+                      button(
+                        context,
+                        "ADD",
+                        () {
+                          if (_formKey.currentState!.validate()) {
+                            if (_image != null) {
+                              DailyUpdateServices.addDailyItemToDB(
+                                context,
+                                itemName.text,
+                                itemPrice.text,
+                                itemUnit.text,
+                                _image,
+                              );
+                            } else {
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return oopsAlert(context, "Add image");
+                                },
+                              );
+                            }
+                          }
+                        },
+                        width: dynamicWidth(context, .3),
+                        height: dynamicHeight(context, .056),
+                        fontSize: dynamicWidth(context, .042),
+                        color: myWhite,
+                        btnColor: myGreen,
+                      ),
                       button(
                         context,
                         "Cancel",
