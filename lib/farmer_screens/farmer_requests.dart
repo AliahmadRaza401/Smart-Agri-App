@@ -136,6 +136,7 @@ class _FarmerRequestsState extends State<FarmerRequests> {
                           data["quantity"].toString(),
                           data["unit"].toString(),
                           data["status"].toString(),
+                          farmer: true,
                         );
                       },
                     ),
