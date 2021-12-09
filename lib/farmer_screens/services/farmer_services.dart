@@ -38,7 +38,7 @@ class FarmerServices {
       "category": category,
       "unit": unit,
       "quantity": quantity,
-      "status": "pending"
+      "status": "Pending"
     }).then((value) {
       Fluttertoast.showToast(
         msg: "Account created successfully :) ",

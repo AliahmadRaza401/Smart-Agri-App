@@ -35,6 +35,7 @@ class _ProfileState extends State<Profile> {
               userImage = value.data()!['image']['url'].toString();
 
               print("object + $userImage");
+              print(userImage.runtimeType);
               loggedInUser = UserModel.fromMap(value.data());
             }),
           },
@@ -202,12 +203,15 @@ class _ProfileState extends State<Profile> {
                       borderRadius: BorderRadius.circular(
                         dynamicWidth(context, .06),
                       ),
-                      image: DecorationImage(
-                        image: NetworkImage(
-                          "$userImage",
-                        ),
-                        fit: BoxFit.cover,
-                      ),
+                      // image: DecorationImage(
+                      //   image: NetworkImage(
+                      //     "$userImage",
+                      //   ),
+                      //   fit: BoxFit.cover,
+                      // ),
+                    ),
+                    child: Image.network(
+                      userImage.toString(),
                     ),
                   ),
                 ),

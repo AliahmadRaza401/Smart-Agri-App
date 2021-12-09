@@ -283,7 +283,7 @@ Widget oopsAlert(context, message) {
 
 Widget farmerRequestCard(
     context, image, number, name, category, quantity, unit, status,
-    {farmer = ""}) {
+    {farmer = "", function1 = "", function2 = ""}) {
   return Padding(
     padding: EdgeInsets.symmetric(
       horizontal: dynamicWidth(context, .05),
@@ -441,7 +441,7 @@ Widget farmerRequestCard(
               ],
             ),
           ),
-          farmer == true
+          farmer == true || status.toString() != "Pending"
               ? Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -477,7 +477,7 @@ Widget farmerRequestCard(
                     button(
                       context,
                       "Decline",
-                      () {},
+                      function2,
                       btnColor: myRed,
                       color: myWhite,
                       height: dynamicHeight(context, .046),
@@ -487,7 +487,7 @@ Widget farmerRequestCard(
                     button(
                       context,
                       "Accept",
-                      () {},
+                      function1,
                       btnColor: myGreen,
                       color: myWhite,
                       height: dynamicHeight(context, .046),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
@@ -18,6 +19,19 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: myGrey,
+      appBar: AppBar(
+        title: const Text(
+          "Requests",
+          style: TextStyle(
+            color: myWhite,
+          ),
+        ),
+        centerTitle: true,
+        iconTheme: const IconThemeData(
+          color: myWhite,
+        ),
+      ),
       body: Center(
         child: SizedBox(
           height: dynamicHeight(context, .8),
@@ -65,6 +79,29 @@ class _NotificationPageState extends State<NotificationPage> {
                           data["quantity"].toString(),
                           data["unit"].toString(),
                           data["status"].toString(),
+                          farmer: false,
+                          function1: () {
+                            FirebaseFirestore.instance
+                                .collection("request")
+                                .doc(docs[i].reference.id)
+                                .update(
+                              {
+                                'status': "Accepted",
+                                'traderId': user!.uid,
+                              },
+                            );
+                          },
+                          function2: () {
+                            FirebaseFirestore.instance
+                                .collection("request")
+                                .doc(docs[i].reference.id)
+                                .update(
+                              {
+                                'status': "Declined",
+                                'traderId': user!.uid,
+                              },
+                            );
+                          },
                         );
                       },
                     ),
