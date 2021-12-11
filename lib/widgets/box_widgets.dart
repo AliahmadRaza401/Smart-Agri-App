@@ -60,7 +60,7 @@ Widget farmerCard(context, userName, number, debit, credit, image) {
       height: dynamicHeight(context, .16),
       width: dynamicWidth(context, .9),
       decoration: BoxDecoration(
-        color: greenLite,
+        color: containerBgColor,
         borderRadius: BorderRadius.circular(
           dynamicWidth(context, .03),
         ),
@@ -123,21 +123,25 @@ Widget farmerCard(context, userName, number, debit, credit, image) {
                 ),
               ),
               CircleAvatar(
-                radius: dynamicWidth(context, .08),
+                radius: dynamicWidth(context, .085),
                 backgroundColor: myGreen,
-                child: image != null
-                    ? ClipOval(
-                        child: Image.network(
-                          image,
-                          fit: BoxFit.cover,
-                          width: dynamicWidth(context, 1),
+                child: CircleAvatar(
+                  radius: dynamicWidth(context, .08),
+                  backgroundColor: containerBgColor,
+                  child: image != null
+                      ? ClipOval(
+                          child: Image.network(
+                            image,
+                            fit: BoxFit.cover,
+                            width: dynamicWidth(context, 1),
+                          ),
+                        )
+                      : Icon(
+                          Icons.person,
+                          size: dynamicWidth(context, .08),
+                          color: myWhite,
                         ),
-                      )
-                    : Icon(
-                        Icons.person,
-                        size: dynamicWidth(context, .08),
-                        color: myWhite,
-                      ),
+                ),
               ),
               SizedBox(
                 width: dynamicWidth(context, .26),
@@ -220,7 +224,7 @@ Widget dailyUpdateCard(context, title, date, price, unit, category, image) {
     width: dynamicWidth(context, .9),
     height: dynamicHeight(context, .3),
     decoration: BoxDecoration(
-      color: greenLite,
+      color: containerBgColor,
       borderRadius: BorderRadius.circular(
         dynamicWidth(context, .06),
       ),
@@ -266,7 +270,7 @@ Widget dailyUpdateCard(context, title, date, price, unit, category, image) {
                 title.toString().toUpperCase(),
                 style: TextStyle(
                   color: myBlack,
-                  fontSize: dynamicWidth(context, .052),
+                  fontSize: dynamicWidth(context, .038),
                   fontWeight: FontWeight.w500,
                 ),
                 maxLines: 1,
@@ -276,7 +280,7 @@ Widget dailyUpdateCard(context, title, date, price, unit, category, image) {
                 "Rs. $price / $unit",
                 style: TextStyle(
                   color: myBlack,
-                  fontSize: dynamicWidth(context, .042),
+                  fontSize: dynamicWidth(context, .038),
                   fontWeight: FontWeight.w400,
                 ),
                 maxLines: 1,
@@ -295,7 +299,7 @@ Widget dailyUpdateCard(context, title, date, price, unit, category, image) {
                 category ?? "",
                 style: TextStyle(
                   color: myBlack,
-                  fontSize: dynamicWidth(context, .05),
+                  fontSize: dynamicWidth(context, .038),
                   fontWeight: FontWeight.w500,
                 ),
                 maxLines: 1,

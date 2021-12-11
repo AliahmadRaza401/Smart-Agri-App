@@ -292,7 +292,7 @@ Widget farmerRequestCard(
     child: Container(
       width: dynamicWidth(context, .9),
       decoration: BoxDecoration(
-        color: greenLite,
+        color: containerBgColor,
         borderRadius: BorderRadius.circular(
           dynamicWidth(context, .04),
         ),
@@ -307,8 +307,12 @@ Widget farmerRequestCard(
             children: [
               CircleAvatar(
                 radius: dynamicWidth(context, .08),
-                backgroundColor: myWhite,
-                backgroundImage: NetworkImage(image),
+                backgroundColor: myGreen,
+                child: CircleAvatar(
+                  radius: dynamicWidth(context, .075),
+                  backgroundColor: myWhite,
+                  backgroundImage: NetworkImage(image),
+                ),
               ),
               SizedBox(
                 width: dynamicWidth(context, .46),
@@ -327,7 +331,7 @@ Widget farmerRequestCard(
                 },
                 icon: Icon(
                   Icons.call,
-                  color: myBlack,
+                  color: myGreen,
                   size: dynamicWidth(context, .08),
                 ),
               ),
@@ -338,70 +342,36 @@ Widget farmerRequestCard(
               vertical: dynamicHeight(context, .03),
             ),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Item Name ",
+                      "Item Name : ",
                       style: TextStyle(
                         color: myBlack,
-                        fontSize: dynamicWidth(context, .046),
+                        fontSize: dynamicWidth(context, .04),
                       ),
                     ),
                     SizedBox(
                       height: dynamicHeight(context, .006),
                     ),
                     Text(
-                      "Category ",
+                      "Category : ",
                       style: TextStyle(
                         color: myBlack,
-                        fontSize: dynamicWidth(context, .046),
+                        fontSize: dynamicWidth(context, .04),
                       ),
                     ),
                     SizedBox(
                       height: dynamicHeight(context, .006),
                     ),
                     Text(
-                      "Quantity/Unit ",
+                      "Quantity/Unit : ",
                       style: TextStyle(
                         color: myBlack,
-                        fontSize: dynamicWidth(context, .046),
-                      ),
-                    ),
-                  ],
-                ),
-                Column(
-                  children: [
-                    Text(
-                      "   :   ",
-                      style: TextStyle(
-                        color: myBlack,
-                        fontWeight: FontWeight.bold,
-                        fontSize: dynamicWidth(context, .046),
-                      ),
-                    ),
-                    SizedBox(
-                      height: dynamicHeight(context, .006),
-                    ),
-                    Text(
-                      "   :   ",
-                      style: TextStyle(
-                        color: myBlack,
-                        fontWeight: FontWeight.bold,
-                        fontSize: dynamicWidth(context, .046),
-                      ),
-                    ),
-                    SizedBox(
-                      height: dynamicHeight(context, .006),
-                    ),
-                    Text(
-                      "   :   ",
-                      style: TextStyle(
-                        color: myBlack,
-                        fontWeight: FontWeight.bold,
-                        fontSize: dynamicWidth(context, .046),
+                        fontSize: dynamicWidth(context, .04),
                       ),
                     ),
                   ],
@@ -413,7 +383,7 @@ Widget farmerRequestCard(
                       name,
                       style: TextStyle(
                         color: myBlack,
-                        fontSize: dynamicWidth(context, .046),
+                        fontSize: dynamicWidth(context, .04),
                       ),
                     ),
                     SizedBox(
@@ -423,7 +393,7 @@ Widget farmerRequestCard(
                       category,
                       style: TextStyle(
                         color: myBlack,
-                        fontSize: dynamicWidth(context, .046),
+                        fontSize: dynamicWidth(context, .04),
                       ),
                     ),
                     SizedBox(
@@ -433,7 +403,7 @@ Widget farmerRequestCard(
                       quantity + "/" + unit,
                       style: TextStyle(
                         color: myBlack,
-                        fontSize: dynamicWidth(context, .046),
+                        fontSize: dynamicWidth(context, .04),
                       ),
                     ),
                   ],
@@ -443,30 +413,24 @@ Widget farmerRequestCard(
           ),
           farmer == true || status.toString() != "Pending"
               ? Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Text(
-                      "Status",
-                      style: TextStyle(
-                        color: myBlack,
-                        fontWeight: FontWeight.bold,
-                        fontSize: dynamicWidth(context, .05),
+                    Container(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 10,
+                        vertical: 5,
                       ),
-                    ),
-                    Text(
-                      "  :  ",
-                      style: TextStyle(
-                        color: myBlack,
-                        fontWeight: FontWeight.bold,
-                        fontSize: dynamicWidth(context, .05),
+                      decoration: BoxDecoration(
+                        color: statusColor(status),
+                        borderRadius: BorderRadius.circular(50),
                       ),
-                    ),
-                    Text(
-                      status,
-                      style: TextStyle(
-                        color: myBlack,
-                        fontWeight: FontWeight.bold,
-                        fontSize: dynamicWidth(context, .05),
+                      child: Text(
+                        status,
+                        style: TextStyle(
+                          color: myWhite,
+                          fontWeight: FontWeight.bold,
+                          fontSize: dynamicWidth(context, .035),
+                        ),
                       ),
                     ),
                   ],
@@ -500,4 +464,14 @@ Widget farmerRequestCard(
       ),
     ),
   );
+}
+
+statusColor(status) {
+  if (status == "Accepted") {
+    return myGreen;
+  } else if (status == "Declined") {
+    return myRed;
+  } else {
+    return myYellow;
+  }
 }

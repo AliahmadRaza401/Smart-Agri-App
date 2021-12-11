@@ -182,6 +182,7 @@ class _AddUpdateState extends State<AddUpdate> {
                                 itemName.text,
                                 itemPrice.text,
                                 itemUnit.text,
+                                itemCategory,
                                 _image,
                               );
                             } else {

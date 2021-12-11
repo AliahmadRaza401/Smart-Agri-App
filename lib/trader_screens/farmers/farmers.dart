@@ -116,7 +116,7 @@ class _FarmersState extends State<Farmers> {
                   "All Farmers",
                   style: TextStyle(
                     color: myGreen,
-                    fontSize: dynamicWidth(context, .06),
+                    fontSize: dynamicWidth(context, .05),
                     fontWeight: FontWeight.w600,
                   ),
                 ),

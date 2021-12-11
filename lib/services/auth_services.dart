@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_agri/model/user_model.dart';
 import 'package:smart_agri/services/firebase_services.dart';
+import 'package:smart_agri/start_up/choice.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/trader_screens/authentication/login.dart';
 import 'package:smart_agri/utils/app_route.dart';
@@ -177,7 +178,7 @@ class AuthServices {
   static logOut(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     userLoggedIn(false);
-    AppRoutes.replace(context, const LoginPage());
+    AppRoutes.replace(context, const Choice());
   }
 
   // user Logged
@@ -193,7 +194,7 @@ class AuthServices {
     return boolValue;
   }
 
-    // Farmer Logged
+  // Farmer Logged
   static farmerLoggedIn(value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setBool('farmerLoggedIn', value);
@@ -218,6 +219,4 @@ class AuthServices {
     String? value = prefs.getString('farmerID');
     return value;
   }
-
-
 }

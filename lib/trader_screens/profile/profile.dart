@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -196,24 +198,26 @@ class _ProfileState extends State<Profile> {
                     top: dynamicHeight(context, .14),
                   ),
                   child: Container(
-                    width: dynamicWidth(context, .32),
-                    height: dynamicHeight(context, .16),
-                    decoration: BoxDecoration(
-                      color: myWhite,
-                      borderRadius: BorderRadius.circular(
-                        dynamicWidth(context, .06),
+                      width: dynamicWidth(context, .32),
+                      height: dynamicHeight(context, .16),
+                      decoration: BoxDecoration(
+                        color: myWhite,
+                        borderRadius: BorderRadius.circular(
+                          dynamicWidth(context, .06),
+                        ),
+                        image: DecorationImage(
+                          image: NetworkImage(
+                            "$userImage",
+                          ),
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                      // image: DecorationImage(
-                      //   image: NetworkImage(
-                      //     "$userImage",
-                      //   ),
-                      //   fit: BoxFit.cover,
+                      child: Text("")
+                      //  Image.network(
+
+                      //   userImage.toString(),
                       // ),
-                    ),
-                    child: Image.network(
-                      userImage.toString(),
-                    ),
-                  ),
+                      ),
                 ),
               ],
             ),

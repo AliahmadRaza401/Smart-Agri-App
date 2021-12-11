@@ -9,5 +9,6 @@ const Color myGrey = Color(0xfff0f2f1);
 const Color myYellow = Color(0xfff3cc05);
 const Color myBlack = Color(0xff0c0801);
 const Color noColor = Colors.transparent;
+const Color containerBgColor = Colors.white;
 
 bool obscureText = true;

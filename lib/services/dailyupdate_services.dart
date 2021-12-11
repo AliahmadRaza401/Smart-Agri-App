@@ -2,10 +2,12 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_agri/farmer_screens/services/balance_services.dart';
 import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/utils/app_route.dart';
@@ -16,7 +18,7 @@ class DailyUpdateServices {
   static FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   static addDailyItemToDB(
-      BuildContext context, name, price, unit, imageFile) async {
+      BuildContext context, name, price, unit, category,imageFile) async {
     AuthProvider authProvider =
         Provider.of<AuthProvider>(context, listen: false);
     User? user = _auth.currentUser;
@@ -33,11 +35,18 @@ class DailyUpdateServices {
         'itemName': name,
         'itemPrice': price,
         'itemUnit': unit,
+        'category' : category,
         'date': date,
         'time': time,
         'traderId': user!.uid,
         'image': {'name': now.toString(), 'url': image}
       });
+      BalanceServices.sendRequest(
+        context,
+        user.uid,
+        category,
+        price,
+      );
       authProvider.isLoading(false);
       Fluttertoast.showToast(
         msg: "Added Success",

@@ -100,7 +100,7 @@ Widget profileButton(context, icon, text, {function = ""}) {
         children: [
           Icon(
             icon,
-            color: myBlack,
+            color: myGreen,
           ),
           SizedBox(
             width: dynamicWidth(context, .06),
@@ -110,7 +110,7 @@ Widget profileButton(context, icon, text, {function = ""}) {
             style: TextStyle(
               color: myBlack,
               fontWeight: FontWeight.w500,
-              fontSize: dynamicWidth(context, .048),
+              fontSize: dynamicWidth(context, .04),
             ),
           ),
         ],
