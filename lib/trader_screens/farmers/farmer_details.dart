@@ -8,7 +8,6 @@ import 'package:smart_agri/trader_screens/farmers/update_farmer.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/add_amount_dialog.dart';
-import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -303,7 +302,6 @@ class _FarmerDetailsState extends State<FarmerDetails> {
 
                                 netBalance =
                                     netBalance + int.parse(data['price']);
-                                print('netBalance: $netBalance');
 
                                 return Slidable(
                                   endActionPane: ActionPane(
@@ -312,11 +310,12 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                                       SlidableAction(
                                         flex: 1,
                                         onPressed: (BuildContext context) {
-                                          var balaceId = docs[i].id;
+                                          var balanceId = docs[i].id;
                                           FirebaseServices.deleteBalance(
-                                              context,
-                                              widget.farmerId,
-                                              balaceId);
+                                            context,
+                                            widget.farmerId,
+                                            balanceId,
+                                          );
                                         },
                                         backgroundColor: myRed,
                                         foregroundColor: Colors.white,
