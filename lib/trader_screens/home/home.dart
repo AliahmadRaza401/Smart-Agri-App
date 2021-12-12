@@ -26,10 +26,13 @@ class _HomeState extends State<Home> {
   UserModel loggedInUser = UserModel();
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
+  dynamic leneHen = 0.0, deneHen = 0.0;
+
   @override
   void initState() {
     super.initState();
     getUserData();
+    getBalance();
   }
 
   getUserData() {
@@ -38,6 +41,31 @@ class _HomeState extends State<Home> {
             setState(() {
               loggedInUser = UserModel.fromMap(value.data());
             }),
+          },
+        );
+  }
+
+  getBalance() {
+    _firebaseFirestore
+        .collection('users')
+        .doc(user!.uid)
+        .collection('balance')
+        .get()
+        .then(
+          (value) => {
+            for (var i in value.docs)
+              {
+                if (i.data().isNotEmpty){
+                    setState(() {
+                      leneHen += int.parse(i.data()["leneHen"].toString());
+                    }),
+                  }
+                else{
+                  setState(() {
+                    leneHen = 0;
+                  }),
+                }
+              }
           },
         );
   }
@@ -162,8 +190,8 @@ class _HomeState extends State<Home> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        balanceBox(context, "DEBIT", "80,000", myGreen),
-                        balanceBox(context, "CREDIT", "30,000", myRed),
+                        balanceBox(context, "Yet to Receive", leneHen.toString(), myGreen),
+                        balanceBox(context, "Yet to Give", deneHen.toString(), myRed),
                       ],
                     ),
                   ),
