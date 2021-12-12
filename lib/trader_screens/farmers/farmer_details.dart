@@ -72,7 +72,6 @@ class _FarmerDetailsState extends State<FarmerDetails> {
         actions: [
           InkWell(
             onTap: () async {
-              print("hi");
               var number = widget.mNumber;
               await canLaunch("tel:$number")
                   ? await launch("tel:$number")
@@ -300,49 +299,52 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                               itemBuilder: (_, i) {
                                 final data = docs[i].data();
 
-                                netBalance =
-                                    netBalance + int.parse(data['price']);
-
-                                return Slidable(
-                                  endActionPane: ActionPane(
-                                    motion: const ScrollMotion(),
-                                    children: [
-                                      SlidableAction(
-                                        flex: 1,
-                                        onPressed: (BuildContext context) {
-                                          var balanceId = docs[i].id;
-                                          FirebaseServices.deleteBalance(
-                                            context,
-                                            widget.farmerId,
-                                            balanceId,
-                                          );
-                                        },
-                                        backgroundColor: myRed,
-                                        foregroundColor: Colors.white,
-                                        icon: Icons.delete,
-                                        label: 'Delete',
-                                      ),
-                                    ],
-                                  ),
-                                  child: Center(
-                                    child: farmerRecordCard(
-                                      context,
-                                      data['name'],
-                                      data['price'],
-                                      data['date'],
-                                      data['time'],
+                                if (data.containsKey("price") == true) {
+                                  netBalance =
+                                      netBalance + int.parse(data['price']);
+                                  return Slidable(
+                                    endActionPane: ActionPane(
+                                      motion: const ScrollMotion(),
+                                      children: [
+                                        SlidableAction(
+                                          flex: 1,
+                                          onPressed: (BuildContext context) {
+                                            var balanceId = docs[i].id;
+                                            FirebaseServices.deleteBalance(
+                                              context,
+                                              widget.farmerId,
+                                              balanceId,
+                                            );
+                                          },
+                                          backgroundColor: myRed,
+                                          foregroundColor: Colors.white,
+                                          icon: Icons.delete,
+                                          label: 'Delete',
+                                        ),
+                                      ],
                                     ),
-                                    // farmerRecordCard(
-                                    //   context,
-                                    //   data['name'],
-                                    //   FontWeight.w400,
-                                    //    data['price'],
+                                    child: Center(
+                                      child: farmerRecordCard(
+                                        context,
+                                        data['name'],
+                                        data['price'],
+                                        data['date'],
+                                        data['time'],
+                                      ),
+                                      // farmerRecordCard(
+                                      //   context,
+                                      //   data['name'],
+                                      //   FontWeight.w400,
+                                      //    data['price'],
 
-                                    //   date: data['date'],
-                                    //   time: data['time'],
-                                    // ),
-                                  ),
-                                );
+                                      //   date: data['date'],
+                                      //   time: data['time'],
+                                      // ),
+                                    ),
+                                  );
+                                } else {
+                                  return const SizedBox();
+                                }
                               },
                             );
                           }
