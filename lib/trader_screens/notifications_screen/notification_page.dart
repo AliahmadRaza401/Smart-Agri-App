@@ -118,16 +118,24 @@ class _NotificationPageState extends State<NotificationPage> {
                                 await FirebaseFirestore.instance
                                     .collection("users")
                                     .doc(user!.uid)
-                                    .update(
+                                    .collection("balance")
+                                    .doc(data["farmerId"])
+                                    .set(
                                   {
+                                    'traderId': user!.uid,
+                                    'farmerId': data["farmerId"],
                                     'leneHen': price,
                                   },
                                 );
                                 await FirebaseFirestore.instance
                                     .collection("farmers")
                                     .doc(data["farmerId"])
-                                    .update(
+                                    .collection("balance")
+                                    .doc(user!.uid)
+                                    .set(
                                   {
+                                    'traderId': user!.uid,
+                                    'farmerId': data["farmerId"],
                                     'deneHen': price,
                                   },
                                 );
