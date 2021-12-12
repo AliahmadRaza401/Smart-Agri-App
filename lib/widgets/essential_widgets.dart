@@ -282,7 +282,7 @@ Widget oopsAlert(context, message) {
 }
 
 Widget farmerRequestCard(
-    context, image, number, name, category, quantity, unit, status,
+    context, image,farmerName , number,name, category, quantity, unit, status,
     {farmer = "", function1 = "", function2 = ""}) {
   return Padding(
     padding: EdgeInsets.symmetric(
@@ -317,7 +317,7 @@ Widget farmerRequestCard(
               SizedBox(
                 width: dynamicWidth(context, .46),
                 child: Text(
-                  name,
+                  farmerName,
                   style: TextStyle(
                     color: myBlack,
                     fontWeight: FontWeight.bold,

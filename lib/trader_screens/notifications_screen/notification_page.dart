@@ -71,10 +71,12 @@ class _NotificationPageState extends State<NotificationPage> {
                       itemCount: docs.length,
                       itemBuilder: (context, i) {
                         final data = docs[i].data();
+                        print('data trader: $data');
                         return farmerRequestCard(
                           context,
-                          "image",
-                          "number",
+                          data["farmerImage"].toString(),
+                          data["farmerName"].toString(),
+                          data["farmerNumber"].toString(),
                           data["itemName"].toString(),
                           data["category"].toString(),
                           data["quantity"].toString(),

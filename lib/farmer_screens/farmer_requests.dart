@@ -32,11 +32,13 @@ class _FarmerRequestsState extends State<FarmerRequests> {
         .get()
         .then(
           (value) => {
+            print(value.data()),
             setState(
               () {
                 traderId = value.data()!["traderId"];
                 farmerName = value.data()!["firstName"];
-                farmerImage = value.data()!["image"]["src"];
+                farmerImage = value.data()!["image"]["url"];
+
                 farmerNumber = value.data()!["mobileNumber"];
               },
             ),
@@ -124,13 +126,16 @@ class _FarmerRequestsState extends State<FarmerRequests> {
                       horizontal: dynamicWidth(context, .02),
                     ),
                     child: ListView.builder(
+                      // reverse: true,
                       itemCount: docs.length,
                       itemBuilder: (context, i) {
                         final data = docs[i].data();
+                        // print('data get: $data');
                         return farmerRequestCard(
                           context,
-                          "image",
-                          "number",
+                          data["farmerImage"].toString(),
+                          data["farmerName"].toString(),
+                          data["farmerNumber"].toString(),
                           data["itemName"].toString(),
                           data["category"].toString(),
                           data["quantity"].toString(),

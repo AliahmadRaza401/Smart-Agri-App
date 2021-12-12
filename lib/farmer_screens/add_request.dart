@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_agri/farmer_screens/services/farmer_services.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
@@ -44,7 +45,7 @@ class _AddRequestState extends State<AddRequest> {
   @override
   Widget build(BuildContext context) {
     // bool loading = Provider.of<HomeProvider>(context).isLoading;
-
+    print(widget.farmerImage);
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
@@ -208,6 +209,7 @@ class _AddRequestState extends State<AddRequest> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       button(context, "ADD", () {
+                        print(widget.farmerImage);
                         if (_formKey.currentState!.validate()) {
                           FarmerServices.sendRequest(
                             context,
