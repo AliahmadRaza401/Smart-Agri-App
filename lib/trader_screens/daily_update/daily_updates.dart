@@ -70,7 +70,11 @@ class _DailyUpdatesState extends State<DailyUpdates> {
             padding: EdgeInsets.symmetric(
               vertical: dynamicHeight(context, .02),
             ),
-            child: SizedBox(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: myWhite,
+              ),
               width: dynamicWidth(context, .9),
               child: inputTextField(
                 context,

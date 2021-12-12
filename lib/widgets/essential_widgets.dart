@@ -282,7 +282,7 @@ Widget oopsAlert(context, message) {
 }
 
 Widget farmerRequestCard(
-    context, image,farmerName , number,name, category, quantity, unit, status,
+    context, image, farmerName, number, name, category, quantity, unit, status,
     {farmer = "", function1 = "", function2 = ""}) {
   return Padding(
     padding: EdgeInsets.symmetric(
@@ -311,7 +311,11 @@ Widget farmerRequestCard(
                 child: CircleAvatar(
                   radius: dynamicWidth(context, .075),
                   backgroundColor: myWhite,
-                  backgroundImage: NetworkImage(image),
+                  backgroundImage: NetworkImage(
+                    image == "" || image == null
+                        ? 'https://www.clipartkey.com/mpngs/m/87-871244_this-free-icons-png-design-of-male-avatar.png'
+                        : image,
+                  ),
                 ),
               ),
               SizedBox(

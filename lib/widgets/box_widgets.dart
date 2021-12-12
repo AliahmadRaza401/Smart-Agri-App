@@ -32,7 +32,7 @@ Widget balanceBox(context, title, amount, color) {
               title,
               style: TextStyle(
                 color: myBlack,
-                fontSize: dynamicWidth(context, .054),
+                fontSize: dynamicWidth(context, .048),
               ),
             ),
           ],
