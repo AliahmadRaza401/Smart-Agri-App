@@ -337,78 +337,81 @@ Widget farmerRequestCard(
               ),
             ],
           ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: dynamicHeight(context, .03),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Item Name : ",
-                      style: TextStyle(
-                        color: myBlack,
-                        fontSize: dynamicWidth(context, .04),
+          InkWell(
+            onTap: function1,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: dynamicHeight(context, .03),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Item Name : ",
+                        style: TextStyle(
+                          color: myBlack,
+                          fontSize: dynamicWidth(context, .04),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: dynamicHeight(context, .006),
-                    ),
-                    Text(
-                      "Category : ",
-                      style: TextStyle(
-                        color: myBlack,
-                        fontSize: dynamicWidth(context, .04),
+                      SizedBox(
+                        height: dynamicHeight(context, .006),
                       ),
-                    ),
-                    SizedBox(
-                      height: dynamicHeight(context, .006),
-                    ),
-                    Text(
-                      "Quantity/Unit : ",
-                      style: TextStyle(
-                        color: myBlack,
-                        fontSize: dynamicWidth(context, .04),
+                      Text(
+                        "Category : ",
+                        style: TextStyle(
+                          color: myBlack,
+                          fontSize: dynamicWidth(context, .04),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      name,
-                      style: TextStyle(
-                        color: myBlack,
-                        fontSize: dynamicWidth(context, .04),
+                      SizedBox(
+                        height: dynamicHeight(context, .006),
                       ),
-                    ),
-                    SizedBox(
-                      height: dynamicHeight(context, .006),
-                    ),
-                    Text(
-                      category,
-                      style: TextStyle(
-                        color: myBlack,
-                        fontSize: dynamicWidth(context, .04),
+                      Text(
+                        "Quantity/Unit : ",
+                        style: TextStyle(
+                          color: myBlack,
+                          fontSize: dynamicWidth(context, .04),
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      height: dynamicHeight(context, .006),
-                    ),
-                    Text(
-                      quantity + "/" + unit,
-                      style: TextStyle(
-                        color: myBlack,
-                        fontSize: dynamicWidth(context, .04),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        name,
+                        style: TextStyle(
+                          color: myBlack,
+                          fontSize: dynamicWidth(context, .04),
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              ],
+                      SizedBox(
+                        height: dynamicHeight(context, .006),
+                      ),
+                      Text(
+                        category,
+                        style: TextStyle(
+                          color: myBlack,
+                          fontSize: dynamicWidth(context, .04),
+                        ),
+                      ),
+                      SizedBox(
+                        height: dynamicHeight(context, .006),
+                      ),
+                      Text(
+                        quantity + "/" + unit,
+                        style: TextStyle(
+                          color: myBlack,
+                          fontSize: dynamicWidth(context, .04),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           farmer == true || status.toString() != "Pending"
