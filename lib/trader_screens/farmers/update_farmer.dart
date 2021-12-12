@@ -240,7 +240,8 @@ class _UpdateFarmerState extends State<UpdateFarmer> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            button(context, "UPDATE", () {
+                            button(context, "UPDATE",
+                               () {
                               if (_formKey.currentState!.validate()) {
                                 FarmerServicesTrader.updateFarmerToDB(
                                   context,

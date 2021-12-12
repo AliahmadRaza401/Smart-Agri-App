@@ -168,7 +168,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
         backgroundColor: myGreen,
         elevation: 4.0,
         label: AutoSizeText(
-          'Add Balance',
+          'Sale Item',
           style: TextStyle(
             color: myWhite,
             fontSize: dynamicWidth(context, .04),
@@ -272,12 +272,6 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                   ),
                   farmerRecordCardHeading(
                     context,
-                    "Entries",
-                    FontWeight.w600,
-                    myBlack,
-                    debit: "Sent",
-                    credit: "Received",
-                    heading: true,
                   ),
                   Flexible(
                     child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
@@ -335,17 +329,19 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                                     child: farmerRecordCard(
                                       context,
                                       data['name'],
-                                      FontWeight.w400,
-                                      myBlack,
-                                      debit: data['type'] == 'dabit'
-                                          ? data['price']
-                                          : "",
-                                      credit: data['type'] != 'dabit'
-                                          ? data['price']
-                                          : "",
-                                      date: data['date'],
-                                      time: data['time'],
+                                      data['price'],
+                                      data['date'],
+                                      data['time'],
                                     ),
+                                    // farmerRecordCard(
+                                    //   context,
+                                    //   data['name'],
+                                    //   FontWeight.w400,
+                                    //    data['price'],
+
+                                    //   date: data['date'],
+                                    //   time: data['time'],
+                                    // ),
                                   ),
                                 );
                               },

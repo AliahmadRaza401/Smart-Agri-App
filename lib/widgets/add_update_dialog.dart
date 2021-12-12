@@ -201,7 +201,7 @@ class _AddUpdateState extends State<AddUpdate> {
                         color: myWhite,
                         btnColor: myGreen,
                       ),
-                      button(
+                      cancelButton(
                         context,
                         "Cancel",
                         () {

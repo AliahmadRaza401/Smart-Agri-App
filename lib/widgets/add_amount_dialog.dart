@@ -55,7 +55,7 @@ class _AddAmountState extends State<AddAmount> {
           dynamicWidth(context, .04),
         ),
       ),
-      backgroundColor: greenLite,
+      backgroundColor: containerBgColor,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -220,7 +220,7 @@ class _AddAmountState extends State<AddAmount> {
                                   widget.farmerId,
                                   itemName.text,
                                   itemPrice.text,
-                                  "");
+                                  "cradit");
                             }
                           },
                           width: dynamicWidth(context, .3),
@@ -228,8 +228,9 @@ class _AddAmountState extends State<AddAmount> {
                           fontSize: dynamicWidth(context, .042),
                           color: myWhite,
                           btnColor: myGreen,
+                          
                         ),
-                        button(
+                        cancelButton(
                           context,
                           "Cancel",
                           () {

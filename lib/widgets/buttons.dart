@@ -3,8 +3,17 @@ import 'package:flutter/material.dart';
 import '../utils/config.dart';
 import 'dynamic_size.dart';
 
-Widget button(context, text, function,
-    {width = "", height = "", fontSize = "", color = "", btnColor = ""}) {
+Widget button(
+  context,
+  text,
+  function, {
+  width = "",
+  height = "",
+  fontSize = "",
+  color = "",
+  btnColor = "",
+ 
+}) {
   return InkWell(
     onTap: function == "" ? () {} : function,
     child: Container(
@@ -13,6 +22,54 @@ Widget button(context, text, function,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(
           dynamicWidth(context, .6),
+        ),
+
+        gradient: LinearGradient(
+          colors: [
+            btnColor == "" ? myGreen : btnColor,
+            btnColor == "" ? myLiteGreen : btnColor,
+          ],
+          begin: const FractionalOffset(0.0, 0.0),
+          end: const FractionalOffset(1.0, 0.0),
+          stops: const [0.0, 1.0],
+          tileMode: TileMode.clamp,
+        ),
+      ),
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyle(
+            color: color == "" ? myWhite : color,
+            fontSize: fontSize == "" ? dynamicWidth(context, .054) : fontSize,
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Widget cancelButton(
+  context,
+  text,
+  function, {
+  width = "",
+  height = "",
+  fontSize = "",
+  color = "",
+  btnColor = "",
+}) {
+  return InkWell(
+    onTap: function == "" ? () {} : function,
+    child: Container(
+      width: width == "" ? dynamicWidth(context, .8) : width,
+      height: height == "" ? dynamicHeight(context, .064) : height,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(
+          dynamicWidth(context, .6),
+        ),
+        border: Border.all(
+          color: myRed, //                   <--- border color
+          width: 2.0,
         ),
         gradient: LinearGradient(
           colors: [

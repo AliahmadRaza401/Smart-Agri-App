@@ -1,3 +1,5 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
@@ -84,8 +86,7 @@ Widget noDataError(context, image, page, imageSize, {farmer = false}) {
   );
 }
 
-Widget farmerRecordCard(context, entry, bold, textColor,
-    {debit = "", credit = "", heading, date, time}) {
+Widget farmerRecordCard(context, entry, amount, date, time) {
   return Container(
     margin: EdgeInsets.symmetric(vertical: 2),
     decoration: BoxDecoration(
@@ -95,61 +96,73 @@ Widget farmerRecordCard(context, entry, bold, textColor,
     child: Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(
+            Container(
               height: dynamicHeight(context, .08),
-              width: dynamicWidth(context, .41),
+              width: dynamicWidth(context, .5),
               child: Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    Text(
-                      entry,
-                      style: TextStyle(
-                        color: myBlack,
-                        fontSize: heading == true
-                            ? dynamicWidth(context, .042)
-                            : dynamicWidth(context, .040),
-                        fontWeight: bold,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Container(
+                          // color: Colors.amber,
+                          padding: EdgeInsets.symmetric(horizontal: 10),
+                          alignment: Alignment.center,
+                          width: dynamicWidth(context, .5),
+                          child: Text(
+                            entry,
+                            style: TextStyle(
+                              color: myBlack,
+                              fontSize: dynamicWidth(context, .040),
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    Text('${date}' + '$time'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('${date}'),
+                      ],
+                    ),
+
+                    // Text('$time'),
                   ],
                 ),
               ),
             ),
             Container(
+              // color: Colors.yellow,
               height: dynamicHeight(context, .08),
-              width: dynamicWidth(context, .25),
-              color: heading == true ? noColor : greenLite,
-              child: Center(
-                child: Text(
-                  heading == true ? credit : "$credit",
-                  style: TextStyle(
-                    color: myGreen,
-                    fontSize: heading == true
-                        ? dynamicWidth(context, .042)
-                        : dynamicWidth(context, .040),
-                    fontWeight: bold,
+              width: dynamicWidth(context, .38),
+              child: Row(
+                children: [
+                  Container(
+                    height: dynamicHeight(context, .075),
+                    width: dynamicWidth(context, .01),
+                    decoration: BoxDecoration(
+                      color: greenLite,
+                    ),
                   ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: dynamicHeight(context, .08),
-              width: dynamicWidth(context, .22),
-              child: Center(
-                child: Text(
-                  heading == true ? debit : "$debit",
-                  style: TextStyle(
-                    color: myRed,
-                    fontSize: heading == true
-                        ? dynamicWidth(context, .042)
-                        : dynamicWidth(context, .040),
-                    fontWeight: bold,
+                  Container(
+                    height: dynamicHeight(context, .08),
+                    width: dynamicWidth(context, .35),
+                    alignment: Alignment.center,
+                    child: Text(
+                      "Rs: $amount",
+                      style: TextStyle(
+                        color: myBlack,
+                        fontSize: dynamicWidth(context, .040),
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
             ),
           ],
@@ -161,13 +174,7 @@ Widget farmerRecordCard(context, entry, bold, textColor,
 
 Widget farmerRecordCardHeading(
   context,
-  entry,
-  bold,
-  textColor, {
-  debit = "",
-  credit = "",
-  heading,
-}) {
+) {
   return Container(
     margin: EdgeInsets.symmetric(vertical: 2),
     decoration: BoxDecoration(
@@ -177,23 +184,22 @@ Widget farmerRecordCardHeading(
     child: Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SizedBox(
+            Container(
+              // color: Colors.amber,
               height: dynamicHeight(context, .08),
-              width: dynamicWidth(context, .41),
+              width: dynamicWidth(context, .51),
               child: Center(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      entry,
+                      "Items",
                       style: TextStyle(
                         color: myBlack,
-                        fontSize: heading == true
-                            ? dynamicWidth(context, .042)
-                            : dynamicWidth(context, .040),
-                        fontWeight: bold,
+                        fontSize: dynamicWidth(context, .040),
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ],
@@ -202,33 +208,15 @@ Widget farmerRecordCardHeading(
             ),
             Container(
               height: dynamicHeight(context, .08),
-              width: dynamicWidth(context, .25),
-              color: heading == true ? noColor : greenLite,
+              width: dynamicWidth(context, .38),
+              color: greenLite,
               child: Center(
                 child: Text(
-                  heading == true ? credit : "$credit",
+                  "Total",
                   style: TextStyle(
                     color: myGreen,
-                    fontSize: heading == true
-                        ? dynamicWidth(context, .042)
-                        : dynamicWidth(context, .040),
-                    fontWeight: bold,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              height: dynamicHeight(context, .08),
-              width: dynamicWidth(context, .22),
-              child: Center(
-                child: Text(
-                  heading == true ? debit : "$debit",
-                  style: TextStyle(
-                    color: myRed,
-                    fontSize: heading == true
-                        ? dynamicWidth(context, .042)
-                        : dynamicWidth(context, .040),
-                    fontWeight: bold,
+                    fontSize: dynamicWidth(context, .042),
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
