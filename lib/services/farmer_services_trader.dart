@@ -113,7 +113,6 @@ class FarmerServicesTrader {
     farmerId,
     name,
     price,
-    balanceType,
   ) async {
     print('adding Farmer Amount...........:');
     DateTime now = DateTime.now();
@@ -124,6 +123,13 @@ class FarmerServicesTrader {
     User? user = _auth.currentUser;
     authProvider.isLoading(true);
 
+    dynamic t1 = (int.parse(price.toString()) / 100);
+    dynamic deduction = (t1 * 2.75);
+    dynamic finalPrice = (int.parse(price.toString()) - deduction);
+
+
+
+
     try {
       firebaseFirestore
           .collection("farmers")
@@ -131,11 +137,12 @@ class FarmerServicesTrader {
           .collection("balance")
           .add(
         {
-          'type': balanceType,
           'name': name,
           'price': price,
           'date': date,
           'time': time,
+          'deductions': deduction,
+          'finalBalance': finalPrice,
         },
       );
       authProvider.isLoading(false);
