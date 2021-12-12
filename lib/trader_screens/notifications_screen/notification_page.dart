@@ -117,7 +117,7 @@ class _NotificationPageState extends State<NotificationPage> {
                               if (check == true) {
                                 await FirebaseFirestore.instance
                                     .collection("users")
-                                    .doc(docs[i].reference.id)
+                                    .doc(user!.uid)
                                     .update(
                                   {
                                     'leneHen': price,
@@ -125,7 +125,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                 );
                                 await FirebaseFirestore.instance
                                     .collection("farmers")
-                                    .doc(docs[i].reference.id)
+                                    .doc(data["farmerId"])
                                     .update(
                                   {
                                     'deneHen': price,

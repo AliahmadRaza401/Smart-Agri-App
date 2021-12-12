@@ -25,9 +25,10 @@ class _AddUpdateState extends State<AddUpdate> {
   String itemCategory = "";
   File? _image;
   List<String> dropdownList = <String>[
-    'Crops',
+    "Select Category",
     'Fertilizers',
-    'Sprays',
+    'Pesticides',
+    'Seed',
     'Cash',
   ];
 
@@ -177,14 +178,24 @@ class _AddUpdateState extends State<AddUpdate> {
                         () {
                           if (_formKey.currentState!.validate()) {
                             if (_image != null) {
-                              DailyUpdateServices.addDailyItemToDB(
-                                context,
-                                itemName.text,
-                                itemPrice.text,
-                                itemUnit.text,
-                                itemCategory,
-                                _image,
-                              );
+                              if (itemCategory != "") {
+                                DailyUpdateServices.addDailyItemToDB(
+                                  context,
+                                  itemName.text,
+                                  itemPrice.text,
+                                  itemUnit.text,
+                                  itemCategory,
+                                  _image,
+                                );
+                              }
+                              else {
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return oopsAlert(context, "Fill All Fields");
+                                  },
+                                );
+                              }
                             } else {
                               showDialog(
                                 context: context,

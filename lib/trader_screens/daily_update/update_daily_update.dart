@@ -1,7 +1,6 @@
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_agri/services/dailyupdate_services.dart';
-import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
@@ -31,9 +30,9 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
   dynamic itemCategory = "";
 
   List<String> dropdownList = <String>[
-    'Crops',
     'Fertilizers',
-    'Sprays',
+    'Pesticides',
+    'Seed',
     'Cash',
   ];
 
@@ -76,8 +75,8 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                           height: dynamicHeight(context, .02),
                         ),
                         TextFormField(
-                          controller: itemName,
-                          // ..text = widget.itemName.toString(),
+                          controller: itemName
+                            ..text = widget.itemName.toString(),
                           keyboardType: TextInputType.text,
                           decoration: const InputDecoration(
                             hintText: "item Name",
@@ -94,8 +93,7 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                           height: dynamicHeight(context, .02),
                         ),
                         TextFormField(
-                          controller: itemPrice,
-                          // ..text = widget.price.toString(),
+                          controller: itemPrice..text = widget.price.toString(),
                           keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                             hintText: "Price",
@@ -112,8 +110,7 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                           height: dynamicHeight(context, .02),
                         ),
                         TextFormField(
-                          controller: itemUnit,
-                          // ..text = widget.unit.toString(),
+                          controller: itemUnit..text = widget.unit.toString(),
                           keyboardType: TextInputType.text,
                           decoration: const InputDecoration(
                             hintText: "Unit",
@@ -159,11 +156,13 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                       button(context, "UPDATE", () {
                         if (_formKey.currentState!.validate()) {
                           DailyUpdateServices.updateDailyItemToDB(
-                              context,
-                              widget.docsId,
-                              itemName.text.toLowerCase(),
-                              itemPrice.text,
-                              itemUnit.text);
+                            context,
+                            widget.docsId,
+                            itemName.text.toLowerCase(),
+                            itemPrice.text,
+                            itemUnit.text,
+                            itemCategory,
+                          );
                         }
                       },
                           width: dynamicWidth(context, .3),

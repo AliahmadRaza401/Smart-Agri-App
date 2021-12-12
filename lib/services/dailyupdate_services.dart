@@ -2,7 +2,6 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -18,7 +17,7 @@ class DailyUpdateServices {
   static FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
   static addDailyItemToDB(
-      BuildContext context, name, price, unit, category,imageFile) async {
+      BuildContext context, name, price, unit, category, imageFile) async {
     AuthProvider authProvider =
         Provider.of<AuthProvider>(context, listen: false);
     User? user = _auth.currentUser;
@@ -35,7 +34,7 @@ class DailyUpdateServices {
         'itemName': name,
         'itemPrice': price,
         'itemUnit': unit,
-        'category' : category,
+        'category': category,
         'date': date,
         'time': time,
         'traderId': user!.uid,
@@ -74,6 +73,7 @@ class DailyUpdateServices {
     name,
     price,
     unit,
+    itemCategory,
   ) async {
     AuthProvider authProvider =
         Provider.of<AuthProvider>(context, listen: false);
@@ -89,6 +89,7 @@ class DailyUpdateServices {
         'itemName': name,
         'itemPrice': price,
         'itemUnit': unit,
+        'category' : itemCategory,
         'date': date,
         'time': time,
         'traderId': user!.uid,
