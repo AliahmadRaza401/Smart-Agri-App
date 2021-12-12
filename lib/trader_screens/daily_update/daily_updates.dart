@@ -197,7 +197,7 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                                 data['date'],
                                 data['itemPrice'],
                                 data['itemUnit'],
-                                "category",
+                                data['category'],
                                 data['image']['url'],
                               ),
                             ),

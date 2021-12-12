@@ -220,7 +220,7 @@ class _AddAmountState extends State<AddAmount> {
                                   widget.farmerId,
                                   itemName.text,
                                   itemPrice.text,
-                                  "cradit");
+                              );
                             }
                           },
                           width: dynamicWidth(context, .3),
