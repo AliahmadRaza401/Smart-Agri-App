@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/app_buttons.dart';
+import 'package:smart_agri/widgets/buttons.dart';
 
 class GeneralDialogs {
   static Future showSuccessDialog(context, String message) {
@@ -304,10 +305,11 @@ class OopsDialog extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             SizedBox(height: 30),
-            NormalButton(
-              buttonText: "OK",
-              onTap: () => Navigator.pop(context),
-            )
+            button(context, "Ok", () {}),
+            // NormalButton(
+            //   buttonText: "OK",
+            //   onTap: () => Navigator.pop(context),
+            // )
           ],
         ),
       ),

@@ -41,7 +41,7 @@ class _UpdateFarmerState extends State<UpdateFarmer> {
           dynamicWidth(context, .04),
         ),
       ),
-      backgroundColor: greenLite,
+      backgroundColor: containerBgColor,
       child: SizedBox(
         height: dynamicHeight(context, .76),
         child: Stack(
@@ -69,7 +69,7 @@ class _UpdateFarmerState extends State<UpdateFarmer> {
                                 "Update Farmer",
                                 style: TextStyle(
                                   color: myGreen,
-                                  fontSize: dynamicWidth(context, .07),
+                                  fontSize: dynamicWidth(context, .05),
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -240,8 +240,7 @@ class _UpdateFarmerState extends State<UpdateFarmer> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            button(context, "UPDATE",
-                               () {
+                            button(context, "UPDATE", () {
                               if (_formKey.currentState!.validate()) {
                                 FarmerServicesTrader.updateFarmerToDB(
                                   context,
@@ -260,7 +259,7 @@ class _UpdateFarmerState extends State<UpdateFarmer> {
                                 fontSize: dynamicWidth(context, .042),
                                 color: myWhite,
                                 btnColor: myGreen),
-                            button(
+                            cancelButton(
                               context,
                               "Cancel",
                               () {

@@ -60,6 +60,7 @@ class FarmerServicesTrader {
       authProvider.isLoading(false);
       print("Catch Error");
       Fluttertoast.showToast(
+        
         msg: e.toString(),
         backgroundColor: myGreen,
         textColor: myWhite,

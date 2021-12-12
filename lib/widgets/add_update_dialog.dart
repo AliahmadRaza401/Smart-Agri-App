@@ -1,7 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_agri/services/dailyupdate_services.dart';
+import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/utils/image_piker.dart';
@@ -33,13 +35,15 @@ class _AddUpdateState extends State<AddUpdate> {
 
   @override
   Widget build(BuildContext context) {
+    var loading = Provider.of<AuthProvider>(context).loading;
+
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
           dynamicWidth(context, .04),
         ),
       ),
-      backgroundColor: greenLite,
+      backgroundColor: containerBgColor,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -173,7 +177,7 @@ class _AddUpdateState extends State<AddUpdate> {
                     children: [
                       button(
                         context,
-                        "ADD",
+                        loading ? "Adding..." : "ADD",
                         () {
                           if (_formKey.currentState!.validate()) {
                             if (_image != null) {

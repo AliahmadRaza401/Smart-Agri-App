@@ -8,7 +8,14 @@ import 'package:smart_agri/widgets/dynamic_size.dart';
 class AddRequest extends StatefulWidget {
   final dynamic farmerId, traderId, farmerImage, farmerName, farmerNumber;
 
-  const AddRequest({Key? key, this.farmerId, this.traderId, this.farmerImage, this.farmerName, this.farmerNumber}) : super(key: key);
+  const AddRequest(
+      {Key? key,
+      this.farmerId,
+      this.traderId,
+      this.farmerImage,
+      this.farmerName,
+      this.farmerNumber})
+      : super(key: key);
 
   @override
   State<AddRequest> createState() => _AddRequestState();
@@ -44,7 +51,7 @@ class _AddRequestState extends State<AddRequest> {
           dynamicWidth(context, .04),
         ),
       ),
-      backgroundColor: greenLite,
+      backgroundColor: containerBgColor,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -191,7 +198,6 @@ class _AddRequestState extends State<AddRequest> {
                             ),
                           ),
                         ),
-
                         SizedBox(
                           height: dynamicHeight(context, .02),
                         ),
@@ -222,7 +228,7 @@ class _AddRequestState extends State<AddRequest> {
                           fontSize: dynamicWidth(context, .042),
                           color: myWhite,
                           btnColor: myGreen),
-                      button(
+                      cancelButton(
                         context,
                         "Cancel",
                         () {

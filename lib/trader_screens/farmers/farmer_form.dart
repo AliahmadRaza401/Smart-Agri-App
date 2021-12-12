@@ -255,7 +255,8 @@ class _FarmerFormState extends State<FarmerForm> {
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
-                                return oopsAlert(context, "Add image");
+                                return oopsAlert(context,
+                                    "Image is required! \n kindly Add any image");
                               },
                             );
                           }

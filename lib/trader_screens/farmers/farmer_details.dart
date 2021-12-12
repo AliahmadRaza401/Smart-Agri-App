@@ -100,7 +100,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                       color: myGreen,
                     ),
                     title: Text(
-                      'Update',
+                      'Edit',
                       style: TextStyle(
                         color: myGreen,
                         fontWeight: FontWeight.w600,

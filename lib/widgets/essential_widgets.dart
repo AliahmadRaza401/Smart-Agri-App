@@ -248,21 +248,33 @@ Widget oopsAlert(context, message) {
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 30),
+          SizedBox(height: 40),
           Text(
             message,
             style: TextStyle(fontSize: 18),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: 30),
-          SizedBox(
-            height: MediaQuery.of(context).size.height * 0.06,
-            width: MediaQuery.of(context).size.width * 0.4,
-            child: NormalButton(
-              buttonText: "OK",
-              onTap: () => Navigator.pop(context),
-            ),
-          )
+          SizedBox(height: 40),
+          Container(
+              height: MediaQuery.of(context).size.height * 0.05,
+              width: MediaQuery.of(context).size.width * 0.4,
+              child: button(
+                context,
+                "OK",
+                () {
+                  AppRoutes.pop(context);
+                },
+                fontSize: MediaQuery.of(context).size.width * 0.045,
+              )),
+          // Container(
+          //   height: MediaQuery.of(context).size.height * 0.06,
+          //   width: MediaQuery.of(context).size.width * 0.4,
+          //   decoration: BoxDecoration(borderRadius: BorderRadius.circular(50)),
+          //   child: NormalButton(
+          //     buttonText: "OK",
+          //     onTap: () => Navigator.pop(context),
+          //   ),
+          // )
         ],
       ),
     ),
@@ -326,7 +338,7 @@ Widget farmerRequestCard(
             ],
           ),
           InkWell(
-            onTap: function1,
+            onTap: () {},
             child: Padding(
               padding: EdgeInsets.symmetric(
                 vertical: dynamicHeight(context, .03),

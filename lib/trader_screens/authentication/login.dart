@@ -29,8 +29,19 @@ class _LoginPageState extends State<LoginPage> {
   final email = TextEditingController();
   final password = TextEditingController();
   final fUsername = TextEditingController();
+  late AuthProvider _authProvider;
+  @override
+  void initState() {
+    super.initState();
+    _authProvider = Provider.of<AuthProvider>(context, listen: false);
+    email.clear();
+    password.clear();
+  }
 
   loginCheck() async {
+    setState(() {
+      _authProvider.isLoading(true);
+    });
     dynamic check, id;
     await FirebaseFirestore.instance
         .collection("farmers")
@@ -48,37 +59,34 @@ class _LoginPageState extends State<LoginPage> {
         }
       }
       if (check == true) {
-        AuthServices.farmerLoggedIn(true);
+        setState(() {
+          _authProvider.isLoading(false);
+          AuthServices.farmerLoggedIn(true);
+        });
+
         AppRoutes.replace(
           context,
           FarmerBottomNav(
             farmerId: id,
           ),
         );
-
       } else if (check == false) {
+        setState(() {
+          _authProvider.isLoading(false);
+        });
         Fluttertoast.showToast(
           msg: "Invalid UserName or Password\nTry Again!!",
           backgroundColor: myGreen,
           textColor: myWhite,
-          gravity: ToastGravity.CENTER,
+          gravity: ToastGravity.BOTTOM,
         );
       }
     });
   }
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-
-    email.clear();
-    password.clear();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    var loading = Provider.of<AuthProvider>(context).loading;
+    print(_authProvider.loading);
     return SafeArea(
       child: Container(
         width: dynamicWidth(context, 1),
@@ -86,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              "assets/bg.jpg",
+              "assets/bg.jpeg",
             ),
             fit: BoxFit.cover,
           ),
@@ -205,8 +213,11 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                           child: button(
                             context,
-                            loading == true ? "Loading..." : "Login",
+                            _authProvider.loading == true
+                                ? "Loading..."
+                                : "Login",
                             () {
+                              print(_authProvider.loading);
                               if (!_formKey.currentState!.validate()) {
                                 return;
                               } else {
