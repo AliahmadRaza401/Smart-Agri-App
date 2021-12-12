@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -154,6 +155,31 @@ class _FarmerDetailsState extends State<FarmerDetails> {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (context) => AddAmount(
+              farmerId: widget.farmerId,
+            ),
+          );
+        },
+        backgroundColor: myGreen,
+        elevation: 4.0,
+        label: AutoSizeText(
+          'Add Balance',
+          style: TextStyle(
+            color: myWhite,
+            fontSize: dynamicWidth(context, .04),
+            fontWeight: FontWeight.w400,
+          ),
+          maxLines: 1,
+        ),
+        icon: const Icon(
+          Icons.add,
+          color: myWhite,
+        ),
       ),
       body: Column(
         children: [
@@ -338,46 +364,6 @@ class _FarmerDetailsState extends State<FarmerDetails> {
           ),
           SizedBox(
             height: dynamicHeight(context, .02),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              redButton(
-                context,
-                "You Gave Rs.",
-                () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AddAmount(
-                      farmerId: widget.farmerId,
-                      balanceType: 'dabit',
-                    ),
-                  );
-                },
-                width: dynamicWidth(context, .36),
-                fontSize: dynamicWidth(context, .042),
-              ),
-              button(
-                context,
-                "You Got Rs.",
-                () {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AddAmount(
-                      farmerId: widget.farmerId,
-                      balanceType: 'credit',
-                    ),
-                  );
-                },
-                width: dynamicWidth(context, .36),
-                fontSize: dynamicWidth(context, .042),
-                color: myWhite,
-                btnColor: myGreen,
-              ),
-            ],
-          ),
-          SizedBox(
-            height: dynamicHeight(context, .01),
           ),
         ],
       ),
