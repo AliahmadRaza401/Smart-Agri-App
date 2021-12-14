@@ -23,6 +23,7 @@ class FarmerServices {
     farmerNumber,
     itemName,
     category,
+    subCategory,
     unit,
     quantity,
   ) async {
@@ -36,6 +37,7 @@ class FarmerServices {
       'farmerNumber': farmerNumber,
       "itemName": itemName,
       "category": category,
+      "subCategory": subCategory,
       "unit": unit,
       "quantity": quantity,
       "status": "Pending"

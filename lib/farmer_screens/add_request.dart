@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:smart_agri/farmer_screens/services/farmer_services.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
@@ -26,7 +25,7 @@ class _AddRequestState extends State<AddRequest> {
   final _formKey = GlobalKey<FormState>();
   final itemName = TextEditingController();
   final itemQuantity = TextEditingController();
-  String itemCategory = "", selectedUnit = "";
+  String itemCategory = "", selectedType = "", unit = "";
   List<String> dropdownList = <String>[
     "Select Category",
     'Fertilizers',
@@ -34,12 +33,10 @@ class _AddRequestState extends State<AddRequest> {
     'Seed',
     'Cash',
   ];
-  List<String> unitList = <String>[
-    "Select Unit",
-    'ML',
-    'Grams',
-    'KG',
-    'Rs.',
+  List<String> typeList = <String>[
+    "Select Type",
+    'Liquid',
+    'Solid',
   ];
 
   @override
@@ -94,52 +91,6 @@ class _AddRequestState extends State<AddRequest> {
                           },
                           onChanged: (_) => setState(() {}),
                         ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            vertical: dynamicHeight(context, .01),
-                          ),
-                          child: Container(
-                            width: dynamicWidth(context, .9),
-                            decoration: const BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                  width: .4,
-                                  color: myBlack,
-                                ),
-                              ),
-                            ),
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton<String>(
-                                value: itemCategory == ""
-                                    ? dropdownList[0]
-                                    : itemCategory,
-                                iconSize: 24,
-                                elevation: 9,
-                                onChanged: (String? value) async {
-                                  setState(
-                                    () {
-                                      itemCategory = value.toString();
-                                    },
-                                  );
-                                },
-                                hint: const Text("Select Category"),
-                                style: TextStyle(
-                                  color: myGreen,
-                                  fontSize: dynamicWidth(context, .04),
-                                ),
-                                // borderRadius: BorderRadius.circular(15),
-                                items: dropdownList
-                                    .map<DropdownMenuItem<String>>(
-                                        (String value) {
-                                  return DropdownMenuItem<String>(
-                                    value: value,
-                                    child: Text(value),
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          ),
-                        ),
                         TextFormField(
                           controller: itemQuantity,
                           keyboardType: TextInputType.text,
@@ -170,26 +121,37 @@ class _AddRequestState extends State<AddRequest> {
                             ),
                             child: DropdownButtonHideUnderline(
                               child: DropdownButton<String>(
-                                value: selectedUnit == ""
-                                    ? unitList[0]
-                                    : selectedUnit,
+                                value: itemCategory == ""
+                                    ? dropdownList[0]
+                                    : itemCategory,
                                 iconSize: 24,
                                 elevation: 9,
                                 onChanged: (String? value) async {
                                   setState(
                                     () {
-                                      selectedUnit = value.toString();
+                                      itemCategory = value.toString();
+                                      if (itemCategory == "Fertilizers") {
+                                        unit = "No. of Bags";
+                                      } else if (itemCategory == "Seed") {
+                                        unit = "Kg";
+                                      } else if (itemCategory == "Cash") {
+                                        unit = "Rs.";
+                                      } else if (itemCategory ==
+                                          "Select Category") {
+                                        unit = "";
+                                      }
                                     },
                                   );
                                 },
-                                hint: const Text("Select Unit"),
+                                hint: const Text("Select Category"),
                                 style: TextStyle(
                                   color: myGreen,
                                   fontSize: dynamicWidth(context, .04),
                                 ),
                                 // borderRadius: BorderRadius.circular(15),
-                                items: unitList.map<DropdownMenuItem<String>>(
-                                    (String value) {
+                                items: dropdownList
+                                    .map<DropdownMenuItem<String>>(
+                                        (String value) {
                                   return DropdownMenuItem<String>(
                                     value: value,
                                     child: Text(value),
@@ -197,6 +159,77 @@ class _AddRequestState extends State<AddRequest> {
                                 }).toList(),
                               ),
                             ),
+                          ),
+                        ),
+                        itemCategory == "Pesticides"
+                            ? Padding(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: dynamicHeight(context, .01),
+                                ),
+                                child: Container(
+                                  width: dynamicWidth(context, .9),
+                                  decoration: const BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        width: .4,
+                                        color: myBlack,
+                                      ),
+                                    ),
+                                  ),
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButton<String>(
+                                      value: selectedType == ""
+                                          ? typeList[0]
+                                          : selectedType,
+                                      iconSize: 24,
+                                      elevation: 9,
+                                      onChanged: (String? value) async {
+                                        setState(
+                                          () {
+                                            selectedType = value.toString();
+                                            if (selectedType == "Liquid") {
+                                              unit = "ML";
+                                            } else if (selectedType ==
+                                                "Solid") {
+                                              unit = "Grams";
+                                            } else if (selectedType ==
+                                                "Select Type") {
+                                              unit = "";
+                                            }
+                                          },
+                                        );
+                                      },
+                                      hint: const Text("Select Type"),
+                                      style: TextStyle(
+                                        color: myGreen,
+                                        fontSize: dynamicWidth(context, .04),
+                                      ),
+                                      items: typeList
+                                          .map<DropdownMenuItem<String>>(
+                                              (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: dynamicHeight(context, .01),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Unit : $unit",
+                                style: TextStyle(
+                                  fontSize: dynamicWidth(context, .04),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         SizedBox(
@@ -209,7 +242,6 @@ class _AddRequestState extends State<AddRequest> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       button(context, "ADD", () {
-                        print(widget.farmerImage);
                         if (_formKey.currentState!.validate()) {
                           FarmerServices.sendRequest(
                             context,
@@ -220,7 +252,8 @@ class _AddRequestState extends State<AddRequest> {
                             widget.farmerNumber,
                             itemName.text,
                             itemCategory,
-                            selectedUnit,
+                            itemCategory == "Pesticides" ? selectedType : "",
+                            unit,
                             itemQuantity.text,
                           );
                         }

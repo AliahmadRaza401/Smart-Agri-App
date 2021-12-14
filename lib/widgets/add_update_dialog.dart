@@ -23,14 +23,18 @@ class _AddUpdateState extends State<AddUpdate> {
   final _formKey = GlobalKey<FormState>();
   final itemName = TextEditingController();
   final itemPrice = TextEditingController();
-  final itemUnit = TextEditingController();
-  String itemCategory = "";
   File? _image;
+  String itemCategory = "", selectedType = "", unit = "";
   List<String> dropdownList = <String>[
     "Select Category",
     'Fertilizers',
     'Pesticides',
     'Seed',
+  ];
+  List<String> typeList = <String>[
+    "Select Type",
+    'Liquid',
+    'Solid',
   ];
 
   @override
@@ -103,23 +107,6 @@ class _AddUpdateState extends State<AddUpdate> {
                           },
                           onChanged: (_) => setState(() {}),
                         ),
-                        SizedBox(
-                          height: dynamicHeight(context, .02),
-                        ),
-                        TextFormField(
-                          controller: itemUnit,
-                          keyboardType: TextInputType.text,
-                          decoration: const InputDecoration(
-                            hintText: "Unit",
-                          ),
-                          validator: (text) {
-                            if (text == null || text.isEmpty) {
-                              return 'Required!';
-                            }
-                            return null;
-                          },
-                          onChanged: (_) => setState(() {}),
-                        ),
                         Padding(
                           padding: EdgeInsets.symmetric(
                             vertical: dynamicHeight(context, .01),
@@ -145,6 +132,16 @@ class _AddUpdateState extends State<AddUpdate> {
                                   setState(
                                     () {
                                       itemCategory = value.toString();
+                                      if (itemCategory == "Fertilizers") {
+                                        unit = "No. of Bags";
+                                      } else if (itemCategory == "Seed") {
+                                        unit = "Kg";
+                                      } else if (itemCategory == "Cash") {
+                                        unit = "Rs.";
+                                      } else if (itemCategory ==
+                                          "Select Category") {
+                                        unit = "";
+                                      }
                                     },
                                   );
                                 },
@@ -164,6 +161,77 @@ class _AddUpdateState extends State<AddUpdate> {
                                 }).toList(),
                               ),
                             ),
+                          ),
+                        ),
+                        itemCategory == "Pesticides"
+                            ? Padding(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: dynamicHeight(context, .01),
+                                ),
+                                child: Container(
+                                  width: dynamicWidth(context, .9),
+                                  decoration: const BoxDecoration(
+                                    border: Border(
+                                      bottom: BorderSide(
+                                        width: .4,
+                                        color: myBlack,
+                                      ),
+                                    ),
+                                  ),
+                                  child: DropdownButtonHideUnderline(
+                                    child: DropdownButton<String>(
+                                      value: selectedType == ""
+                                          ? typeList[0]
+                                          : selectedType,
+                                      iconSize: 24,
+                                      elevation: 9,
+                                      onChanged: (String? value) async {
+                                        setState(
+                                          () {
+                                            selectedType = value.toString();
+                                            if (selectedType == "Liquid") {
+                                              unit = "ML";
+                                            } else if (selectedType ==
+                                                "Solid") {
+                                              unit = "Grams";
+                                            } else if (selectedType ==
+                                                "Select Type") {
+                                              unit = "";
+                                            }
+                                          },
+                                        );
+                                      },
+                                      hint: const Text("Select Type"),
+                                      style: TextStyle(
+                                        color: myGreen,
+                                        fontSize: dynamicWidth(context, .04),
+                                      ),
+                                      items: typeList
+                                          .map<DropdownMenuItem<String>>(
+                                              (String value) {
+                                        return DropdownMenuItem<String>(
+                                          value: value,
+                                          child: Text(value),
+                                        );
+                                      }).toList(),
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(),
+                        Padding(
+                          padding: EdgeInsets.only(
+                            top: dynamicHeight(context, .01),
+                          ),
+                          child: Row(
+                            children: [
+                              Text(
+                                "Unit : $unit",
+                                style: TextStyle(
+                                  fontSize: dynamicWidth(context, .04),
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                         SizedBox(
@@ -186,8 +254,11 @@ class _AddUpdateState extends State<AddUpdate> {
                                   context,
                                   itemName.text,
                                   itemPrice.text,
-                                  itemUnit.text,
+                                  unit,
                                   itemCategory,
+                                  itemCategory == "Pesticides"
+                                      ? selectedType
+                                      : "",
                                   _image,
                                 );
                               } else {
