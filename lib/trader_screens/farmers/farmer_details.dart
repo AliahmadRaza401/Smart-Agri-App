@@ -290,7 +290,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                         if (snapshot.hasData) {
                           final docs = snapshot.data!.docs;
                           if (docs.isEmpty) {
-                            return Text("Record is empty");
+                            return const Text("Record is empty");
                           } else {
                             return ListView.builder(
                               shrinkWrap: true,
@@ -327,19 +327,10 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                                       child: farmerRecordCard(
                                         context,
                                         data['name'],
-                                        data['price'],
+                                        data['finalBalance'],
                                         data['date'],
                                         data['time'],
                                       ),
-                                      // farmerRecordCard(
-                                      //   context,
-                                      //   data['name'],
-                                      //   FontWeight.w400,
-                                      //    data['price'],
-
-                                      //   date: data['date'],
-                                      //   time: data['time'],
-                                      // ),
                                     ),
                                   );
                                 } else {

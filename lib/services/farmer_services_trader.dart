@@ -60,7 +60,6 @@ class FarmerServicesTrader {
       authProvider.isLoading(false);
       print("Catch Error");
       Fluttertoast.showToast(
-        
         msg: e.toString(),
         backgroundColor: myGreen,
         textColor: myWhite,
@@ -125,11 +124,11 @@ class FarmerServicesTrader {
     authProvider.isLoading(true);
 
     dynamic t1 = (int.parse(price.toString()) / 100);
-    dynamic deduction = (t1 * 2.75);
+    dynamic labourCharges = (t1 * 1);
+    dynamic brokerCharges = (t1 * 0.15);
+    dynamic traderCharges = (t1 * 1.6);
+    dynamic deduction = labourCharges + brokerCharges + traderCharges;
     dynamic finalPrice = (int.parse(price.toString()) - deduction);
-
-
-
 
     try {
       firebaseFirestore
@@ -142,6 +141,9 @@ class FarmerServicesTrader {
           'price': price,
           'date': date,
           'time': time,
+          'labourCharges': labourCharges,
+          'brokerCharges': brokerCharges,
+          'traderCharges': traderCharges,
           'deductions': deduction,
           'finalBalance': finalPrice,
         },

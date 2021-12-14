@@ -31,7 +31,6 @@ class _AddUpdateState extends State<AddUpdate> {
     'Fertilizers',
     'Pesticides',
     'Seed',
-    'Cash',
   ];
 
   @override
@@ -191,12 +190,12 @@ class _AddUpdateState extends State<AddUpdate> {
                                   itemCategory,
                                   _image,
                                 );
-                              }
-                              else {
+                              } else {
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return oopsAlert(context, "Fill All Fields");
+                                    return oopsAlert(
+                                        context, "Fill All Fields");
                                   },
                                 );
                               }
