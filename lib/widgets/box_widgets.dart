@@ -424,3 +424,30 @@ Widget dailyUpdateCard(context, title, date, price, unit, category, image) {
   //   ],
   // );
 }
+
+Widget dailyUpdateFilter(context, text) {
+  return Padding(
+    padding: EdgeInsets.symmetric(
+      horizontal: dynamicWidth(context, .012),
+    ),
+    child: Container(
+      height: dynamicHeight(context, .036),
+      decoration: BoxDecoration(
+        color: myGreen,
+        borderRadius: BorderRadius.circular(100),
+      ),
+      padding: EdgeInsets.symmetric(
+        horizontal: dynamicWidth(context, .04),
+      ),
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyle(
+            fontSize: dynamicWidth(context, .036),
+            color: myWhite,
+          ),
+        ),
+      ),
+    ),
+  );
+}

@@ -23,7 +23,7 @@ class _DailyUpdatesState extends State<DailyUpdates> {
   User? user = FirebaseAuth.instance.currentUser;
 
   final searchQuery = TextEditingController();
-  String stream = "";
+  dynamic stream = "";
 
   @override
   Widget build(BuildContext context) {
@@ -85,11 +85,68 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                 inputAction: TextInputAction.done,
                 submitFunction: (value) {
                   setState(() {
-                    stream = value;
+                    if (value == "") {
+                      stream = "";
+                    } else {
+                      stream = FirebaseFirestore.instance
+                          .collection('dailyUpdate')
+                          .where("itemName", isEqualTo: value.toLowerCase())
+                          .where("traderId", isEqualTo: user!.uid)
+                          .snapshots();
+                    }
                   });
                 },
               ),
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    stream = FirebaseFirestore.instance
+                        .collection('dailyUpdate')
+                        .where("category", isEqualTo: "Fertilizers")
+                        .where("traderId", isEqualTo: user!.uid)
+                        .snapshots();
+                  });
+                },
+                child: dailyUpdateFilter(context, "Fertilizers"),
+              ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    stream = FirebaseFirestore.instance
+                        .collection('dailyUpdate')
+                        .where("category", isEqualTo: "Pesticides")
+                        .where("traderId", isEqualTo: user!.uid)
+                        .snapshots();
+                  });
+                },
+                child: dailyUpdateFilter(context, "Pesticides"),
+              ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    stream = FirebaseFirestore.instance
+                        .collection('dailyUpdate')
+                        .where("category", isEqualTo: "Seed")
+                        .where("traderId", isEqualTo: user!.uid)
+                        .snapshots();
+                  });
+                },
+                child: dailyUpdateFilter(context, "Seed"),
+              ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    stream = "";
+                  });
+                },
+                child: dailyUpdateFilter(context, "All"),
+              ),
+            ],
           ),
           Padding(
             padding: EdgeInsets.only(
@@ -113,10 +170,7 @@ class _DailyUpdatesState extends State<DailyUpdates> {
           Expanded(
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
               stream: stream != ""
-                  ? FirebaseFirestore.instance
-                      .collection('dailyUpdate')
-                      .where("itemName", isEqualTo: stream.toLowerCase())
-                      .snapshots()
+                  ? stream
                   : FirebaseFirestore.instance
                       .collection('dailyUpdate')
                       .where("traderId", isEqualTo: user!.uid)
