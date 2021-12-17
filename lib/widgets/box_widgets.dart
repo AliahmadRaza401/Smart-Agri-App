@@ -222,7 +222,7 @@ Widget farmerCard(context, userName, number, debit, credit, image) {
 Widget dailyUpdateCard(context, title, date, price, unit, category, image) {
   return Container(
     width: dynamicWidth(context, .9),
-    height: dynamicHeight(context, .3),
+    height: dynamicHeight(context, .28),
     decoration: BoxDecoration(
       color: containerBgColor,
       borderRadius: BorderRadius.circular(

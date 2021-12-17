@@ -256,7 +256,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                         ),
                       ),
                       Text(
-                        "",
+                        netBalance.toString(),
                         style: TextStyle(
                           color: myBlack,
                           fontSize: dynamicWidth(context, .048),
@@ -302,12 +302,13 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                                 if (data.containsKey("price") == true) {
                                   netBalance =
                                       netBalance + int.parse(data['price']);
+
                                   return Slidable(
                                     endActionPane: ActionPane(
+                                      extentRatio: .25,
                                       motion: const ScrollMotion(),
                                       children: [
                                         SlidableAction(
-                                          flex: 1,
                                           onPressed: (BuildContext context) {
                                             var balanceId = docs[i].id;
                                             FirebaseServices.deleteBalance(
@@ -324,12 +325,17 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                                       ],
                                     ),
                                     child: Center(
-                                      child: farmerRecordCard(
-                                        context,
-                                        data['name'],
-                                        data['finalBalance'],
-                                        data['date'],
-                                        data['time'],
+                                      child: InkWell(
+                                        onTap: () {
+
+                                        },
+                                        child: farmerRecordCard(
+                                          context,
+                                          data['name'],
+                                          data['finalBalance'],
+                                          data['date'],
+                                          data['time'],
+                                        ),
                                       ),
                                     ),
                                   );
