@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_agri/utils/config.dart';
@@ -92,8 +93,8 @@ Widget farmerCard(context, userName, number, debit, credit, image) {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "DEBIT",
+                        AutoSizeText(
+                          "Yet to Give",
                           style: TextStyle(
                             color: myBlack,
                             fontSize: dynamicWidth(context, .044),
@@ -152,15 +153,17 @@ Widget farmerCard(context, userName, number, debit, credit, image) {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "CREDIT",
-                          style: TextStyle(
-                            color: myBlack,
-                            fontSize: dynamicWidth(context, .044),
-                            fontWeight: FontWeight.w500,
+                        Flexible(
+                          child: AutoSizeText(
+                            "Yet to Receive",
+                            style: TextStyle(
+                              color: myBlack,
+                              fontSize: dynamicWidth(context, .044),
+                              fontWeight: FontWeight.w500,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),

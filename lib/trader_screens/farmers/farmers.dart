@@ -163,8 +163,6 @@ class _FarmersState extends State<Farmers> {
                       itemCount: docs.length,
                       itemBuilder: (_, i) {
                         final data = docs[i].data();
-                        print('docs[i]: ${docs[i].id}');
-                        // addAmount(docs[i].id);
                         return InkWell(
                           onTap: () {
                             AppRoutes.push(

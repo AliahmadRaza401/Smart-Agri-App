@@ -22,6 +22,7 @@ class _AddAmountState extends State<AddAmount> {
   final _formKey = GlobalKey<FormState>();
   final itemName = TextEditingController();
   final itemPrice = TextEditingController();
+  final itemTodayRate = TextEditingController();
 
   // int hour = 00;
   // int mint = 00;
@@ -109,6 +110,25 @@ class _AddAmountState extends State<AddAmount> {
                               controller: itemPrice,
                               decoration: InputDecoration(
                                 hintText: "Price",
+                              ),
+                              validator: (text) {
+                                if (text == null || text.isEmpty) {
+                                  return 'Required!';
+                                }
+                                return null;
+                              },
+                              onChanged: (_) => setState(() {}),
+                            ),
+                          ),
+                          SizedBox(
+                            height: dynamicHeight(context, .02),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(),
+                            child: TextFormField(
+                              controller: itemTodayRate,
+                              decoration: InputDecoration(
+                                hintText: "Today Rate of Item",
                               ),
                               validator: (text) {
                                 if (text == null || text.isEmpty) {
@@ -220,6 +240,7 @@ class _AddAmountState extends State<AddAmount> {
                                   widget.farmerId,
                                   itemName.text,
                                   itemPrice.text,
+                                itemTodayRate.text,
                               );
                             }
                           },

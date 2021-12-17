@@ -113,6 +113,7 @@ class FarmerServicesTrader {
     farmerId,
     name,
     price,
+    todayPrice,
   ) async {
     print('adding Farmer Amount...........:');
     DateTime now = DateTime.now();
@@ -146,6 +147,7 @@ class FarmerServicesTrader {
           'traderCharges': traderCharges,
           'deductions': deduction,
           'finalBalance': finalPrice,
+          'todayPrice': todayPrice,
         },
       );
       authProvider.isLoading(false);
