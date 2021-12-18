@@ -4,6 +4,7 @@ import 'package:smart_agri/farmer_screens/farmer_requests.dart';
 import 'package:smart_agri/services/auth_services.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/utils/local_notification.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 
@@ -148,6 +149,9 @@ class _FarmerProfileState extends State<FarmerProfile> {
                         context,
                         Icons.edit,
                         "Edit Profile",
+                        function: () {
+                          
+                        },
                       ),
                     ),
                     Padding(

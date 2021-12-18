@@ -221,13 +221,18 @@ class _LoginPageState extends State<LoginPage> {
                               if (!_formKey.currentState!.validate()) {
                                 return;
                               } else {
-                                widget.name == "Trader"
-                                    ? AuthServices.signIn(
-                                        context,
-                                        email.text,
-                                        password.text,
-                                      )
-                                    : loginCheck();
+                                if (widget.name == "Trader") {
+                                  setState(() {
+                                    _authProvider.isLoading(true);
+                                  });
+                                  AuthServices.signIn(
+                                    context,
+                                    email.text,
+                                    password.text,
+                                  );
+                                } else {
+                                  loginCheck();
+                                }
                               }
                             },
                           ),

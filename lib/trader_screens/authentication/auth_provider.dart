@@ -1,6 +1,4 @@
-
 import 'package:flutter/material.dart';
-
 
 class AuthProvider extends ChangeNotifier {
   late BuildContext context;
@@ -11,11 +9,8 @@ class AuthProvider extends ChangeNotifier {
 
   bool loading = false;
 
-
-  void isLoading(value) {
+  void isLoading(bool value) {
     loading = value;
     notifyListeners();
   }
-
-
 }

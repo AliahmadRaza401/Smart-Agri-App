@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/utils/local_notification.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -475,8 +476,16 @@ Widget farmerRequestCard(
 
 statusColor(status) {
   if (status == "Accepted") {
+    // LocalNotificationsService.instance.showChatNotifcation(
+    //   title: "Request Accepted",
+    //   body: "Trader accept your request",
+    // );
     return myGreen;
   } else if (status == "Declined") {
+    // LocalNotificationsService.instance.showChatNotifcation(
+    //   title: "Request Declined",
+    //   body: "Trader reject your request",
+    // );
     return myRed;
   } else {
     return myYellow;

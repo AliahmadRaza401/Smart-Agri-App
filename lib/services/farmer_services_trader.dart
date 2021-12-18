@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/services/firebase_services.dart';
+import 'package:smart_agri/services/history.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/trader_screens/farmers/farmers.dart';
 import 'package:smart_agri/utils/app_route.dart';
@@ -151,6 +152,13 @@ class FarmerServicesTrader {
         },
       );
       authProvider.isLoading(false);
+      HistoryServices.addHistory(
+        context,
+        farmerId,
+        user!.uid,
+        name,
+        finalPrice,
+      );
       Fluttertoast.showToast(
         msg: "Added Success",
         backgroundColor: myGreen,

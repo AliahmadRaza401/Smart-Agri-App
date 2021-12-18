@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_agri/farmer_screens/add_request.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/utils/local_notification.dart';
 import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
@@ -130,7 +131,10 @@ class _FarmerRequestsState extends State<FarmerRequests> {
                       itemCount: docs.length,
                       itemBuilder: (context, i) {
                         final data = docs[i].data();
-                        // print('data get: $data');
+                        // LocalNotificationsService.instance.showChatNotifcation(
+                        //   title: "Request Declined",
+                        //   body: "Trader reject your request",
+                        // );
                         return farmerRequestCard(
                           context,
                           data["farmerImage"].toString(),

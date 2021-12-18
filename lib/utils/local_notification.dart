@@ -45,7 +45,7 @@ class LocalNotificationsService {
     throw UnimplementedError();
   }
 
-  Future<void> showChatNotifcation({
+   Future<void> showChatNotifcation({
     required String title,
     required String body,
   }) async {

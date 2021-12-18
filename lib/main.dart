@@ -5,10 +5,12 @@ import 'package:provider/provider.dart';
 import 'package:smart_agri/providers/multi_providers.dart';
 import 'package:smart_agri/start_up/choice.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/utils/local_notification.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await LocalNotificationsService.instance.initialize();
   runApp(const MyApp());
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
