@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:smart_agri/farmer_screens/farmer_history.dart';
 import 'package:smart_agri/farmer_screens/farmer_requests.dart';
 import 'package:smart_agri/services/auth_services.dart';
 import 'package:smart_agri/utils/app_route.dart';
@@ -149,19 +150,16 @@ class _FarmerProfileState extends State<FarmerProfile> {
                         context,
                         Icons.edit,
                         "Edit Profile",
-                        function: () {
-                          
-                        },
+                        function: () {},
                       ),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
                         vertical: dynamicHeight(context, .01),
                       ),
-                      child:
-                          profileButton(context, Icons.notifications, "Request",
-                              function: () {
-                        AppRoutes.push(context, FarmerRequests());
+                      child: profileButton(context, Icons.history, "History",
+                          function: () {
+                        AppRoutes.push(context, FarmerHistory(farmerId: widget.farmerId,));
                       }),
                     ),
                     Padding(
@@ -171,9 +169,8 @@ class _FarmerProfileState extends State<FarmerProfile> {
                       child: profileButton(context, Icons.logout, "LogOut",
                           function: () {
                         setState(() {
-                          AuthServices.userLoggedIn(false);
+                          AuthServices.logOutFarmer(context);
                         });
-                        AuthServices.logOut(context);
                       }),
                     ),
                   ],

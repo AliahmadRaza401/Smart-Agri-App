@@ -41,7 +41,6 @@ class AuthServices {
                 _authProvider.isLoading(false),
               });
     } on FirebaseAuthException catch (error) {
-     
       switch (error.code) {
         case "invalid-email":
           errorMessage = "Your email address is invalid.";
@@ -64,7 +63,7 @@ class AuthServices {
         default:
           errorMessage = "An undefined Error happened.";
       }
-            _authProvider.isLoading(false);
+      _authProvider.isLoading(false);
 
       // GeneralDialogs.showOopsDialog(context, errorMessage);
       Fluttertoast.showToast(
@@ -180,6 +179,12 @@ class AuthServices {
   static logOut(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     userLoggedIn(false);
+    AppRoutes.replace(context, const Choice());
+  }
+
+  static logOutFarmer(BuildContext context) async {
+    await FirebaseAuth.instance.signOut();
+    farmerLoggedIn(false);
     AppRoutes.replace(context, const Choice());
   }
 

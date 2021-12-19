@@ -474,6 +474,127 @@ Widget farmerRequestCard(
   );
 }
 
+Widget historyCard(
+  context,
+  name,
+  int price,
+  date,
+  time,
+) {
+  return Padding(
+    padding: EdgeInsets.symmetric(
+      horizontal: dynamicWidth(context, .05),
+      vertical: dynamicHeight(context, .005),
+    ),
+    child: Container(
+      width: dynamicWidth(context, .9),
+      decoration: BoxDecoration(
+        color: containerBgColor,
+        borderRadius: BorderRadius.circular(
+          dynamicWidth(context, .04),
+        ),
+      ),
+      padding: EdgeInsets.all(
+        dynamicWidth(context, .04),
+      ),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Icon(
+                Icons.history_rounded,
+                color: myGreen,
+              )
+            ],
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: dynamicHeight(context, .01),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Name : ",
+                      style: TextStyle(
+                        color: myBlack,
+                        fontSize: dynamicWidth(context, .04),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(
+                      height: dynamicHeight(context, .006),
+                    ),
+                    Text(
+                      "Price : ",
+                      style: TextStyle(
+                        color: myBlack,
+                        fontSize: dynamicWidth(context, .04),
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      name,
+                      style: TextStyle(
+                        color: myBlack,
+                        fontSize: dynamicWidth(context, .04),
+                      ),
+                    ),
+                    SizedBox(
+                      height: dynamicHeight(context, .006),
+                    ),
+                    Text(
+                      '$price',
+                      style: TextStyle(
+                        color: myBlack,
+                        fontSize: dynamicWidth(context, .04),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Container(
+            child: Divider(
+              thickness: 0.7,
+              color: myGreen,
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                time,
+                style: TextStyle(
+                  color: myBlack,
+                  fontSize: dynamicWidth(context, .04),
+                ),
+              ),
+              Text(
+                date,
+                style: TextStyle(
+                  color: myBlack,
+                  fontSize: dynamicWidth(context, .04),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
 statusColor(status) {
   if (status == "Accepted") {
     // LocalNotificationsService.instance.showChatNotifcation(

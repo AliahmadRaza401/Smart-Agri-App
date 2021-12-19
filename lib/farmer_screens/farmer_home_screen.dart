@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_agri/farmer_screens/farmer_daily_updates.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/utils/local_notification.dart';
 import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/box_widgets.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
@@ -226,6 +227,22 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                                   itemCount: docs.length,
                                   itemBuilder: (context, i) {
                                     final data = docs[i].data();
+                                    DateTime date = DateTime.now();
+                                    if (data['createdAt'] != null) {
+                                      DateTime postDate =
+                                          data['createdAt'].toDate();
+                                      final diff =
+                                          date.difference(postDate).inMinutes;
+                                      print('diff: $diff');
+                                      if (diff <= 1) {
+                                        LocalNotificationsService.instance
+                                            .showChatNotifcation(
+                                                title: "New Post",
+                                                body:
+                                                    "Trader Upload new post in daily item");
+                                      }
+                                    }
+
                                     return Padding(
                                       padding: EdgeInsets.symmetric(
                                         vertical: dynamicHeight(context, .01),

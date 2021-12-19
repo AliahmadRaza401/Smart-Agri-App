@@ -16,8 +16,8 @@ class DailyUpdateServices {
   static final _auth = FirebaseAuth.instance;
   static FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
-  static addDailyItemToDB(
-      BuildContext context, name, price, unit, category, subCategory, imageFile) async {
+  static addDailyItemToDB(BuildContext context, name, price, unit, category,
+      subCategory, imageFile) async {
     AuthProvider authProvider =
         Provider.of<AuthProvider>(context, listen: false);
     User? user = _auth.currentUser;
@@ -38,6 +38,7 @@ class DailyUpdateServices {
         'subCategory': subCategory,
         'date': date,
         'time': time,
+        'createdAt': now,
         'traderId': user!.uid,
         'image': {'name': now.toString(), 'url': image}
       });
@@ -90,7 +91,7 @@ class DailyUpdateServices {
         'itemName': name,
         'itemPrice': price,
         'itemUnit': unit,
-        'category' : itemCategory,
+        'category': itemCategory,
         'date': date,
         'time': time,
         'traderId': user!.uid,

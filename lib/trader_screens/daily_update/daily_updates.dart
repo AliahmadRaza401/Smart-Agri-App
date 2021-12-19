@@ -105,6 +105,14 @@ class _DailyUpdatesState extends State<DailyUpdates> {
               GestureDetector(
                 onTap: () {
                   setState(() {
+                    stream = "";
+                  });
+                },
+                child: dailyUpdateFilter(context, "All"),
+              ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
                     stream = FirebaseFirestore.instance
                         .collection('dailyUpdate')
                         .where("category", isEqualTo: "Fertilizers")
@@ -137,14 +145,6 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                   });
                 },
                 child: dailyUpdateFilter(context, "Seed"),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    stream = "";
-                  });
-                },
-                child: dailyUpdateFilter(context, "All"),
               ),
             ],
           ),
@@ -278,4 +278,32 @@ class _DailyUpdatesState extends State<DailyUpdates> {
       ),
     );
   }
+
+  Widget dailyUpdateFilter(context, text) {
+  return Padding(
+    padding: EdgeInsets.symmetric(
+      horizontal: dynamicWidth(context, .012),
+    ),
+    child: Container(
+      height: dynamicHeight(context, .036),
+      decoration: BoxDecoration(
+        color: myGreen,
+        borderRadius: BorderRadius.circular(100),
+      ),
+      padding: EdgeInsets.symmetric(
+        horizontal: dynamicWidth(context, .04),
+      ),
+      child: Center(
+        child: Text(
+          text,
+          style: TextStyle(
+            fontSize: dynamicWidth(context, .036),
+            color: myWhite,
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
 }

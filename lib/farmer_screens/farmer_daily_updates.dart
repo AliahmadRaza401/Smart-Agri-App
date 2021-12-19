@@ -6,6 +6,7 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/trader_screens/daily_update/update_daily_update.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/utils/local_notification.dart';
 import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/box_widgets.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
@@ -131,6 +132,7 @@ class _FarmerDailyUpdatesState extends State<FarmerDailyUpdates> {
                 }
                 if (snapshot.hasData) {
                   final docs = snapshot.data!.docs;
+                  print('docs: $docs');
 
                   if (docs.isEmpty) {
                     return noDataError(
@@ -149,6 +151,17 @@ class _FarmerDailyUpdatesState extends State<FarmerDailyUpdates> {
                         itemCount: docs.length,
                         itemBuilder: (context, i) {
                           final data = docs[i].data();
+                          DateTime date = DateTime.now();
+                          DateTime postDate = data['createdAt'].toDate();
+                          final diff = date.difference(postDate).inMinutes;
+                          if (diff <= 1) {
+                            LocalNotificationsService.instance
+                                .showChatNotifcation(
+                                    title: "New Post",
+                                    body:
+                                        "Trader Upload new post in daily item");
+                          }
+
                           return Slidable(
                             endActionPane: ActionPane(
                               motion: const ScrollMotion(),

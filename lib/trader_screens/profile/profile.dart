@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_agri/model/user_model.dart';
 import 'package:smart_agri/services/auth_services.dart';
+import 'package:smart_agri/trader_screens/history/trader_history.dart';
+import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
@@ -171,11 +173,11 @@ class _ProfileState extends State<Profile> {
                       padding: EdgeInsets.symmetric(
                         vertical: dynamicHeight(context, .01),
                       ),
-                      child: profileButton(
-                        context,
-                        Icons.notifications,
-                        "Notifications",
-                      ),
+                      child: profileButton(context, Icons.history, "History",
+                          function: () {
+                        AppRoutes.push(
+                            context, TraderHistory(traderId: user!.uid));
+                      }),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
