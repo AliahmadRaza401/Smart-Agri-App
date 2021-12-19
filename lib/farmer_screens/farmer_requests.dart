@@ -131,6 +131,7 @@ class _FarmerRequestsState extends State<FarmerRequests> {
                       itemCount: docs.length,
                       itemBuilder: (context, i) {
                         final data = docs[i].data();
+                        print('data: $data');
                         // LocalNotificationsService.instance.showChatNotifcation(
                         //   title: "Request Declined",
                         //   body: "Trader reject your request",

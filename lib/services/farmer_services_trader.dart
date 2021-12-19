@@ -159,6 +159,7 @@ class FarmerServicesTrader {
         name,
         finalPrice,
       );
+
       Fluttertoast.showToast(
         msg: "Added Success",
         backgroundColor: myGreen,

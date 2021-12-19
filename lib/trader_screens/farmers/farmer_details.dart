@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:quds_popup_menu/quds_popup_menu.dart';
 import 'package:smart_agri/services/firebase_services.dart';
+import 'package:smart_agri/trader_screens/farmers/balance_detail_dialog.dart';
 import 'package:smart_agri/trader_screens/farmers/update_farmer.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
@@ -290,7 +291,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                         if (snapshot.hasData) {
                           final docs = snapshot.data!.docs;
                           if (docs.isEmpty) {
-                            return const Text("Record is empty");
+                            return Center(child: const Text("Record is empty"));
                           } else {
                             return ListView.builder(
                               shrinkWrap: true,
@@ -298,8 +299,10 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                               itemCount: docs.length,
                               itemBuilder: (_, i) {
                                 final data = docs[i].data();
+                                print('data: $data');
 
                                 if (data.containsKey("price") == true) {
+                                  // calNetBalance(data['price']);
                                   netBalance =
                                       netBalance + int.parse(data['price']);
 
@@ -327,12 +330,27 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                                     child: Center(
                                       child: InkWell(
                                         onTap: () {
-
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) =>
+                                                  BalanceDetailDialog(
+                                                    deduction:
+                                                        data['deductions'],
+                                                    finalBalance:
+                                                        data['finalBalance']
+                                                            .toInt(),
+                                                    itemName: data['name'],
+                                                    price: data['price']
+                                                        .toString(),
+                                                    todayPrice:
+                                                        data['todayPrice']
+                                                            .toString(),
+                                                  ));
                                         },
                                         child: farmerRecordCard(
                                           context,
                                           data['name'],
-                                          data['finalBalance'],
+                                          data['finalBalance'].toInt(),
                                           data['date'],
                                           data['time'],
                                         ),
@@ -362,5 +380,11 @@ class _FarmerDetailsState extends State<FarmerDetails> {
         ],
       ),
     );
+  }
+
+  calNetBalance(price) {
+    setState(() {
+      netBalance = netBalance + int.parse(price);
+    });
   }
 }
