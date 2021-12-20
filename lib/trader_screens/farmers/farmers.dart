@@ -27,6 +27,20 @@ class _FarmersState extends State<Farmers> {
   final searchQuery = TextEditingController();
   String stream = "";
 
+  getFarmerBalance(id) async {
+    await FirebaseFirestore.instance
+        .collection('farmers')
+        .doc(id)
+        .collection("balance")
+        .get()
+        .then((value) {
+      var temp = value.docs;
+      for (var i in temp) {
+        print(i.data());
+      }
+    });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -149,6 +163,7 @@ class _FarmersState extends State<Farmers> {
                 }
                 if (snapshot.hasData) {
                   final docs = snapshot.data!.docs;
+
                   if (docs.isEmpty) {
                     return noDataError(
                       context,
@@ -163,6 +178,9 @@ class _FarmersState extends State<Farmers> {
                       itemCount: docs.length,
                       itemBuilder: (_, i) {
                         final data = docs[i].data();
+
+                        // getFarmerBalance(docs[i].id);
+
                         return InkWell(
                           onTap: () {
                             AppRoutes.push(
@@ -187,8 +205,8 @@ class _FarmersState extends State<Farmers> {
                               context,
                               data['userName'],
                               data['mobileNumber'],
-                              "80,000",
-                              "30,000",
+                              data['deneHen'] ?? "",
+                              data['leneHen'] ?? "",
                               data['image']['url'],
                             ),
                           ),

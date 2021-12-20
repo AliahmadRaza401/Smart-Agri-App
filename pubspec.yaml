@@ -54,7 +54,6 @@ dependencies:
   flutter_local_notifications: ^8.2.0
   dropdown_search: ^1.0.3
   url_launcher: ^6.0.13
-  get: ^4.6.1
 
 
 dev_dependencies:

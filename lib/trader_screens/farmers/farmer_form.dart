@@ -48,7 +48,7 @@ class _FarmerFormState extends State<FarmerForm> {
       body: Form(
         key: _formKey,
         child: Center(
-          child: Container(
+          child: SizedBox(
             width: dynamicWidth(context, .9),
             height: dynamicHeight(context, .76),
             child: SingleChildScrollView(
