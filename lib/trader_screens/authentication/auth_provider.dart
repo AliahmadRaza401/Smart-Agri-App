@@ -8,7 +8,6 @@ class AuthProvider extends ChangeNotifier {
   }
 
   bool loading = false;
-
   void isLoading(bool value) {
     loading = value;
     notifyListeners();

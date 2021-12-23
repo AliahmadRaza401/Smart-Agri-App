@@ -20,7 +20,8 @@ final farmerNumber = TextEditingController();
 final farmerCnic = TextEditingController();
 
 class FarmerForm extends StatefulWidget {
-  const FarmerForm({Key? key}) : super(key: key);
+  // final int farmerNo;
+  // const FarmerForm({required this.farmerNo});
 
   @override
   _FarmerFormState createState() => _FarmerFormState();
@@ -243,6 +244,7 @@ class _FarmerFormState extends State<FarmerForm> {
                           if (_image != null) {
                             FarmerServicesTrader.addFarmerToDB(
                               context,
+                              0,
                               userName.text,
                               farmerPassword.text,
                               farmerFName.text,

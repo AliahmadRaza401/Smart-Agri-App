@@ -3,7 +3,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:provider/provider.dart';
 import 'package:smart_agri/services/fcm_services.dart';
+import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
@@ -29,6 +31,9 @@ class FarmerServices {
     quantity,
   ) async {
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+    AuthProvider authProvider =
+        Provider.of<AuthProvider>(context, listen: false);
+    authProvider.isLoading(true);
 
     await firebaseFirestore.collection("request").doc().set({
       'farmerId': farmerId,
@@ -47,8 +52,9 @@ class FarmerServices {
         'trader',
         'traderId',
         "New Request",
-        "$farmerName  send a request",
+        "$farmerName send a request for $category",
       );
+      authProvider.isLoading(false);
       Fluttertoast.showToast(
         msg: "Account created successfully :) ",
         backgroundColor: myGreen,
@@ -57,6 +63,7 @@ class FarmerServices {
       );
       AppRoutes.pop(context);
     }).catchError(() {
+      authProvider.isLoading(false);
       oopsAlert(context, "Request Failed! \n Please try again later");
     });
   }

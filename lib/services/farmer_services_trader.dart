@@ -18,6 +18,7 @@ class FarmerServicesTrader {
 // add farmer in DB
   static addFarmerToDB(
     BuildContext context,
+    farmerNo,
     userName,
     password,
     firstName,
@@ -35,6 +36,7 @@ class FarmerServicesTrader {
       print(firstName);
       var image = await FirebaseServices.imageUpload(imageFile, cnic);
       firebaseFirestore.collection("farmers").add({
+        'farmerNo' : farmerNo,
         'firstName': firstName,
         'lastName': lastName,
         'cnic': cnic,

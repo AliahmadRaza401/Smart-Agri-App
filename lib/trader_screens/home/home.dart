@@ -8,6 +8,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_agri/model/user_model.dart';
+import 'package:smart_agri/services/auth_services.dart';
 import 'package:smart_agri/services/fcm_services.dart';
 import 'package:smart_agri/trader_screens/daily_update/daily_updates.dart';
 import 'package:smart_agri/trader_screens/farmers/farmer_details.dart';
@@ -42,6 +43,7 @@ class _HomeState extends State<Home> {
     super.initState();
     getUserData();
     getBalance();
+    saveTraderID();
     FCMServices.fcmGetTokenandSubscribe('trader');
     fcmListen();
   }
@@ -63,6 +65,10 @@ class _HomeState extends State<Home> {
         });
       }
     });
+  }
+
+  saveTraderID() async {
+    await AuthServices.saveTraderID(user!.uid);
   }
 
   getUserData() {
@@ -336,7 +342,7 @@ class _HomeState extends State<Home> {
                                 return noDataError(
                                   context,
                                   "assets/farmerCartoon.png",
-                                  const FarmerForm(),
+                                  null,
                                   dynamicHeight(context, .18),
                                 );
                               } else {

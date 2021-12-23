@@ -12,7 +12,6 @@ Widget button(
   fontSize = "",
   color = "",
   btnColor = "",
- 
 }) {
   return InkWell(
     onTap: function == "" ? () {} : function,
@@ -23,7 +22,6 @@ Widget button(
         borderRadius: BorderRadius.circular(
           dynamicWidth(context, .6),
         ),
-
         gradient: LinearGradient(
           colors: [
             btnColor == "" ? myGreen : btnColor,
@@ -148,6 +146,14 @@ Widget profileButton(context, icon, text, {function = ""}) {
         borderRadius: BorderRadius.circular(
           dynamicWidth(context, .03),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 1,
+            blurRadius: 1,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
       ),
       padding: EdgeInsets.symmetric(
         horizontal: dynamicWidth(context, .04),

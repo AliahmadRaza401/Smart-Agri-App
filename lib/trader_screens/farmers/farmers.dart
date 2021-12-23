@@ -26,7 +26,7 @@ class _FarmersState extends State<Farmers> {
 
   final searchQuery = TextEditingController();
   String stream = "";
-
+  int farmerNo = 0;
   getFarmerBalance(id) async {
     await FirebaseFirestore.instance
         .collection('farmers')
@@ -168,7 +168,9 @@ class _FarmersState extends State<Farmers> {
                     return noDataError(
                       context,
                       "assets/farmerCartoon.png",
-                      const FarmerForm(),
+                      FarmerForm(
+                          // farmerNo: farmerNo,
+                          ),
                       dynamicHeight(context, .3),
                     );
                   } else {
@@ -178,7 +180,6 @@ class _FarmersState extends State<Farmers> {
                       itemCount: docs.length,
                       itemBuilder: (_, i) {
                         final data = docs[i].data();
-
                         // getFarmerBalance(docs[i].id);
 
                         return InkWell(
@@ -230,7 +231,9 @@ class _FarmersState extends State<Farmers> {
         onPressed: () {
           AppRoutes.push(
             context,
-            const FarmerForm(),
+            FarmerForm(
+                // farmerNo: farmerNo,
+                ),
           );
         },
         backgroundColor: myGreen,

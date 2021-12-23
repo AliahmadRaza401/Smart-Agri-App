@@ -226,4 +226,17 @@ class AuthServices {
     String? value = prefs.getString('farmerID');
     return value;
   }
+
+  // save TraderId
+  static saveTraderID(String value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('traderID', value);
+  }
+
+  // get Farmer LoggedIn value
+  static getTraderID() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? value = prefs.getString('traderID');
+    return value;
+  }
 }

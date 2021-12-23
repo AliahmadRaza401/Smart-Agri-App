@@ -493,6 +493,14 @@ Widget historyCard(
         borderRadius: BorderRadius.circular(
           dynamicWidth(context, .04),
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 1,
+            blurRadius: 1,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
       ),
       padding: EdgeInsets.all(
         dynamicWidth(context, .04),
