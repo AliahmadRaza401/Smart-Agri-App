@@ -42,6 +42,7 @@ dependencies:
   firebase_core: ^1.8.0
   firebase_storage: ^10.1.0
   firebase_analytics: ^5.0.6
+  firebase_messaging: ^10.0.0
   fluttertoast: ^8.0.8
   shared_preferences: ^2.0.8
   provider: ^6.0.1
@@ -54,6 +55,8 @@ dependencies:
   flutter_local_notifications: ^8.2.0
   dropdown_search: ^1.0.3
   url_launcher: ^6.0.13
+
+  http: ^0.13.4
 
 
 dev_dependencies:

@@ -3,6 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:smart_agri/services/fcm_services.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
@@ -42,6 +43,12 @@ class FarmerServices {
       "quantity": quantity,
       "status": "Pending"
     }).then((value) {
+      FCMServices.sendFCM(
+        'trader',
+        'traderId',
+        "New Request",
+        "$farmerName  send a request",
+      );
       Fluttertoast.showToast(
         msg: "Account created successfully :) ",
         backgroundColor: myGreen,

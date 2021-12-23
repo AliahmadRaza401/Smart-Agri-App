@@ -1,18 +1,26 @@
+// ignore_for_file: avoid_print
+
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_agri/model/user_model.dart';
+import 'package:smart_agri/services/fcm_services.dart';
 import 'package:smart_agri/trader_screens/daily_update/daily_updates.dart';
 import 'package:smart_agri/trader_screens/farmers/farmer_details.dart';
 import 'package:smart_agri/trader_screens/farmers/farmer_form.dart';
 import 'package:smart_agri/trader_screens/farmers/farmers.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/utils/local_notification.dart';
 import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/box_widgets.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
+import 'package:http/http.dart' as http;
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -27,12 +35,34 @@ class _HomeState extends State<Home> {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   dynamic leneHen = 0.0, deneHen = 0.0;
+  late FirebaseMessaging messaging;
 
   @override
   void initState() {
     super.initState();
     getUserData();
     getBalance();
+    FCMServices.fcmGetTokenandSubscribe('trader');
+    fcmListen();
+  }
+
+  fcmListen() {
+    print("FCM Listen...");
+    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+      print("message recieved");
+      print("body: ${event.notification!.body!}");
+      print('FCM data: ${event.data['msgId']}');
+
+      if (event.data['id'] == user!.uid) {
+        LocalNotificationsService.instance.showChatNotifcation(
+            title: '${event.notification!.title}',
+            body: '${event.notification!.body}');
+
+        FirebaseMessaging.onMessageOpenedApp.listen((message) {
+          print('Message clicked!');
+        });
+      }
+    });
   }
 
   getUserData() {
@@ -55,16 +85,18 @@ class _HomeState extends State<Home> {
           (value) => {
             for (var i in value.docs)
               {
-                if (i.data().isNotEmpty){
+                if (i.data().isNotEmpty)
+                  {
                     setState(() {
                       leneHen += int.parse(i.data()["leneHen"].toString());
                     }),
                   }
-                else{
-                  setState(() {
-                    leneHen = 0;
-                  }),
-                }
+                else
+                  {
+                    setState(() {
+                      leneHen = 0;
+                    }),
+                  }
               }
           },
         );
@@ -190,8 +222,10 @@ class _HomeState extends State<Home> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        balanceBox(context, "Yet to Receive", leneHen.toString(), myGreen),
-                        balanceBox(context, "Yet to Give", deneHen.toString(), myRed),
+                        balanceBox(context, "Yet to Receive",
+                            leneHen.toString(), myGreen),
+                        balanceBox(
+                            context, "Yet to Give", deneHen.toString(), myRed),
                       ],
                     ),
                   ),

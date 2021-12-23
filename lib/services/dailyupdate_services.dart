@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/farmer_screens/services/balance_services.dart';
+import 'package:smart_agri/services/fcm_services.dart';
 import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/utils/app_route.dart';
@@ -47,6 +48,12 @@ class DailyUpdateServices {
         user.uid,
         category,
         price,
+      );
+      await FCMServices.sendFCM(
+        'farmer',
+        "",
+        "$name Post",
+        "Trader add new Post in Daily Update",
       );
       authProvider.isLoading(false);
       Fluttertoast.showToast(

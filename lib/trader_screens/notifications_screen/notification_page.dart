@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:smart_agri/services/fcm_services.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
@@ -150,6 +151,14 @@ class _NotificationPageState extends State<NotificationPage> {
                                     'traderId': user!.uid,
                                   },
                                 );
+
+                                // send Notification to farmer
+                                FCMServices.sendFCM(
+                                  'farmer',
+                                  '${docs[i].reference.id}',
+                                  "Request Accepted",
+                                  "your request is accepted",
+                                );
                               } else if (check == false) {
                                 Fluttertoast.showToast(
                                   msg:
@@ -170,6 +179,12 @@ class _NotificationPageState extends State<NotificationPage> {
                                 'status': "Declined",
                                 'traderId': user!.uid,
                               },
+                            );
+                            FCMServices.sendFCM(
+                              'farmer',
+                              '${docs[i].reference.id}',
+                              "Request Declined",
+                              "Trader cancel your request",
                             );
                           },
                         );

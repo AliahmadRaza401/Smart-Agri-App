@@ -1,7 +1,11 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_agri/farmer_screens/farmer_daily_updates.dart';
+import 'package:smart_agri/services/fcm_services.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/utils/local_notification.dart';
 import 'package:smart_agri/widgets/add_update_dialog.dart';
@@ -25,6 +29,35 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
   void initState() {
     super.initState();
     getFarmerData();
+    FCMServices.fcmGetTokenandSubscribe('farmer');
+    fcmListen();
+  }
+
+  fcmListen() {
+    print("FCM Listen...");
+    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+      print("message recieved");
+      print("body: ${event.notification!.body!}");
+      print('FCM data: ${event.data['msgId']}');
+
+      if (event.data['id'] == widget.farmerId) {
+        LocalNotificationsService.instance.showChatNotifcation(
+            title: '${event.notification!.title}',
+            body: '${event.notification!.body}');
+
+        FirebaseMessaging.onMessageOpenedApp.listen((message) {
+          print('Message clicked!');
+        });
+      } else {
+        LocalNotificationsService.instance.showChatNotifcation(
+            title: '${event.notification!.title}',
+            body: '${event.notification!.body}');
+
+        FirebaseMessaging.onMessageOpenedApp.listen((message) {
+          print('Message clicked!');
+        });
+      }
+    });
   }
 
   getFarmerData() {
