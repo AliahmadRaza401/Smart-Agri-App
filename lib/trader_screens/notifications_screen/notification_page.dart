@@ -152,10 +152,54 @@ class _NotificationPageState extends State<NotificationPage> {
                                   },
                                 );
 
+
+
+
+                                await FirebaseFirestore.instance
+                                    .collection("farmers")
+                                    .doc(data["farmerId"])
+                                    .get()
+                                    .then((querySnapshot) async {
+                                  var deneHenData = querySnapshot.data()!["deneHen"];
+                                  var leneHenData = querySnapshot.data()!["leneHen"];
+
+                                  if (leneHenData > 0) {
+                                    if (leneHenData > price) {
+                                      price = leneHenData - price;
+                                      await FirebaseFirestore.instance.collection("farmers").doc(data["farmerId"]).update(
+                                        {
+                                          'deneHen': deneHenData,
+                                          'leneHen': price,
+                                        },
+                                      );
+                                    } else if (leneHenData < price) {
+                                      price = price - leneHenData;
+                                      await FirebaseFirestore.instance.collection("farmers").doc(data["farmerId"]).update(
+                                        {
+                                          'deneHen': price + deneHenData,
+                                          'leneHen': 0,
+                                        },
+                                      );
+                                    }
+                                  } else if (leneHenData == 0) {
+                                    await FirebaseFirestore.instance.collection("farmers").doc(data["farmerId"]).update(
+                                      {
+                                        'deneHen': price + deneHenData,
+                                        'leneHen': 0,
+                                      },
+                                    );
+                                  }
+                                });
+
+
+
+
+
+
                                 // send Notification to farmer
                                 FCMServices.sendFCM(
                                   'farmer',
-                                  '${docs[i].reference.id}',
+                                  docs[i].reference.id,
                                   "Request Accepted",
                                   "your request is accepted",
                                 );
@@ -182,7 +226,7 @@ class _NotificationPageState extends State<NotificationPage> {
                             );
                             FCMServices.sendFCM(
                               'farmer',
-                              '${docs[i].reference.id}',
+                              docs[i].reference.id,
                               "Request Declined",
                               "Trader cancel your request",
                             );

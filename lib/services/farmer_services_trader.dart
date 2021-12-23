@@ -153,6 +153,43 @@ class FarmerServicesTrader {
           'todayPrice': todayPrice,
         },
       );
+
+      await FirebaseFirestore.instance
+          .collection("farmers")
+          .doc(farmerId)
+          .get()
+          .then((querySnapshot) async {
+        var deneHenData = querySnapshot.data()!["deneHen"];
+        var leneHenData = querySnapshot.data()!["leneHen"];
+
+        if (deneHenData > 0) {
+          if (deneHenData > finalPrice) {
+            finalPrice = deneHenData - finalPrice;
+            await firebaseFirestore.collection("farmers").doc(farmerId).update(
+              {
+                'deneHen': finalPrice,
+                'leneHen': leneHenData,
+              },
+            );
+          } else if (deneHenData < finalPrice) {
+            finalPrice = finalPrice - deneHenData;
+            await firebaseFirestore.collection("farmers").doc(farmerId).update(
+              {
+                'deneHen': 0,
+                'leneHen': finalPrice + leneHenData,
+              },
+            );
+          }
+        } else if (deneHenData == 0) {
+          await firebaseFirestore.collection("farmers").doc(farmerId).update(
+            {
+              'deneHen': 0,
+              'leneHen': finalPrice + leneHenData,
+            },
+          );
+        }
+      });
+
       authProvider.isLoading(false);
       HistoryServices.addHistory(
         context,
