@@ -185,7 +185,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
         backgroundColor: myGreen,
         elevation: 4.0,
         label: AutoSizeText(
-          'Sale Item',
+          'New Sale',
           style: TextStyle(
             color: myWhite,
             fontSize: dynamicWidth(context, .04),

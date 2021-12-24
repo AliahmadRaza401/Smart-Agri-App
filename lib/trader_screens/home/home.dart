@@ -85,9 +85,10 @@ class _HomeState extends State<Home> {
               {
                 if (i.data()['traderId'] == user!.uid)
                   {
-                    
-                    leneHen += i.data()['leneHen'],
-                    deneHen += i.data()['deneHen'],
+                    setState(() {
+                      leneHen += i.data()['leneHen'];
+                      deneHen += i.data()['deneHen'];
+                    }),
                   }
               },
           },
@@ -372,8 +373,8 @@ class _HomeState extends State<Home> {
                                             context,
                                             data['userName'],
                                             data['mobileNumber'],
-                                            "80,000",
-                                            "30,000",
+                                            data['leneHen'] ?? "0.0",
+                                            data['deneHen'] ?? "0.0",
                                             data['image']['url']),
                                       ),
                                     );

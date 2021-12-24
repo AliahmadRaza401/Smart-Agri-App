@@ -36,7 +36,7 @@ class FarmerServicesTrader {
       print(firstName);
       var image = await FirebaseServices.imageUpload(imageFile, cnic);
       firebaseFirestore.collection("farmers").add({
-        'farmerNo' : farmerNo,
+        'farmerNo': farmerNo,
         'firstName': firstName,
         'lastName': lastName,
         'cnic': cnic,
@@ -214,6 +214,7 @@ class FarmerServicesTrader {
         backgroundColor: myGreen,
         textColor: myWhite,
       );
+      AppRoutes.pop(context);
     }
   }
 }

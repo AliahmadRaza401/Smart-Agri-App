@@ -51,7 +51,7 @@ class BalanceDetailDialog extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 20,
                     color: myBlack,
-                    fontWeight: FontWeight.bold,
+                    // fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
@@ -76,7 +76,7 @@ class BalanceDetailDialog extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 20,
                     color: myBlack,
-                    fontWeight: FontWeight.bold,
+                    // fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
@@ -100,7 +100,7 @@ class BalanceDetailDialog extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 20,
                     color: myBlack,
-                    fontWeight: FontWeight.bold,
+                    // fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
@@ -166,7 +166,7 @@ class BalanceDetailDialog extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 18,
                         color: myBlack,
-                        fontWeight: FontWeight.bold,
+                        // fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],

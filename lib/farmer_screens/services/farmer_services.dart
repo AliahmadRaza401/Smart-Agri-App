@@ -50,7 +50,7 @@ class FarmerServices {
     }).then((value) {
       FCMServices.sendFCM(
         'trader',
-        'traderId',
+        '$traderId',
         "New Request",
         "$farmerName send a request for $category",
       );
