@@ -159,8 +159,8 @@ class FarmerServicesTrader {
           .doc(farmerId)
           .get()
           .then((querySnapshot) async {
-        var deneHenData = querySnapshot.data()!["deneHen"];
-        var leneHenData = querySnapshot.data()!["leneHen"];
+        var deneHenData = querySnapshot.data()!["deneHen"] ?? 0;
+        var leneHenData = querySnapshot.data()!["leneHen"] ?? 0;
 
         if (deneHenData > 0) {
           if (deneHenData > finalPrice) {
@@ -207,6 +207,7 @@ class FarmerServicesTrader {
       AppRoutes.pop(context);
       print("Success");
     } catch (e) {
+      print('e: $e');
       authProvider.isLoading(false);
       print("Catch Error");
       Fluttertoast.showToast(
