@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:quds_popup_menu/quds_popup_menu.dart';
 import 'package:smart_agri/services/firebase_services.dart';
+import 'package:smart_agri/trader_screens/farmers/balance_detail_dialog.dart';
 import 'package:smart_agri/trader_screens/farmers/update_farmer.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
@@ -341,11 +342,26 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                                     ),
                                     child: Center(
                                       child: InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) =>
+                                                  BalanceDetailDialog(
+                                                    itemName: data['name'],
+                                                    price: data['price'],
+                                                    deduction:
+                                                        data['deductions'],
+                                                    finalBalance:
+                                                        data['finalBalance']
+                                                            .toInt(),
+                                                    todayPrice:
+                                                        data['todayPrice'],
+                                                  ));
+                                        },
                                         child: farmerRecordCard(
                                           context,
                                           data['name'],
-                                          data['finalBalance'],
+                                          data['finalBalance'].toInt(),
                                           data['date'],
                                           data['time'],
                                         ),

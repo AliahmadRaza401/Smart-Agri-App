@@ -62,7 +62,7 @@ class BalanceDetailDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Price:  ',
+                  'Amount:  ',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 20,

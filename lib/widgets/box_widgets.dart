@@ -262,6 +262,9 @@ Widget dailyUpdateCard(context, title, date, price, unit, category, image) {
             ),
           ),
         ),
+        SizedBox(
+          height: dynamicHeight(context, .01),
+        ),
         Padding(
           padding: EdgeInsets.symmetric(
             horizontal: dynamicWidth(context, .06),
@@ -316,12 +319,13 @@ Widget dailyUpdateCard(context, title, date, price, unit, category, image) {
             horizontal: dynamicWidth(context, .06),
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Text(
                 date ?? "",
                 style: TextStyle(
                   color: myBlack,
-                  fontSize: dynamicWidth(context, .04),
+                  fontSize: dynamicWidth(context, .03),
                   fontWeight: FontWeight.w300,
                 ),
                 maxLines: 1,
@@ -424,5 +428,3 @@ Widget dailyUpdateCard(context, title, date, price, unit, category, image) {
   //   ],
   // );
 }
-
-
