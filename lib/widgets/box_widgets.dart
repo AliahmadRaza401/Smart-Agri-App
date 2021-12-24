@@ -111,7 +111,7 @@ Widget farmerCard(context, userName, number, debit, credit, image) {
                         Text(
                           "Rs. $debit",
                           style: TextStyle(
-                            color: myGreen,
+                            color: myRed,
                             fontSize: dynamicWidth(context, .04),
                             fontWeight: FontWeight.w500,
                           ),
@@ -173,7 +173,7 @@ Widget farmerCard(context, userName, number, debit, credit, image) {
                         Text(
                           "Rs. $credit",
                           style: TextStyle(
-                            color: myRed,
+                            color: myGreen,
                             fontSize: dynamicWidth(context, .04),
                             fontWeight: FontWeight.w500,
                           ),

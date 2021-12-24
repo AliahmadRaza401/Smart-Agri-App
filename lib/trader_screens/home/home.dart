@@ -1,7 +1,5 @@
 // ignore_for_file: avoid_print
 
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -21,7 +19,6 @@ import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/box_widgets.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
-import 'package:http/http.dart' as http;
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -82,28 +79,16 @@ class _HomeState extends State<Home> {
   }
 
   getBalance() {
-    _firebaseFirestore
-        .collection('users')
-        .doc(user!.uid)
-        .collection('balance')
-        .get()
-        .then(
+    _firebaseFirestore.collection('farmers').get().then(
           (value) => {
             for (var i in value.docs)
               {
-                if (i.data().isNotEmpty)
+                if (i.data()['traderId'] == user!.uid)
                   {
-                    setState(() {
-                      leneHen += int.parse(i.data()["leneHen"].toString());
-                    }),
+                    leneHen += i.data()['leneHen'],
+                    deneHen += i.data()['deneHen'],
                   }
-                else
-                  {
-                    setState(() {
-                      leneHen = 0;
-                    }),
-                  }
-              }
+              },
           },
         );
   }
@@ -228,10 +213,18 @@ class _HomeState extends State<Home> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        balanceBox(context, "Yet to Receive",
-                            leneHen.toString(), myGreen),
                         balanceBox(
-                            context, "Yet to Give", deneHen.toString(), myRed),
+                          context,
+                          "Yet to Receive",
+                          deneHen.toString(),
+                          myGreen,
+                        ),
+                        balanceBox(
+                          context,
+                          "Yet to Give",
+                          leneHen.toString(),
+                          myRed,
+                        ),
                       ],
                     ),
                   ),
