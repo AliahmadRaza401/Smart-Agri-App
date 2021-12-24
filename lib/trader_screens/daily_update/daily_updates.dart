@@ -23,7 +23,7 @@ class _DailyUpdatesState extends State<DailyUpdates> {
   User? user = FirebaseAuth.instance.currentUser;
 
   final searchQuery = TextEditingController();
-  dynamic stream = "";
+  dynamic stream = "", activeCategory = "";
 
   @override
   Widget build(BuildContext context) {
@@ -105,14 +105,20 @@ class _DailyUpdatesState extends State<DailyUpdates> {
               GestureDetector(
                 onTap: () {
                   setState(() {
+                    activeCategory = "";
                     stream = "";
                   });
                 },
-                child: dailyUpdateFilter(context, "All"),
+                child: dailyUpdateFilter(
+                  context,
+                  "All",
+                  activeCategory == "" ? true : false,
+                ),
               ),
               GestureDetector(
                 onTap: () {
                   setState(() {
+                    activeCategory = "Fertilizers";
                     stream = FirebaseFirestore.instance
                         .collection('dailyUpdate')
                         .where("category", isEqualTo: "Fertilizers")
@@ -120,11 +126,14 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                         .snapshots();
                   });
                 },
-                child: dailyUpdateFilter(context, "Fertilizers"),
+                child: dailyUpdateFilter(context, "Fertilizers",
+                    activeCategory == "Fertilizers" ? true : false),
               ),
               GestureDetector(
                 onTap: () {
                   setState(() {
+                    activeCategory = "Pesticides";
+
                     stream = FirebaseFirestore.instance
                         .collection('dailyUpdate')
                         .where("category", isEqualTo: "Pesticides")
@@ -132,19 +141,25 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                         .snapshots();
                   });
                 },
-                child: dailyUpdateFilter(context, "Pesticides"),
+                child: dailyUpdateFilter(context, "Pesticides",
+                    activeCategory == "Pesticides" ? true : false),
               ),
               GestureDetector(
                 onTap: () {
-                  setState(() {
-                    stream = FirebaseFirestore.instance
-                        .collection('dailyUpdate')
-                        .where("category", isEqualTo: "Seed")
-                        .where("traderId", isEqualTo: user!.uid)
-                        .snapshots();
-                  });
+                  setState(
+                    () {
+                      activeCategory = "Seed";
+
+                      stream = FirebaseFirestore.instance
+                          .collection('dailyUpdate')
+                          .where("category", isEqualTo: "Seed")
+                          .where("traderId", isEqualTo: user!.uid)
+                          .snapshots();
+                    },
+                  );
                 },
-                child: dailyUpdateFilter(context, "Seed"),
+                child: dailyUpdateFilter(
+                    context, "Seed", activeCategory == "Seed" ? true : false),
               ),
             ],
           ),
@@ -279,31 +294,35 @@ class _DailyUpdatesState extends State<DailyUpdates> {
     );
   }
 
-  Widget dailyUpdateFilter(context, text) {
-  return Padding(
-    padding: EdgeInsets.symmetric(
-      horizontal: dynamicWidth(context, .012),
-    ),
-    child: Container(
-      height: dynamicHeight(context, .036),
-      decoration: BoxDecoration(
-        color: myGreen,
-        borderRadius: BorderRadius.circular(100),
-      ),
+  Widget dailyUpdateFilter(context, text, check) {
+    return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: dynamicWidth(context, .04),
+        horizontal: dynamicWidth(context, .012),
       ),
-      child: Center(
-        child: Text(
-          text,
-          style: TextStyle(
-            fontSize: dynamicWidth(context, .036),
-            color: myWhite,
+      child: Container(
+        height: dynamicHeight(context, .036),
+        decoration: BoxDecoration(
+          color: check == false ? noColor : myGreen,
+          borderRadius: BorderRadius.circular(
+            dynamicWidth(context, .4),
+          ),
+          border: Border.all(
+            color: myGreen,
+          ),
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: dynamicWidth(context, .04),
+        ),
+        child: Center(
+          child: Text(
+            text,
+            style: TextStyle(
+              fontSize: dynamicWidth(context, .036),
+              color: check == false ? myGreen : myWhite,
+            ),
           ),
         ),
       ),
-    ),
-  );
-}
-
+    );
+  }
 }

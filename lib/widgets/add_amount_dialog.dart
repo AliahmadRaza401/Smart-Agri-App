@@ -89,6 +89,7 @@ class _AddAmountState extends State<AddAmount> {
                             margin: EdgeInsets.only(),
                             child: TextFormField(
                               controller: itemName,
+                              textInputAction: TextInputAction.next,
                               decoration: InputDecoration(
                                 hintText: "item Name",
                               ),
@@ -108,6 +109,8 @@ class _AddAmountState extends State<AddAmount> {
                             margin: EdgeInsets.only(),
                             child: TextFormField(
                               controller: itemPrice,
+                              keyboardType: TextInputType.number,
+                              textInputAction: TextInputAction.next,
                               decoration: InputDecoration(
                                 hintText: "Price",
                               ),
@@ -127,8 +130,10 @@ class _AddAmountState extends State<AddAmount> {
                             margin: EdgeInsets.only(),
                             child: TextFormField(
                               controller: itemTodayRate,
+                              keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 hintText: "Today Rate of Item",
+
                               ),
                               validator: (text) {
                                 if (text == null || text.isEmpty) {
@@ -145,85 +150,6 @@ class _AddAmountState extends State<AddAmount> {
                         ],
                       ),
                     ),
-                    // Column(
-                    //   children: [
-                    //     getDateTime(
-                    //       () {
-                    //         DatePicker.showDatePicker(context,
-                    //             showTitleActions: true,
-                    //             minTime: DateTime(
-                    //                 currentYear - 2, currentmonth, currentDay),
-                    //             maxTime: DateTime(2025, 1, 7),
-                    //             theme: DatePickerTheme(
-                    //               headerColor: myGreen,
-                    //               backgroundColor: myBlack,
-                    //               itemStyle: TextStyle(
-                    //                 color: Colors.white,
-                    //                 fontWeight: FontWeight.bold,
-                    //                 fontSize: dynamicWidth(context, .044),
-                    //               ),
-                    //               cancelStyle: TextStyle(
-                    //                 color: Colors.white,
-                    //                 fontSize: dynamicWidth(context, .044),
-                    //               ),
-                    //               doneStyle: TextStyle(
-                    //                 color: Colors.white,
-                    //                 fontSize: dynamicWidth(context, .04),
-                    //               ),
-                    //             ),
-                    //             onChanged: (date) {}, onConfirm: (date) {
-                    //           setState(() {
-                    //             addDate =
-                    //                 "${date.year}-${date.month}-${date.day}";
-                    //           });
-                    //         },
-                    //             currentTime: DateTime.now(),
-                    //             locale: LocaleType.en);
-                    //       },
-                    //       "Select Date",
-                    //       Icons.calendar_today,
-                    //       addDate ?? nowDate,
-                    //     ),
-                    //     getDateTime(
-                    //       () {
-                    //         DatePicker.showTime12hPicker(
-                    //           context,
-                    //           showTitleActions: true,
-                    //           theme: DatePickerTheme(
-                    //             headerColor: myGreen,
-                    //             backgroundColor: myBlack,
-                    //             itemStyle: TextStyle(
-                    //               color: Colors.white,
-                    //               fontWeight: FontWeight.bold,
-                    //               fontSize: dynamicWidth(context, .044),
-                    //             ),
-                    //             cancelStyle: TextStyle(
-                    //               color: Colors.white,
-                    //               fontSize: dynamicWidth(context, .044),
-                    //             ),
-                    //             doneStyle: TextStyle(
-                    //               color: Colors.white,
-                    //               fontSize: dynamicWidth(context, .04),
-                    //             ),
-                    //           ),
-                    //           onChanged: (date) {},
-                    //           onConfirm: (date) {
-                    //             setState(() {
-                    //               hour = date.hour;
-                    //               mint = date.minute;
-                    //               addTime = "${date.hour} : ${date.minute}";
-                    //               // endTime = date;
-                    //             });
-                    //           },
-                    //           currentTime: DateTime.now(),
-                    //         );
-                    //       },
-                    //       "End Time",
-                    //       Icons.access_time,
-                    //       addTime ?? nowTime,
-                    //     ),
-                    //   ],
-                    // ),
                     SizedBox(
                       height: dynamicHeight(context, .02),
                     ),
