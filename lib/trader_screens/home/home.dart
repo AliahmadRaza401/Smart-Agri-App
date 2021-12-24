@@ -85,8 +85,10 @@ class _HomeState extends State<Home> {
               {
                 if (i.data()['traderId'] == user!.uid)
                   {
-                    leneHen += i.data()['leneHen'],
-                    deneHen += i.data()['deneHen'],
+                    setState((){
+                      leneHen += i.data()['leneHen'];
+                      deneHen += i.data()['deneHen'];
+                    }),
                   }
               },
           },
