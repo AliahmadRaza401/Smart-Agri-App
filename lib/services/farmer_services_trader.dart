@@ -10,6 +10,7 @@ import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/trader_screens/farmers/farmers.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/widgets/motion_toast.dart';
 
 class FarmerServicesTrader {
   static final _auth = FirebaseAuth.instance;
@@ -51,21 +52,20 @@ class FarmerServicesTrader {
       });
 
       authProvider.isLoading(false);
-      Fluttertoast.showToast(
-        msg: "Added Success",
-        backgroundColor: myGreen,
-        textColor: myWhite,
-        gravity: ToastGravity.CENTER,
+         MyMotionToast.success(
+        context,
+        "Success",
+        "Farmer account created successfully :) ",
       );
       AppRoutes.pop(context);
       print("Success");
     } catch (e) {
       authProvider.isLoading(false);
       print("Catch Error");
-      Fluttertoast.showToast(
-        msg: e.toString(),
-        backgroundColor: myGreen,
-        textColor: myWhite,
+        MyMotionToast.error(
+        context,
+        "Error",
+        e.toString(),
       );
     }
   }
@@ -91,21 +91,20 @@ class FarmerServicesTrader {
       });
 
       authProvider.isLoading(false);
-      Fluttertoast.showToast(
-        msg: "Update Success!",
-        backgroundColor: myGreen,
-        textColor: myWhite,
-        gravity: ToastGravity.CENTER,
+         MyMotionToast.success(
+        context,
+        "Success",
+        "Farmer update successfully :) ",
       );
       AppRoutes.replace(context, Farmers());
       print("Success");
     } catch (e) {
       authProvider.isLoading(false);
       print("Catch Error");
-      Fluttertoast.showToast(
-        msg: e.toString(),
-        backgroundColor: myGreen,
-        textColor: myWhite,
+        MyMotionToast.error(
+        context,
+        "Error",
+        'Oops! something went wrong',
       );
     }
   }
@@ -199,10 +198,10 @@ class FarmerServicesTrader {
         finalPrice,
       );
 
-      Fluttertoast.showToast(
-        msg: "Added Success",
-        backgroundColor: myGreen,
-        textColor: myWhite,
+        MyMotionToast.success(
+        context,
+        "Success",
+        "Amount added successfully :) ",
       );
       AppRoutes.pop(context);
       print("Success");
@@ -210,10 +209,10 @@ class FarmerServicesTrader {
       print('e: $e');
       authProvider.isLoading(false);
       print("Catch Error");
-      Fluttertoast.showToast(
-        msg: e.toString(),
-        backgroundColor: myGreen,
-        textColor: myWhite,
+         MyMotionToast.error(
+        context,
+        "Error",
+        "Oops! something went wrong",
       );
       AppRoutes.pop(context);
     }

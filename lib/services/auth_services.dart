@@ -12,13 +12,13 @@ import 'package:smart_agri/trader_screens/authentication/login.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/botton_nav.dart';
+import 'package:smart_agri/widgets/motion_toast.dart';
 
 class AuthServices {
   static var errorMessage;
 
   //SignIn
-  static void signIn(
-      BuildContext context, String email, String password) async {
+  static signIn(BuildContext context, String email, String password) async {
     final auth = FirebaseAuth.instance;
     AuthProvider _authProvider =
         Provider.of<AuthProvider>(context, listen: false);
@@ -27,11 +27,10 @@ class AuthServices {
       await auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((uid) => {
-                Fluttertoast.showToast(
-                  msg: "LogIn Successful",
-                  backgroundColor: myGreen,
-                  textColor: myWhite,
-                  gravity: ToastGravity.CENTER,
+                MyMotionToast.success(
+                  context,
+                  "Wellcome",
+                  '"LogIn Successful"',
                 ),
                 AppRoutes.replace(
                   context,
@@ -66,12 +65,12 @@ class AuthServices {
       _authProvider.isLoading(false);
 
       // GeneralDialogs.showOopsDialog(context, errorMessage);
-      Fluttertoast.showToast(
-        msg: errorMessage!,
-        backgroundColor: myGreen,
-        textColor: myWhite,
-        gravity: ToastGravity.CENTER,
+      MyMotionToast.error(
+        context,
+        "Error",
+        errorMessage,
       );
+      return "false";
     }
   }
 
@@ -92,12 +91,12 @@ class AuthServices {
               })
           .catchError((e) {
         print(e);
-        Fluttertoast.showToast(
-          msg: e!.message,
-          backgroundColor: myGreen,
-          textColor: myWhite,
-          gravity: ToastGravity.CENTER,
+        MyMotionToast.error(
+          context,
+          "Error",
+          e!.message,
         );
+
         _authProvider.isLoading(false);
       });
     } on FirebaseAuthException catch (error) {
@@ -124,11 +123,10 @@ class AuthServices {
           errorMessage = "An undefined Error happened.";
       }
       _authProvider.isLoading(false);
-      Fluttertoast.showToast(
-        msg: errorMessage!,
-        backgroundColor: myGreen,
-        textColor: myWhite,
-        gravity: ToastGravity.CENTER,
+      MyMotionToast.error(
+        context,
+        "Error",
+        errorMessage,
       );
     }
   }
@@ -164,11 +162,10 @@ class AuthServices {
       'cnic': cnic,
       'image': {'name': cnic, 'url': image}
     });
-    Fluttertoast.showToast(
-      msg: "Account created successfully :) ",
-      backgroundColor: myGreen,
-      textColor: myWhite,
-      gravity: ToastGravity.CENTER,
+    MyMotionToast.success(
+      context,
+      "Success",
+      'Account created successfully :) ',
     );
 
     AppRoutes.push(context, const LoginPage());

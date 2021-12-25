@@ -319,7 +319,7 @@ Widget dailyUpdateCard(context, title, date, price, unit, category, image) {
             horizontal: dynamicWidth(context, .06),
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Text(
                 date ?? "",

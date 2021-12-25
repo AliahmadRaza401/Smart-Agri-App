@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/widgets/motion_toast.dart';
 
 class FirebaseServices {
   static final _auth = FirebaseAuth.instance;
@@ -15,10 +16,10 @@ class FirebaseServices {
         .doc(id) // <-- Doc ID to be deleted.
         .delete()
         .then((e) {
-      Fluttertoast.showToast(
-        msg: "Delete Successfully!",
-        backgroundColor: myGreen,
-        textColor: myWhite,
+         MyMotionToast.delete(
+        context,
+        "Success",
+        "Delete successfully :) ",
       );
       print("Delete");
     });
@@ -32,10 +33,10 @@ class FirebaseServices {
           .collection("balance")
           .doc(balanceId)
           .delete();
-      Fluttertoast.showToast(
-        msg: "Delete Successfully!",
-        backgroundColor: myGreen,
-        textColor: myWhite,
+        MyMotionToast.delete(
+        context,
+        "Success",
+        "Delete successfully :) ",
       );
     } catch (e) {
       print("Failed!");

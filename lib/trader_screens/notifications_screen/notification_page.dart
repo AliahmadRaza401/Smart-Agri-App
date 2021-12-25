@@ -7,6 +7,7 @@ import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
+import 'package:smart_agri/widgets/motion_toast.dart';
 
 class NotificationPage extends StatefulWidget {
   const NotificationPage({Key? key}) : super(key: key);
@@ -152,21 +153,23 @@ class _NotificationPageState extends State<NotificationPage> {
                                   },
                                 );
 
-
-
-
                                 await FirebaseFirestore.instance
                                     .collection("farmers")
                                     .doc(data["farmerId"])
                                     .get()
                                     .then((querySnapshot) async {
-                                  var deneHenData = querySnapshot.data()!["deneHen"];
-                                  var leneHenData = querySnapshot.data()!["leneHen"];
+                                  var deneHenData =
+                                      querySnapshot.data()!["deneHen"];
+                                  var leneHenData =
+                                      querySnapshot.data()!["leneHen"];
 
                                   if (leneHenData > 0) {
                                     if (leneHenData > price) {
                                       price = leneHenData - price;
-                                      await FirebaseFirestore.instance.collection("farmers").doc(data["farmerId"]).update(
+                                      await FirebaseFirestore.instance
+                                          .collection("farmers")
+                                          .doc(data["farmerId"])
+                                          .update(
                                         {
                                           'deneHen': deneHenData,
                                           'leneHen': price,
@@ -174,7 +177,10 @@ class _NotificationPageState extends State<NotificationPage> {
                                       );
                                     } else if (leneHenData < price) {
                                       price = price - leneHenData;
-                                      await FirebaseFirestore.instance.collection("farmers").doc(data["farmerId"]).update(
+                                      await FirebaseFirestore.instance
+                                          .collection("farmers")
+                                          .doc(data["farmerId"])
+                                          .update(
                                         {
                                           'deneHen': price + deneHenData,
                                           'leneHen': 0,
@@ -182,7 +188,10 @@ class _NotificationPageState extends State<NotificationPage> {
                                       );
                                     }
                                   } else if (leneHenData == 0) {
-                                    await FirebaseFirestore.instance.collection("farmers").doc(data["farmerId"]).update(
+                                    await FirebaseFirestore.instance
+                                        .collection("farmers")
+                                        .doc(data["farmerId"])
+                                        .update(
                                       {
                                         'deneHen': price + deneHenData,
                                         'leneHen': 0,
@@ -190,11 +199,6 @@ class _NotificationPageState extends State<NotificationPage> {
                                     );
                                   }
                                 });
-
-
-
-
-
 
                                 // send Notification to farmer
                                 FCMServices.sendFCM(
@@ -204,12 +208,10 @@ class _NotificationPageState extends State<NotificationPage> {
                                   "your request is accepted",
                                 );
                               } else if (check == false) {
-                                Fluttertoast.showToast(
-                                  msg:
-                                      "Add Daily Update first of this Category",
-                                  backgroundColor: myGreen,
-                                  textColor: myWhite,
-                                  gravity: ToastGravity.CENTER,
+                                MyMotionToast.warning(
+                                  context,
+                                  "Missing",
+                                  "Add Daily Update first of this Category",
                                 );
                               }
                             });

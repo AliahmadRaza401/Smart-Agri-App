@@ -55,7 +55,7 @@ dependencies:
   flutter_local_notifications: ^8.2.0
   dropdown_search: ^1.0.3
   url_launcher: ^6.0.13
-
+  motion_toast: ^2.0.0
   http: ^0.13.4
 
 

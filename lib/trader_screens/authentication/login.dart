@@ -12,6 +12,7 @@ import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/farmer_bottom_nav.dart';
 import 'package:smart_agri/widgets/form_fields.dart';
+import 'package:smart_agri/widgets/motion_toast.dart';
 import 'package:smart_agri/widgets/rich_text.dart';
 
 class LoginPage extends StatefulWidget {
@@ -63,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
           _authProvider.isLoading(false);
           AuthServices.farmerLoggedIn(true);
         });
-
+        MyMotionToast.success(context, "Success", "Login Successfully");
         AppRoutes.replace(
           context,
           FarmerBottomNav(
@@ -74,11 +75,10 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           _authProvider.isLoading(false);
         });
-        Fluttertoast.showToast(
-          msg: "Invalid UserName or Password\nTry Again!!",
-          backgroundColor: myGreen,
-          textColor: myWhite,
-          gravity: ToastGravity.BOTTOM,
+        MyMotionToast.error(
+          context,
+          "UnAuthorized",
+          "Invalid UserName or Password",
         );
       }
     });
@@ -216,7 +216,7 @@ class _LoginPageState extends State<LoginPage> {
                             _authProvider.loading == true
                                 ? "Loading..."
                                 : "Login",
-                            () {
+                            () async {
                               print(_authProvider.loading);
                               if (!_formKey.currentState!.validate()) {
                                 return;
@@ -225,11 +225,17 @@ class _LoginPageState extends State<LoginPage> {
                                   setState(() {
                                     _authProvider.isLoading(true);
                                   });
-                                  AuthServices.signIn(
+                                  var a = await AuthServices.signIn(
                                     context,
                                     email.text,
                                     password.text,
                                   );
+
+                                  setState(() {
+                                    _authProvider.isLoading(false);
+                                  });
+
+                                  print('a: $a');
                                 } else {
                                   loginCheck();
                                 }

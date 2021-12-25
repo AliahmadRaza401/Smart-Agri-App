@@ -12,6 +12,7 @@ import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/widgets/motion_toast.dart';
 
 class DailyUpdateServices {
   static final _auth = FirebaseAuth.instance;
@@ -56,22 +57,21 @@ class DailyUpdateServices {
         "Trader add new Post in Daily Update",
       );
       authProvider.isLoading(false);
-      Fluttertoast.showToast(
-        msg: "Added Success",
-        backgroundColor: myGreen,
-        textColor: myWhite,
-        gravity: ToastGravity.CENTER,
+         MyMotionToast.success(
+        context,
+        "Success",
+        "Post Upload Successfully",
       );
+    
       AppRoutes.pop(context);
       print("Success");
     } catch (e) {
       authProvider.isLoading(false);
       print("Catch Error");
-      Fluttertoast.showToast(
-        msg: e.toString(),
-        backgroundColor: myGreen,
-        textColor: myWhite,
-        gravity: ToastGravity.CENTER,
+        MyMotionToast.error(
+        context,
+        "Error",
+        e.toString(),
       );
     }
   }
@@ -104,22 +104,20 @@ class DailyUpdateServices {
         'traderId': user!.uid,
       });
       authProvider.isLoading(false);
-      Fluttertoast.showToast(
-        msg: "Update Success!",
-        backgroundColor: myGreen,
-        textColor: myWhite,
-        gravity: ToastGravity.CENTER,
+        MyMotionToast.success(
+        context,
+        "Success",
+        "Update Successfully Donw",
       );
       AppRoutes.pop(context);
       print("Success");
     } catch (e) {
       authProvider.isLoading(false);
       print("Catch Error");
-      Fluttertoast.showToast(
-        msg: e.toString(),
-        backgroundColor: myGreen,
-        textColor: myWhite,
-        gravity: ToastGravity.CENTER,
+        MyMotionToast.error(
+        context,
+        "Error",
+        e.toString(),
       );
     }
   }

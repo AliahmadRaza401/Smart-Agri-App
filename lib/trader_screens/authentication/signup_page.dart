@@ -59,7 +59,7 @@ class _SignUpPageState extends State<SignUpPage> {
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage(
-              "assets/bg.jpg",
+              "assets/bg.jpeg",
             ),
             fit: BoxFit.cover,
           ),
@@ -82,7 +82,7 @@ class _SignUpPageState extends State<SignUpPage> {
               child: Center(
                 child: SizedBox(
                   width: dynamicWidth(context, .86),
-                  height: dynamicHeight(context, .84),
+                  height: dynamicHeight(context, .88),
                   child: SingleChildScrollView(
                     child: Column(
                       children: [
@@ -313,7 +313,8 @@ class _SignUpPageState extends State<SignUpPage> {
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
-                                      return oopsAlert(context, "Add image");
+                                      return oopsAlert(context,
+                                          "Image Required! \n kindly Add your profile image");
                                     },
                                   );
                                 }

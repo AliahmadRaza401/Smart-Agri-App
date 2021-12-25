@@ -9,6 +9,7 @@ import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
+import 'package:smart_agri/widgets/motion_toast.dart';
 
 class FarmerServices {
   static getFarmerProfileByID(farmerId) {
@@ -55,12 +56,12 @@ class FarmerServices {
         "$farmerName send a request for $category",
       );
       authProvider.isLoading(false);
-      Fluttertoast.showToast(
-        msg: "Account created successfully :) ",
-        backgroundColor: myGreen,
-        textColor: myWhite,
-        gravity: ToastGravity.CENTER,
+      MyMotionToast.success(
+        context,
+        "Success",
+        "Account created successfully :) ",
       );
+   
       AppRoutes.pop(context);
     }).catchError(() {
       authProvider.isLoading(false);
