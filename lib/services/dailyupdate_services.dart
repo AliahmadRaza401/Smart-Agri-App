@@ -57,18 +57,17 @@ class DailyUpdateServices {
         "Trader add new Post in Daily Update",
       );
       authProvider.isLoading(false);
-         MyMotionToast.success(
+      AppRoutes.pop(context);
+      MyMotionToast.success(
         context,
         "Success",
         "Post Upload Successfully",
       );
-    
-      AppRoutes.pop(context);
       print("Success");
     } catch (e) {
       authProvider.isLoading(false);
       print("Catch Error");
-        MyMotionToast.error(
+      MyMotionToast.error(
         context,
         "Error",
         e.toString(),
@@ -104,7 +103,7 @@ class DailyUpdateServices {
         'traderId': user!.uid,
       });
       authProvider.isLoading(false);
-        MyMotionToast.success(
+      MyMotionToast.success(
         context,
         "Success",
         "Update Successfully Donw",
@@ -114,7 +113,7 @@ class DailyUpdateServices {
     } catch (e) {
       authProvider.isLoading(false);
       print("Catch Error");
-        MyMotionToast.error(
+      MyMotionToast.error(
         context,
         "Error",
         e.toString(),

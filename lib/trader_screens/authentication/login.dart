@@ -64,13 +64,13 @@ class _LoginPageState extends State<LoginPage> {
           _authProvider.isLoading(false);
           AuthServices.farmerLoggedIn(true);
         });
-        MyMotionToast.success(context, "Success", "Login Successfully");
         AppRoutes.replace(
           context,
           FarmerBottomNav(
             farmerId: id,
           ),
         );
+        MyMotionToast.success(context, "Success", "Login Successfully");
       } else if (check == false) {
         setState(() {
           _authProvider.isLoading(false);

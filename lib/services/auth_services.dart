@@ -27,14 +27,14 @@ class AuthServices {
       await auth
           .signInWithEmailAndPassword(email: email, password: password)
           .then((uid) => {
-                MyMotionToast.success(
-                  context,
-                  "Wellcome",
-                  '"LogIn Successful"',
-                ),
                 AppRoutes.replace(
                   context,
                   const BottomNav(),
+                ),
+                MyMotionToast.success(
+                  context,
+                  "Wellcome",
+                  'LogIn Successful',
                 ),
                 userLoggedIn(true),
                 _authProvider.isLoading(false),

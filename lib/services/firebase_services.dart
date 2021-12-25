@@ -16,7 +16,7 @@ class FirebaseServices {
         .doc(id) // <-- Doc ID to be deleted.
         .delete()
         .then((e) {
-         MyMotionToast.delete(
+      MyMotionToast.delete(
         context,
         "Success",
         "Delete successfully :) ",
@@ -33,7 +33,7 @@ class FirebaseServices {
           .collection("balance")
           .doc(balanceId)
           .delete();
-        MyMotionToast.delete(
+      MyMotionToast.delete(
         context,
         "Success",
         "Delete successfully :) ",

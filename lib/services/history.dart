@@ -28,6 +28,7 @@ class HistoryServices {
           'time': time,
           'farmerId': farmerId,
           'traderId': traderId,
+          'timeStamp': now,
         },
       );
 

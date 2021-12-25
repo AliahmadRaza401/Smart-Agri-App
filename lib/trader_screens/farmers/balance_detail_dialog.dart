@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
+import 'package:smart_agri/widgets/dynamic_size.dart';
 
 class BalanceDetailDialog extends StatelessWidget {
   final String itemName;
@@ -10,6 +11,9 @@ class BalanceDetailDialog extends StatelessWidget {
   final double deduction;
   final int finalBalance;
   final String todayPrice;
+  final double laberChar;
+  final double brokerChar;
+  final double traderChar;
 
   const BalanceDetailDialog({
     Key? key,
@@ -18,6 +22,9 @@ class BalanceDetailDialog extends StatelessWidget {
     required this.deduction,
     required this.finalBalance,
     required this.todayPrice,
+    required this.laberChar,
+    required this.brokerChar,
+    required this.traderChar,
   }) : super(key: key);
 
   @override
@@ -27,7 +34,10 @@ class BalanceDetailDialog extends StatelessWidget {
         borderRadius: BorderRadius.circular(25),
       ),
       content: Padding(
-        padding: const EdgeInsets.all(25.0),
+        padding: EdgeInsets.symmetric(
+          horizontal: dynamicWidth(context, 0.01),
+          vertical: dynamicHeight(context, 0.02),
+        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
@@ -40,8 +50,8 @@ class BalanceDetailDialog extends StatelessWidget {
                   'Item:  ',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 20,
-                    color: myRed,
+                    fontSize: dynamicWidth(context, .038),
+                    color: myGreen,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -49,7 +59,7 @@ class BalanceDetailDialog extends StatelessWidget {
                   itemName,
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: dynamicWidth(context, .038),
                     color: myBlack,
                     // fontWeight: FontWeight.bold,
                   ),
@@ -65,8 +75,8 @@ class BalanceDetailDialog extends StatelessWidget {
                   'Amount:  ',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 20,
-                    color: myRed,
+                    fontSize: dynamicWidth(context, .038),
+                    color: myGreen,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -74,7 +84,7 @@ class BalanceDetailDialog extends StatelessWidget {
                   '$price',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: dynamicWidth(context, .038),
                     color: myBlack,
                     // fontWeight: FontWeight.bold,
                   ),
@@ -89,8 +99,8 @@ class BalanceDetailDialog extends StatelessWidget {
                   'Rate per 40kg:  ',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 20,
-                    color: myRed,
+                    fontSize: dynamicWidth(context, .038),
+                    color: myGreen,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -98,7 +108,7 @@ class BalanceDetailDialog extends StatelessWidget {
                   '$todayPrice',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: dynamicWidth(context, .038),
                     color: myBlack,
                     // fontWeight: FontWeight.bold,
                   ),
@@ -111,38 +121,77 @@ class BalanceDetailDialog extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Deduction:  ',
+                  'Deductions:  ',
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 20,
+                    fontSize: dynamicWidth(context, .038),
                     color: myRed,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 SizedBox(height: 5),
-                Text(
-                  ' Labor Charges  = 1%',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: myBlack,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      ' Labor Charges  of 1% =',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: dynamicWidth(context, .035),
+                        color: myBlack,
+                      ),
+                    ),
+                    Text(
+                      laberChar.toStringAsFixed(2),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: dynamicWidth(context, .035),
+                        color: myBlack,
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  ' Borker Charges = 0.15%',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: myBlack,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      ' Borker Charges of 0.15% =',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: dynamicWidth(context, .035),
+                        color: myBlack,
+                      ),
+                    ),
+                    Text(
+                      brokerChar.toStringAsFixed(2),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: dynamicWidth(context, .035),
+                        color: myBlack,
+                      ),
+                    ),
+                  ],
                 ),
-                Text(
-                  ' Trader Charges = 1.6%',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: myBlack,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      ' Trader Charges of 1.6% =',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: dynamicWidth(context, .035),
+                        color: myBlack,
+                      ),
+                    ),
+                    Text(
+                      traderChar.toStringAsFixed(2),
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: dynamicWidth(context, .035),
+                        color: myBlack,
+                      ),
+                    ),
+                  ],
                 ),
                 SizedBox(
                   height: 10,
@@ -154,7 +203,7 @@ class BalanceDetailDialog extends StatelessWidget {
                       'Total = ',
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: dynamicWidth(context, .035),
                         color: myBlack,
                         fontWeight: FontWeight.bold,
                       ),
@@ -164,7 +213,7 @@ class BalanceDetailDialog extends StatelessWidget {
                       // "$deduction",
                       textAlign: TextAlign.center,
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: dynamicWidth(context, .035),
                         color: myBlack,
                         // fontWeight: FontWeight.bold,
                       ),
@@ -190,8 +239,8 @@ class BalanceDetailDialog extends StatelessWidget {
                     'Final Balance:',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 20,
-                      color: myRed,
+                      fontSize: dynamicWidth(context, .038),
+                      color: myGreen,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -199,7 +248,7 @@ class BalanceDetailDialog extends StatelessWidget {
                     '$finalBalance',
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: dynamicWidth(context, .038),
                       color: myBlack,
                       fontWeight: FontWeight.bold,
                     ),

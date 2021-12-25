@@ -221,13 +221,13 @@ class _HomeState extends State<Home> {
                         balanceBox(
                           context,
                           "Yet to Receive",
-                          deneHen.toString(),
+                          deneHen.toStringAsFixed(0),
                           myGreen,
                         ),
                         balanceBox(
                           context,
                           "Yet to Give",
-                          leneHen.toString(),
+                          leneHen.toStringAsFixed(0),
                           myRed,
                         ),
                       ],
@@ -376,8 +376,8 @@ class _HomeState extends State<Home> {
                                             context,
                                             data['userName'],
                                             data['mobileNumber'],
-                                            data['leneHen'] ?? "0.0",
-                                            data['deneHen'] ?? "0.0",
+                                            data['leneHen'].toStringAsFixed(0),
+                                            data['deneHen'].toStringAsFixed(0),
                                             data['image']['url']),
                                       ),
                                     );

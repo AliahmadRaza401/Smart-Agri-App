@@ -29,12 +29,13 @@ Widget balanceBox(context, title, amount, color) {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
+            AutoSizeText(
               title,
               style: TextStyle(
                 color: myBlack,
-                fontSize: dynamicWidth(context, .048),
+                fontSize: dynamicWidth(context, .044),
               ),
+              maxLines: 1,
             ),
           ],
         ),

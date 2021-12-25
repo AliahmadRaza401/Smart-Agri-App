@@ -484,7 +484,7 @@ Widget historyCard(
   return Padding(
     padding: EdgeInsets.symmetric(
       horizontal: dynamicWidth(context, .05),
-      vertical: dynamicHeight(context, .005),
+      vertical: dynamicHeight(context, .009),
     ),
     child: Container(
       width: dynamicWidth(context, .9),
@@ -542,7 +542,7 @@ Widget historyCard(
                       style: TextStyle(
                         color: myBlack,
                         fontSize: dynamicWidth(context, .04),
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],

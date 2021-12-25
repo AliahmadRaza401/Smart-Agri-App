@@ -44,16 +44,17 @@ class _TraderHistoryState extends State<TraderHistory> {
       ),
       body: Center(
         child: SizedBox(
-          height: dynamicHeight(context, .8),
+          height: dynamicHeight(context, .9),
           width: dynamicWidth(context, 1),
           child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
             stream: FirebaseFirestore.instance
                 .collection('history')
+                // .orderBy('timeStamp')
                 .where("traderId", isEqualTo: widget.traderId)
                 .snapshots(),
             builder: (_, snapshot) {
               if (snapshot.hasError) {
-                return const Text('Oops! Something went wrong');
+                return Center(child: const Text('Oops! Something went wrong'));
               }
               if (!snapshot.hasData) {
                 return const Center(
@@ -81,7 +82,7 @@ class _TraderHistoryState extends State<TraderHistory> {
                       itemCount: docs.length,
                       itemBuilder: (context, i) {
                         final data = docs[i].data();
-                        print('data: $data');
+                        // print('data: $data');
 
                         return historyCard(
                           context,

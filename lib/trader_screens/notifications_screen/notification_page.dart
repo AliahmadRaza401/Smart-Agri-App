@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smart_agri/services/fcm_services.dart';
+import 'package:smart_agri/services/history.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
@@ -199,11 +200,18 @@ class _NotificationPageState extends State<NotificationPage> {
                                     );
                                   }
                                 });
+                                await HistoryServices.addHistory(
+                                  context,
+                                  data["farmerId"],
+                                  user!.uid,
+                                  data["itemName"].toString(),
+                                  price,
+                                );
 
                                 // send Notification to farmer
                                 FCMServices.sendFCM(
                                   'farmer',
-                                  docs[i].reference.id,
+                                  data["farmerId"],
                                   "Request Accepted",
                                   "your request is accepted",
                                 );

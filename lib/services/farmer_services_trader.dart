@@ -41,7 +41,7 @@ class FarmerServicesTrader {
         'firstName': firstName,
         'lastName': lastName,
         'cnic': cnic,
-        'mobileNumber': mobileNumber,
+        'mobileNumber': "0$mobileNumber",
         'userName': userName,
         'password': password,
         'traderId': user!.uid,
@@ -52,17 +52,18 @@ class FarmerServicesTrader {
       });
 
       authProvider.isLoading(false);
-         MyMotionToast.success(
+
+      AppRoutes.pop(context);
+      MyMotionToast.success(
         context,
         "Success",
         "Farmer account created successfully :) ",
       );
-      AppRoutes.pop(context);
       print("Success");
     } catch (e) {
       authProvider.isLoading(false);
       print("Catch Error");
-        MyMotionToast.error(
+      MyMotionToast.error(
         context,
         "Error",
         e.toString(),
@@ -91,7 +92,7 @@ class FarmerServicesTrader {
       });
 
       authProvider.isLoading(false);
-         MyMotionToast.success(
+      MyMotionToast.success(
         context,
         "Success",
         "Farmer update successfully :) ",
@@ -101,7 +102,7 @@ class FarmerServicesTrader {
     } catch (e) {
       authProvider.isLoading(false);
       print("Catch Error");
-        MyMotionToast.error(
+      MyMotionToast.error(
         context,
         "Error",
         'Oops! something went wrong',
@@ -198,18 +199,18 @@ class FarmerServicesTrader {
         finalPrice,
       );
 
-        MyMotionToast.success(
+      AppRoutes.pop(context);
+      MyMotionToast.success(
         context,
         "Success",
         "Amount added successfully :) ",
       );
-      AppRoutes.pop(context);
       print("Success");
     } catch (e) {
       print('e: $e');
       authProvider.isLoading(false);
       print("Catch Error");
-         MyMotionToast.error(
+      MyMotionToast.error(
         context,
         "Error",
         "Oops! something went wrong",

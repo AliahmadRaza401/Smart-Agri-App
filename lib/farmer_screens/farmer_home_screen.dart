@@ -23,7 +23,7 @@ class FarmerHomeScreen extends StatefulWidget {
 }
 
 class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
-  dynamic farmerName, traderId;
+  dynamic farmerName, traderId, leneHen = "", deneHen = "";
 
   @override
   void initState() {
@@ -71,8 +71,11 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
               () {
                 farmerName = value.data()!["firstName"];
                 traderId = value.data()!["traderId"];
+                leneHen = value.data()!["leneHen"];
+                deneHen = value.data()!["deneHen"];
               },
             ),
+            print("\n\nabc $leneHen + abc $deneHen \n\n"),
           },
         );
   }
@@ -200,8 +203,10 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
-                          balanceBox(context, "DEBIT", "80,000", myGreen),
-                          balanceBox(context, "CREDIT", "30,000", myRed),
+                          balanceBox(context, "Yet To Receive",
+                              leneHen.toStringAsFixed(0), myGreen),
+                          balanceBox(context, "Yet To Give",
+                              deneHen.toStringAsFixed(0), myRed),
                         ],
                       ),
                     ),

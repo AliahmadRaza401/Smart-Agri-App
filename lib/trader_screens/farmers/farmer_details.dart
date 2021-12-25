@@ -356,6 +356,12 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                                                             .toInt(),
                                                     todayPrice:
                                                         data['todayPrice'],
+                                                    laberChar:
+                                                        data['traderCharges'],
+                                                    brokerChar:
+                                                        data['brokerCharges'],
+                                                    traderChar:
+                                                        data['traderCharges'],
                                                   ));
                                         },
                                         child: farmerRecordCard(
