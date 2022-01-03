@@ -38,8 +38,7 @@ class _ProfileState extends State<Profile> {
             setState(() {
               userImage = value.data()!['image']['url'].toString();
 
-              print("object + $userImage");
-              print(userImage.runtimeType);
+
               loggedInUser = UserModel.fromMap(value.data());
             }),
           },

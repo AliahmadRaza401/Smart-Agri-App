@@ -342,6 +342,6 @@ class _AddUpdateState extends State<AddUpdate> {
     if (image == null) return;
 
     setState(() => _image = image);
-    print('_image: $_image');
+
   }
 }

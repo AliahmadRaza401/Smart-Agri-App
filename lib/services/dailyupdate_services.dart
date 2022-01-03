@@ -29,9 +29,9 @@ class DailyUpdateServices {
     var time = DateFormat.jm().format(now);
 
     try {
-      print(name);
+
       var image = await FirebaseServices.imageUpload(imageFile, now.toString());
-      print('image: $image');
+
       firebaseFirestore.collection("dailyUpdate").add({
         'itemName': name,
         'itemPrice': price,
@@ -57,17 +57,18 @@ class DailyUpdateServices {
         "Trader add new Post in Daily Update",
       );
       authProvider.isLoading(false);
-      AppRoutes.pop(context);
-      MyMotionToast.success(
+         MyMotionToast.success(
         context,
         "Success",
         "Post Upload Successfully",
       );
-      print("Success");
+    
+      AppRoutes.pop(context);
+
     } catch (e) {
       authProvider.isLoading(false);
-      print("Catch Error");
-      MyMotionToast.error(
+
+        MyMotionToast.error(
         context,
         "Error",
         e.toString(),
@@ -92,7 +93,7 @@ class DailyUpdateServices {
     var time = DateFormat.jm().format(now);
 
     try {
-      print(name);
+
       firebaseFirestore.collection("dailyUpdate").doc(docsID).update({
         'itemName': name,
         'itemPrice': price,
@@ -103,17 +104,16 @@ class DailyUpdateServices {
         'traderId': user!.uid,
       });
       authProvider.isLoading(false);
-      MyMotionToast.success(
+        MyMotionToast.success(
         context,
         "Success",
         "Update Successfully Donw",
       );
       AppRoutes.pop(context);
-      print("Success");
     } catch (e) {
       authProvider.isLoading(false);
-      print("Catch Error");
-      MyMotionToast.error(
+
+        MyMotionToast.error(
         context,
         "Error",
         e.toString(),

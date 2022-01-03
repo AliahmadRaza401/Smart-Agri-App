@@ -26,22 +26,17 @@ Future<void> main() async {
 }
 
 Future<void> _messageHandler(RemoteMessage event) async {
-  print('background message ${event.notification!.body}');
   var traderId = await AuthServices.getTraderID();
-  print('traderId: $traderId');
   var farmerId = await AuthServices.getFarmerID();
-  print('farmerId: $farmerId');
 
   FirebaseMessaging.onMessageOpenedApp.listen((message) {
-    print('Message clicked!');
 
     if (event.data['id'] == traderId || event.data['id'] == farmerId) {
-      print("Request notification");
+
       LocalNotificationsService.instance.showChatNotifcation(
           title: '${event.notification!.title}',
           body: '${event.notification!.body}');
     } else if (event.data['id'] == '') {
-      print("send to all ");
       LocalNotificationsService.instance.showChatNotifcation(
           title: '${event.notification!.title}',
           body: '${event.notification!.body}');

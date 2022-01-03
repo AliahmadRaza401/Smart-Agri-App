@@ -86,7 +86,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(_authProvider.loading);
     return SafeArea(
       child: Container(
         width: dynamicWidth(context, 1),
@@ -217,7 +216,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ? "Loading..."
                                 : "Login",
                             () async {
-                              print(_authProvider.loading);
+
                               if (!_formKey.currentState!.validate()) {
                                 return;
                               } else {
@@ -235,7 +234,7 @@ class _LoginPageState extends State<LoginPage> {
                                     _authProvider.isLoading(false);
                                   });
 
-                                  print('a: $a');
+
                                 } else {
                                   loginCheck();
                                 }

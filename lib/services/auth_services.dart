@@ -90,7 +90,6 @@ class AuthServices {
                 _authProvider.isLoading(false),
               })
           .catchError((e) {
-        print(e);
         MyMotionToast.error(
           context,
           "Error",
@@ -151,7 +150,6 @@ class AuthServices {
     userModel.cnic = cnic;
 
     var image = await FirebaseServices.imageUpload(imageFile, cnic);
-    print('image: $image');
 
     await firebaseFirestore.collection("users").doc(user.uid).set({
       'uid': user.uid,

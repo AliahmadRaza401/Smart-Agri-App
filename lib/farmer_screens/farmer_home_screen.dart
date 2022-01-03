@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -34,11 +32,7 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
   }
 
   fcmListen() {
-    print("FCM Listen...");
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      print("message recieved");
-      print("body: ${event.notification!.body!}");
-      print('FCM data: ${event.data['msgId']}');
 
       if (event.data['id'] == widget.farmerId) {
         LocalNotificationsService.instance.showChatNotifcation(
@@ -46,7 +40,7 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
             body: '${event.notification!.body}');
 
         FirebaseMessaging.onMessageOpenedApp.listen((message) {
-          print('Message clicked!');
+
         });
       } else {
         LocalNotificationsService.instance.showChatNotifcation(
@@ -54,7 +48,6 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
             body: '${event.notification!.body}');
 
         FirebaseMessaging.onMessageOpenedApp.listen((message) {
-          print('Message clicked!');
         });
       }
     });
@@ -271,7 +264,6 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                                           data['createdAt'].toDate();
                                       final diff =
                                           date.difference(postDate).inMinutes;
-                                      print('diff: $diff');
                                       if (diff <= 1) {
                                         LocalNotificationsService.instance
                                             .showChatNotifcation(

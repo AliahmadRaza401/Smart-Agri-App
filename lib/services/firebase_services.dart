@@ -21,7 +21,6 @@ class FirebaseServices {
         "Success",
         "Delete successfully :) ",
       );
-      print("Delete");
     });
   }
 
@@ -39,19 +38,16 @@ class FirebaseServices {
         "Delete successfully :) ",
       );
     } catch (e) {
-      print("Failed!");
     }
   }
 
   static Future<String> imageUpload(imageFile, name) async {
     var image;
-    print('imageFile: $imageFile');
     FirebaseStorage storage = FirebaseStorage.instance;
     Reference ref = storage.ref().child(name);
     UploadTask uploadTask = ref.putFile(imageFile);
     await uploadTask.then((res) {
       image = res.ref.getDownloadURL();
-      print('image: $image');
     });
     return image;
   }

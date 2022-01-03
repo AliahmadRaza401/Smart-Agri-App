@@ -81,7 +81,6 @@ class _FarmerHistoryState extends State<FarmerHistory> {
                       itemCount: docs.length,
                       itemBuilder: (context, i) {
                         final data = docs[i].data();
-                        print('data: $data');
 
                         return historyCard(
                           context,

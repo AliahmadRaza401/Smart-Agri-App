@@ -34,14 +34,13 @@ class FarmerServicesTrader {
     authProvider.isLoading(true);
 
     try {
-      print(firstName);
       var image = await FirebaseServices.imageUpload(imageFile, cnic);
       firebaseFirestore.collection("farmers").add({
         'farmerNo': farmerNo,
         'firstName': firstName,
         'lastName': lastName,
         'cnic': cnic,
-        'mobileNumber': "0$mobileNumber",
+        'mobileNumber': mobileNumber,
         'userName': userName,
         'password': password,
         'traderId': user!.uid,
@@ -52,18 +51,15 @@ class FarmerServicesTrader {
       });
 
       authProvider.isLoading(false);
-
-      AppRoutes.pop(context);
-      MyMotionToast.success(
+         MyMotionToast.success(
         context,
         "Success",
         "Farmer account created successfully :) ",
       );
-      print("Success");
+      AppRoutes.pop(context);
     } catch (e) {
       authProvider.isLoading(false);
-      print("Catch Error");
-      MyMotionToast.error(
+        MyMotionToast.error(
         context,
         "Error",
         e.toString(),
@@ -80,7 +76,6 @@ class FarmerServicesTrader {
     authProvider.isLoading(true);
 
     try {
-      print(firstName);
       firebaseFirestore.collection("farmers").doc(docsId).update({
         'firstName': firstName,
         'lastName': lastName,
@@ -92,17 +87,15 @@ class FarmerServicesTrader {
       });
 
       authProvider.isLoading(false);
-      MyMotionToast.success(
+         MyMotionToast.success(
         context,
         "Success",
         "Farmer update successfully :) ",
       );
       AppRoutes.replace(context, Farmers());
-      print("Success");
     } catch (e) {
       authProvider.isLoading(false);
-      print("Catch Error");
-      MyMotionToast.error(
+        MyMotionToast.error(
         context,
         "Error",
         'Oops! something went wrong',
@@ -118,7 +111,6 @@ class FarmerServicesTrader {
     price,
     todayPrice,
   ) async {
-    print('adding Farmer Amount...........:');
     DateTime now = DateTime.now();
     var date = DateFormat.yMMMMd('en_US').format(now);
     var time = DateFormat.jm().format(now);
@@ -199,18 +191,15 @@ class FarmerServicesTrader {
         finalPrice,
       );
 
-      AppRoutes.pop(context);
-      MyMotionToast.success(
+        MyMotionToast.success(
         context,
         "Success",
         "Amount added successfully :) ",
       );
-      print("Success");
+      AppRoutes.pop(context);
     } catch (e) {
-      print('e: $e');
       authProvider.isLoading(false);
-      print("Catch Error");
-      MyMotionToast.error(
+         MyMotionToast.error(
         context,
         "Error",
         "Oops! something went wrong",

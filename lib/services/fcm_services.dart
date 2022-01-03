@@ -9,9 +9,7 @@ import 'package:smart_agri/utils/config.dart';
 class FCMServices {
   static fcmGetTokenandSubscribe(topic) {
     FirebaseMessaging.instance.getToken().then((value) {
-      print("FCM Token: $value");
       FirebaseMessaging.instance.subscribeToTopic("$topic");
-      print("Scribe $topic Success");
     });
   }
 
