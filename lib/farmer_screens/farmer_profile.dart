@@ -142,17 +142,17 @@ class _FarmerProfileState extends State<FarmerProfile> {
                     SizedBox(
                       height: dynamicHeight(context, .04),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: dynamicHeight(context, .01),
-                      ),
-                      child: profileButton(
-                        context,
-                        Icons.edit,
-                        "Edit Profile",
-                        function: () {},
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.symmetric(
+                    //     vertical: dynamicHeight(context, .01),
+                    //   ),
+                    //   child: profileButton(
+                    //     context,
+                    //     Icons.edit,
+                    //     "Edit Profile",
+                    //     function: () {},
+                    //   ),
+                    // ),
                     Padding(
                       padding: EdgeInsets.symmetric(
                         vertical: dynamicHeight(context, .01),

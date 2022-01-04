@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -31,7 +29,7 @@ class _HomeState extends State<Home> {
   UserModel loggedInUser = UserModel();
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
-  dynamic leneHen = 0.0, deneHen = 0.0;
+  dynamic leneHen = 0.0, deneHen = 0.0, balance = 0.0;
   late FirebaseMessaging messaging;
 
   @override
@@ -46,15 +44,12 @@ class _HomeState extends State<Home> {
 
   fcmListen() {
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-
-
       if (event.data['id'] == user!.uid) {
         LocalNotificationsService.instance.showChatNotifcation(
             title: '${event.notification!.title}',
             body: '${event.notification!.body}');
 
-        FirebaseMessaging.onMessageOpenedApp.listen((message) {
-        });
+        FirebaseMessaging.onMessageOpenedApp.listen((message) {});
       }
     });
   }
@@ -66,9 +61,12 @@ class _HomeState extends State<Home> {
   getUserData() {
     _firebaseFirestore.collection('users').doc(user!.uid).get().then(
           (value) => {
-            setState(() {
-              loggedInUser = UserModel.fromMap(value.data());
-            }),
+            setState(
+              () {
+                loggedInUser = UserModel.fromMap(value.data());
+                balance = value.data()!["balance"];
+              },
+            ),
           },
         );
   }
@@ -146,6 +144,14 @@ class _HomeState extends State<Home> {
                             color: myWhite,
                             fontSize: dynamicWidth(context, .066),
                             fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          'Balance : Rs.${balance.toStringAsFixed(0)}',
+                          style: TextStyle(
+                            color: myWhite,
+                            fontSize: dynamicWidth(context, .04),
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ],
@@ -288,6 +294,8 @@ class _HomeState extends State<Home> {
                                         data['itemUnit'],
                                         "category",
                                         data['image']['url'],
+                                        data['description'],
+
                                       ),
                                     );
                                   },

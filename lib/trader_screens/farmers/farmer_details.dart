@@ -57,20 +57,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
   void initState() {
     super.initState();
     getNetBalance();
-    // getData();
   }
-
-  // Future<String> getData() async {
-  //   var data = await FirebaseFirestore.instance
-  //       .collection("farmers")
-  //       .doc(widget.farmerId)
-  //       .collection("balance")
-  //       .get();
-  //   snapshot = data as DocumentSnapshot<Object?>;
-  //   print(snapshot);
-
-  //   return data.toString();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -357,7 +344,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                                                     todayPrice:
                                                         data['todayPrice'],
                                                     laberChar:
-                                                        data['traderCharges'],
+                                                        data['labourCharges'],
                                                     brokerChar:
                                                         data['brokerCharges'],
                                                     traderChar:

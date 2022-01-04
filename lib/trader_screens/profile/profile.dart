@@ -158,16 +158,16 @@ class _ProfileState extends State<Profile> {
                     SizedBox(
                       height: dynamicHeight(context, .04),
                     ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                        vertical: dynamicHeight(context, .01),
-                      ),
-                      child: profileButton(
-                        context,
-                        Icons.edit,
-                        "Edit Profile",
-                      ),
-                    ),
+                    // Padding(
+                    //   padding: EdgeInsets.symmetric(
+                    //     vertical: dynamicHeight(context, .01),
+                    //   ),
+                    //   child: profileButton(
+                    //     context,
+                    //     Icons.edit,
+                    //     "Edit Profile",
+                    //   ),
+                    // ),
                     Padding(
                       padding: EdgeInsets.symmetric(
                         vertical: dynamicHeight(context, .01),

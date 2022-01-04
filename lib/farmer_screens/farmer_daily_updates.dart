@@ -207,6 +207,7 @@ class _FarmerDailyUpdatesState extends State<FarmerDailyUpdates> {
                               data['itemUnit'],
                               data['category'],
                               data['image']['url'],
+                              data['description'],
                             ),
                           );
                         },

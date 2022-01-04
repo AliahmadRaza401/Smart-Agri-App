@@ -272,6 +272,8 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                                 data['itemUnit'],
                                 data['category'],
                                 data['image']['url'],
+                                data['description'],
+
                               ),
                             ),
                           );

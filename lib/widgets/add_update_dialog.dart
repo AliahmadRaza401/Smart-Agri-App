@@ -23,6 +23,7 @@ class _AddUpdateState extends State<AddUpdate> {
   final _formKey = GlobalKey<FormState>();
   final itemName = TextEditingController();
   final itemPrice = TextEditingController();
+  final itemDescription = TextEditingController();
   File? _image;
   String itemCategory = "", selectedType = "", unit = "";
   List<String> dropdownList = <String>[
@@ -138,6 +139,8 @@ class _AddUpdateState extends State<AddUpdate> {
                                         unit = "Kg";
                                       } else if (itemCategory == "Cash") {
                                         unit = "Rs.";
+                                      } else if (itemCategory == "Pesticides") {
+                                        unit = "Acres";
                                       } else if (itemCategory ==
                                           "Select Category") {
                                         unit = "";
@@ -189,15 +192,6 @@ class _AddUpdateState extends State<AddUpdate> {
                                         setState(
                                           () {
                                             selectedType = value.toString();
-                                            if (selectedType == "Liquid") {
-                                              unit = "ML";
-                                            } else if (selectedType ==
-                                                "Solid") {
-                                              unit = "Grams";
-                                            } else if (selectedType ==
-                                                "Select Type") {
-                                              unit = "";
-                                            }
                                           },
                                         );
                                       },
@@ -234,6 +228,20 @@ class _AddUpdateState extends State<AddUpdate> {
                             ],
                           ),
                         ),
+                        TextFormField(
+                          controller: itemDescription,
+                          keyboardType: TextInputType.text,
+                          decoration: const InputDecoration(
+                            hintText: "item Description",
+                          ),
+                          validator: (text) {
+                            if (text == null || text.isEmpty) {
+                              return 'Required!';
+                            }
+                            return null;
+                          },
+                          onChanged: (_) => setState(() {}),
+                        ),
                         SizedBox(
                           height: dynamicHeight(context, .02),
                         ),
@@ -260,6 +268,7 @@ class _AddUpdateState extends State<AddUpdate> {
                                       ? selectedType
                                       : "",
                                   _image,
+                                  itemDescription.text,
                                 );
                               } else {
                                 showDialog(
@@ -342,6 +351,5 @@ class _AddUpdateState extends State<AddUpdate> {
     if (image == null) return;
 
     setState(() => _image = image);
-
   }
 }

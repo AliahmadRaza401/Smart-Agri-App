@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smart_agri/services/fcm_services.dart';
 import 'package:smart_agri/services/history.dart';
 import 'package:smart_agri/utils/config.dart';
@@ -95,15 +94,9 @@ class _NotificationPageState extends State<NotificationPage> {
                               for (var result in value.docs) {
                                 if (result.data()["traderID"].toString() ==
                                         user!.uid &&
-                                    data["category"].toString().toLowerCase() ==
-                                        result
-                                            .data()["category"]
-                                            .toString()
-                                            .toLowerCase()) {
-                                  if (data["category"]
-                                          .toString()
-                                          .toLowerCase() ==
-                                      "cash") {
+                                    data["category"].toString() ==
+                                        result.data()["category"].toString()) {
+                                  if (data["category"].toString() == "Cash") {
                                     check = true;
                                     price = result.data()["price"];
                                     break;
