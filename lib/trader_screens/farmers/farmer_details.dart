@@ -309,7 +309,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                         if (snapshot.hasData) {
                           final docs = snapshot.data!.docs;
                           if (docs.isEmpty) {
-                            return const Text("Record is empty");
+                            return Center(child: const Text("Record is empty"));
                           } else {
                             return ListView.builder(
                               shrinkWrap: true,

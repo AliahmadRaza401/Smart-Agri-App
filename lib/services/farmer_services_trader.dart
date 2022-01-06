@@ -45,6 +45,8 @@ class FarmerServicesTrader {
         'userName': userName,
         'password': password,
         'traderId': user!.uid,
+        'leneHen': 0.0,
+        'deneHen' :0.0,
         'image': {
           'name': cnic,
           'url': image,

@@ -95,7 +95,7 @@ class _AddRequestState extends State<AddRequest> {
                         ),
                         TextFormField(
                           controller: itemQuantity,
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.number,
                           decoration: const InputDecoration(
                             hintText: "item Quantity",
                           ),

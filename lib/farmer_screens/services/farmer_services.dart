@@ -56,13 +56,12 @@ class FarmerServices {
         "$farmerName send a request for $category",
       );
       authProvider.isLoading(false);
+      AppRoutes.pop(context);
       MyMotionToast.success(
         context,
         "Success",
-        "Account created successfully :) ",
+        "Request Send Successfully :) ",
       );
-   
-      AppRoutes.pop(context);
     }).catchError(() {
       authProvider.isLoading(false);
       oopsAlert(context, "Request Failed! \n Please try again later");

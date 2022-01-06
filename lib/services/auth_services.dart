@@ -34,7 +34,7 @@ class AuthServices {
                 MyMotionToast.success(
                   context,
                   "Wellcome",
-                  'LogIn Successful',
+                  'LogIn Success',
                 ),
                 userLoggedIn(true),
                 _authProvider.isLoading(false),
@@ -87,7 +87,6 @@ class AuthServices {
           .then((value) => {
                 postDetailsToFirestore(context, firstName, lastName,
                     mobilenumber, cnic, imageFile),
-                _authProvider.isLoading(false),
               })
           .catchError((e) {
         print(e);
@@ -139,7 +138,8 @@ class AuthServices {
     final _auth = FirebaseAuth.instance;
     FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
     User? user = _auth.currentUser;
-
+    AuthProvider _authProvider =
+        Provider.of<AuthProvider>(context, listen: false);
     UserModel userModel = UserModel();
 
     // writing all the values
@@ -162,13 +162,15 @@ class AuthServices {
       'cnic': cnic,
       'image': {'name': cnic, 'url': image}
     });
+    _authProvider.isLoading(false);
+
+    AppRoutes.push(context, const LoginPage());
+
     MyMotionToast.success(
       context,
       "Success",
       'Account created successfully :) ',
     );
-
-    AppRoutes.push(context, const LoginPage());
   }
 
   // LogOut--------------------------------------
