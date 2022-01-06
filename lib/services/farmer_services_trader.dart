@@ -1,16 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/services/firebase_services.dart';
-import 'package:smart_agri/services/history.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/trader_screens/farmers/farmers.dart';
 import 'package:smart_agri/utils/app_route.dart';
-import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/motion_toast.dart';
+
+import 'history.dart';
 
 class FarmerServicesTrader {
   static final _auth = FirebaseAuth.instance;
@@ -34,14 +33,13 @@ class FarmerServicesTrader {
     authProvider.isLoading(true);
 
     try {
-      print(firstName);
       var image = await FirebaseServices.imageUpload(imageFile, cnic);
       firebaseFirestore.collection("farmers").add({
         'farmerNo': farmerNo,
         'firstName': firstName,
         'lastName': lastName,
         'cnic': cnic,
-        'mobileNumber': "0$mobileNumber",
+        'mobileNumber': mobileNumber,
         'userName': userName,
         'password': password,
         'traderId': user!.uid,
@@ -54,17 +52,14 @@ class FarmerServicesTrader {
       });
 
       authProvider.isLoading(false);
-
-      AppRoutes.pop(context);
       MyMotionToast.success(
         context,
         "Success",
         "Farmer account created successfully :) ",
       );
-      print("Success");
+      AppRoutes.pop(context);
     } catch (e) {
       authProvider.isLoading(false);
-      print("Catch Error");
       MyMotionToast.error(
         context,
         "Error",
@@ -82,7 +77,6 @@ class FarmerServicesTrader {
     authProvider.isLoading(true);
 
     try {
-      print(firstName);
       firebaseFirestore.collection("farmers").doc(docsId).update({
         'firstName': firstName,
         'lastName': lastName,
@@ -100,10 +94,8 @@ class FarmerServicesTrader {
         "Farmer update successfully :) ",
       );
       AppRoutes.replace(context, Farmers());
-      print("Success");
     } catch (e) {
       authProvider.isLoading(false);
-      print("Catch Error");
       MyMotionToast.error(
         context,
         "Error",
@@ -120,7 +112,6 @@ class FarmerServicesTrader {
     price,
     todayPrice,
   ) async {
-    print('adding Farmer Amount...........:');
     DateTime now = DateTime.now();
     var date = DateFormat.yMMMMd('en_US').format(now);
     var time = DateFormat.jm().format(now);
@@ -153,6 +144,7 @@ class FarmerServicesTrader {
           'deductions': deduction,
           'finalBalance': finalPrice,
           'todayPrice': todayPrice,
+          "timeStamp": DateTime.now(),
         },
       );
 
@@ -192,6 +184,17 @@ class FarmerServicesTrader {
         }
       });
 
+      await FirebaseFirestore.instance
+          .collection("users")
+          .doc(user?.uid)
+          .get()
+          .then((querySnapshot) async {
+        var balance = querySnapshot.data()!["balance"] ?? 0;
+        await firebaseFirestore.collection("users").doc(user?.uid).update({
+          "balance": traderCharges + balance,
+        });
+      });
+
       authProvider.isLoading(false);
       HistoryServices.addHistory(
         context,
@@ -201,17 +204,14 @@ class FarmerServicesTrader {
         finalPrice,
       );
 
-      AppRoutes.pop(context);
       MyMotionToast.success(
         context,
         "Success",
         "Amount added successfully :) ",
       );
-      print("Success");
+      AppRoutes.pop(context);
     } catch (e) {
-      print('e: $e');
       authProvider.isLoading(false);
-      print("Catch Error");
       MyMotionToast.error(
         context,
         "Error",

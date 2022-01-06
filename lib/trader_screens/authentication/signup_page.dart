@@ -379,6 +379,5 @@ class _SignUpPageState extends State<SignUpPage> {
     if (image == null) return;
 
     setState(() => _image = image);
-    print('_image: $_image');
   }
 }

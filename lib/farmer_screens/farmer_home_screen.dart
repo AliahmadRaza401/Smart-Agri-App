@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -34,28 +32,24 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
   }
 
   fcmListen() {
-    print("FCM Listen...");
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      print("message recieved");
-      print("body: ${event.notification!.body!}");
-      print('FCM data: ${event.data['msgId']}');
+      print("FCM Main Farmer");
+      print('user!.uid: ${widget.farmerId}');
+
+      print(event.data);
 
       if (event.data['id'] == widget.farmerId) {
         LocalNotificationsService.instance.showChatNotifcation(
             title: '${event.notification!.title}',
             body: '${event.notification!.body}');
 
-        FirebaseMessaging.onMessageOpenedApp.listen((message) {
-          print('Message clicked!');
-        });
+        FirebaseMessaging.onMessageOpenedApp.listen((message) {});
       } else {
         LocalNotificationsService.instance.showChatNotifcation(
             title: '${event.notification!.title}',
             body: '${event.notification!.body}');
 
-        FirebaseMessaging.onMessageOpenedApp.listen((message) {
-          print('Message clicked!');
-        });
+        FirebaseMessaging.onMessageOpenedApp.listen((message) {});
       }
     });
   }
@@ -271,7 +265,6 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                                           data['createdAt'].toDate();
                                       final diff =
                                           date.difference(postDate).inMinutes;
-                                      print('diff: $diff');
                                       if (diff <= 1) {
                                         LocalNotificationsService.instance
                                             .showChatNotifcation(
@@ -292,8 +285,9 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                                         data['date'],
                                         data['itemPrice'],
                                         data['itemUnit'],
-                                        "category",
+                                        data['category'],
                                         data['image']['url'],
+                                        data['description'],
                                       ),
                                     );
                                   },

@@ -1,17 +1,13 @@
-// ignore_for_file: avoid_print
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:motion_toast/motion_toast.dart';
 import 'package:smart_agri/model/user_model.dart';
 import 'package:smart_agri/services/auth_services.dart';
 import 'package:smart_agri/services/fcm_services.dart';
 import 'package:smart_agri/trader_screens/daily_update/daily_updates.dart';
 import 'package:smart_agri/trader_screens/farmers/farmer_details.dart';
-import 'package:smart_agri/trader_screens/farmers/farmer_form.dart';
 import 'package:smart_agri/trader_screens/farmers/farmers.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
@@ -20,7 +16,6 @@ import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/box_widgets.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
-import 'package:smart_agri/widgets/motion_toast.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -34,7 +29,7 @@ class _HomeState extends State<Home> {
   UserModel loggedInUser = UserModel();
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
-  dynamic leneHen = 0.0, deneHen = 0.0;
+  dynamic leneHen = 0.0, deneHen = 0.0, balance = 0.0;
   late FirebaseMessaging messaging;
 
   @override
@@ -48,21 +43,17 @@ class _HomeState extends State<Home> {
   }
 
   fcmListen() {
-    print("FCM Listen...");
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      print("message recieved");
-      print("body: ${event.notification!.body!}");
-      print('FCM data: ${event.data}');
-      print("Id : ${event.data['msgId']}");
+      print("FCM Main");
+      print('user!.uid: ${user!.uid}');
 
+      print(event.data['id']);
       if (event.data['id'] == user!.uid) {
         LocalNotificationsService.instance.showChatNotifcation(
             title: '${event.notification!.title}',
             body: '${event.notification!.body}');
 
-        FirebaseMessaging.onMessageOpenedApp.listen((message) {
-          print('Message clicked!');
-        });
+        FirebaseMessaging.onMessageOpenedApp.listen((message) {});
       }
     });
   }
@@ -74,9 +65,12 @@ class _HomeState extends State<Home> {
   getUserData() {
     _firebaseFirestore.collection('users').doc(user!.uid).get().then(
           (value) => {
-            setState(() {
-              loggedInUser = UserModel.fromMap(value.data());
-            }),
+            setState(
+              () {
+                loggedInUser = UserModel.fromMap(value.data());
+                balance = value.data()!["balance"];
+              },
+            ),
           },
         );
   }
@@ -154,6 +148,14 @@ class _HomeState extends State<Home> {
                             color: myWhite,
                             fontSize: dynamicWidth(context, .066),
                             fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                        Text(
+                          'Balance : Rs.${balance.toStringAsFixed(0)}',
+                          style: TextStyle(
+                            color: myWhite,
+                            fontSize: dynamicWidth(context, .04),
+                            fontWeight: FontWeight.w500,
                           ),
                         ),
                       ],
@@ -252,6 +254,7 @@ class _HomeState extends State<Home> {
                       StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                         stream: FirebaseFirestore.instance
                             .collection('dailyUpdate')
+                            .orderBy('timeStamp', descending: true)
                             .where("traderId", isEqualTo: user!.uid)
                             .snapshots(),
                         builder: (_, snapshot) {
@@ -294,8 +297,9 @@ class _HomeState extends State<Home> {
                                         data['date'],
                                         data['itemPrice'],
                                         data['itemUnit'],
-                                        "category",
+                                        data['category'],
                                         data['image']['url'],
+                                        data['description'],
                                       ),
                                     );
                                   },

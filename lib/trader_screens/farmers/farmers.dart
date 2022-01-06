@@ -35,9 +35,6 @@ class _FarmersState extends State<Farmers> {
         .get()
         .then((value) {
       var temp = value.docs;
-      for (var i in temp) {
-        print(i.data());
-      }
     });
   }
 

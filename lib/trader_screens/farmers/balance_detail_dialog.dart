@@ -262,8 +262,9 @@ class BalanceDetailDialog extends StatelessWidget {
               color: Colors.grey[400],
             ),
             SizedBox(height: 30),
-            Container(
-              height: 60,
+            SizedBox(
+              height: dynamicHeight(context, .05),
+              width: dynamicWidth(context, .5),
               child: button(context, "Ok", () {
                 Navigator.pop(context);
               }),

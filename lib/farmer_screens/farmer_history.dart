@@ -49,6 +49,7 @@ class _FarmerHistoryState extends State<FarmerHistory> {
           child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
             stream: FirebaseFirestore.instance
                 .collection('history')
+                .orderBy('timeStamp', descending: true)
                 .where("farmerId", isEqualTo: widget.farmerId)
                 .snapshots(),
             builder: (_, snapshot) {
@@ -81,7 +82,6 @@ class _FarmerHistoryState extends State<FarmerHistory> {
                       itemCount: docs.length,
                       itemBuilder: (context, i) {
                         final data = docs[i].data();
-                        print('data: $data');
 
                         return historyCard(
                           context,

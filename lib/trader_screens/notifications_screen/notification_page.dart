@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:smart_agri/services/fcm_services.dart';
 import 'package:smart_agri/services/history.dart';
 import 'package:smart_agri/utils/config.dart';
@@ -43,6 +42,7 @@ class _NotificationPageState extends State<NotificationPage> {
           child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
             stream: FirebaseFirestore.instance
                 .collection('request')
+                // .orderBy('timeStamp', descending: true)
                 .where("traderId", isEqualTo: user!.uid)
                 .snapshots(),
             builder: (_, snapshot) {
@@ -74,7 +74,7 @@ class _NotificationPageState extends State<NotificationPage> {
                       itemCount: docs.length,
                       itemBuilder: (context, i) {
                         final data = docs[i].data();
-                        print('data trader: $data');
+                        dynamic requestPrice = 0;
                         return farmerRequestCard(
                           context,
                           data["farmerImage"].toString(),
@@ -95,17 +95,12 @@ class _NotificationPageState extends State<NotificationPage> {
                               for (var result in value.docs) {
                                 if (result.data()["traderID"].toString() ==
                                         user!.uid &&
-                                    data["category"].toString().toLowerCase() ==
-                                        result
-                                            .data()["category"]
-                                            .toString()
-                                            .toLowerCase()) {
-                                  if (data["category"]
-                                          .toString()
-                                          .toLowerCase() ==
-                                      "cash") {
+                                    data["category"].toString() ==
+                                        result.data()["category"].toString()) {
+                                  if (data["category"].toString() == "Cash") {
                                     check = true;
                                     price = result.data()["price"];
+                                    requestPrice = result.data()["price"];
                                     break;
                                   } else {
                                     price = result.data()["price"];
@@ -113,6 +108,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                         int.parse(data["quantity"].toString());
                                     check = true;
                                     price = temp;
+                                    requestPrice = temp;
                                     break;
                                   }
                                 } else {
@@ -200,6 +196,8 @@ class _NotificationPageState extends State<NotificationPage> {
                                     );
                                   }
                                 });
+
+                                print("\n\n\nobject $price");
                                 await HistoryServices.addHistory(
                                   context,
                                   data["farmerId"],

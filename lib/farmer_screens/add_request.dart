@@ -44,7 +44,7 @@ class _AddRequestState extends State<AddRequest> {
   @override
   Widget build(BuildContext context) {
     var loading = Provider.of<AuthProvider>(context).loading;
-    print(widget.farmerImage);
+
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
@@ -79,34 +79,6 @@ class _AddRequestState extends State<AddRequest> {
                         SizedBox(
                           height: dynamicHeight(context, .02),
                         ),
-                        TextFormField(
-                          controller: itemName,
-                          keyboardType: TextInputType.text,
-                          decoration: const InputDecoration(
-                            hintText: "item Name",
-                          ),
-                          validator: (text) {
-                            if (text == null || text.isEmpty) {
-                              return 'Required!';
-                            }
-                            return null;
-                          },
-                          onChanged: (_) => setState(() {}),
-                        ),
-                        TextFormField(
-                          controller: itemQuantity,
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            hintText: "item Quantity",
-                          ),
-                          validator: (text) {
-                            if (text == null || text.isEmpty) {
-                              return 'Required!';
-                            }
-                            return null;
-                          },
-                          onChanged: (_) => setState(() {}),
-                        ),
                         Padding(
                           padding: EdgeInsets.symmetric(
                             vertical: dynamicHeight(context, .01),
@@ -136,6 +108,8 @@ class _AddRequestState extends State<AddRequest> {
                                         unit = "No. of Bags";
                                       } else if (itemCategory == "Seed") {
                                         unit = "Kg";
+                                      } else if (itemCategory == "Pesticides") {
+                                        unit = "Acres";
                                       } else if (itemCategory == "Cash") {
                                         unit = "Rs.";
                                       } else if (itemCategory ==
@@ -189,15 +163,6 @@ class _AddRequestState extends State<AddRequest> {
                                         setState(
                                           () {
                                             selectedType = value.toString();
-                                            if (selectedType == "Liquid") {
-                                              unit = "ML";
-                                            } else if (selectedType ==
-                                                "Solid") {
-                                              unit = "Grams";
-                                            } else if (selectedType ==
-                                                "Select Type") {
-                                              unit = "";
-                                            }
                                           },
                                         );
                                       },
@@ -219,6 +184,38 @@ class _AddRequestState extends State<AddRequest> {
                                 ),
                               )
                             : const SizedBox(),
+                        itemCategory == "Cash"
+                            ? SizedBox()
+                            : TextFormField(
+                                controller: itemName,
+                                keyboardType: TextInputType.text,
+                                decoration: const InputDecoration(
+                                  hintText: "item Name",
+                                ),
+                                validator: (text) {
+                                  if (text == null || text.isEmpty) {
+                                    return 'Required!';
+                                  }
+                                  return null;
+                                },
+                                onChanged: (_) => setState(() {}),
+                              ),
+                        TextFormField(
+                          controller: itemQuantity,
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            hintText: itemCategory == "Cash"
+                                ? "Cash Amount"
+                                : "item Quantity",
+                          ),
+                          validator: (text) {
+                            if (text == null || text.isEmpty) {
+                              return 'Required!';
+                            }
+                            return null;
+                          },
+                          onChanged: (_) => setState(() {}),
+                        ),
                         Padding(
                           padding: EdgeInsets.only(
                             top: dynamicHeight(context, .01),
@@ -243,16 +240,16 @@ class _AddRequestState extends State<AddRequest> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      button(context, loading ? "Adding..." : "ADD", () {
+                      button(context, loading ? "Adding..." : "ADD", () async {
                         if (_formKey.currentState!.validate()) {
-                          FarmerServices.sendRequest(
+                          await FarmerServices.sendRequest(
                             context,
                             widget.farmerId,
                             widget.traderId,
                             widget.farmerName,
                             widget.farmerImage,
                             widget.farmerNumber,
-                            itemName.text,
+                            itemCategory == "Cash" ? "Cash" : itemName.text,
                             itemCategory,
                             itemCategory == "Pesticides" ? selectedType : "",
                             unit,

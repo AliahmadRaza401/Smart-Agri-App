@@ -188,6 +188,7 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                   ? stream
                   : FirebaseFirestore.instance
                       .collection('dailyUpdate')
+                      .orderBy('timeStamp', descending: true)
                       .where("traderId", isEqualTo: user!.uid)
                       .snapshots(),
               builder: (_, snapshot) {
@@ -272,6 +273,7 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                                 data['itemUnit'],
                                 data['category'],
                                 data['image']['url'],
+                                data['description'],
                               ),
                             ),
                           );

@@ -306,6 +306,5 @@ class _FarmerFormState extends State<FarmerForm> {
     if (image == null) return;
 
     setState(() => _image = image);
-    print('_image: $_image');
   }
 }

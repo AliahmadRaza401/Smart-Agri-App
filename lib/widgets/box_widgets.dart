@@ -223,10 +223,11 @@ Widget farmerCard(context, userName, number, debit, credit, image) {
   );
 }
 
-Widget dailyUpdateCard(context, title, date, price, unit, category, image) {
+Widget dailyUpdateCard(
+    context, title, date, price, unit, category, image, description) {
   return Container(
     width: dynamicWidth(context, .9),
-    height: dynamicHeight(context, .28),
+    height: dynamicHeight(context, .32),
     decoration: BoxDecoration(
       color: containerBgColor,
       borderRadius: BorderRadius.circular(
@@ -255,7 +256,7 @@ Widget dailyUpdateCard(context, title, date, price, unit, category, image) {
           ),
           child: SizedBox(
             width: dynamicWidth(context, .9),
-            height: dynamicHeight(context, .18),
+            height: dynamicHeight(context, .2),
             child: Image.network(
               image,
               width: dynamicWidth(context, 1),
@@ -301,6 +302,7 @@ Widget dailyUpdateCard(context, title, date, price, unit, category, image) {
             horizontal: dynamicWidth(context, .06),
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 category ?? "",
@@ -308,6 +310,16 @@ Widget dailyUpdateCard(context, title, date, price, unit, category, image) {
                   color: myBlack,
                   fontSize: dynamicWidth(context, .038),
                   fontWeight: FontWeight.w500,
+                ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
+              Text(
+                date ?? "",
+                style: TextStyle(
+                  color: myBlack,
+                  fontSize: dynamicWidth(context, .03),
+                  fontWeight: FontWeight.w300,
                 ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
@@ -322,15 +334,17 @@ Widget dailyUpdateCard(context, title, date, price, unit, category, image) {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                date ?? "",
-                style: TextStyle(
-                  color: myBlack,
-                  fontSize: dynamicWidth(context, .03),
-                  fontWeight: FontWeight.w300,
+              Flexible(
+                child: Text(
+                  description ?? "",
+                  style: TextStyle(
+                    color: myBlack,
+                    fontSize: dynamicWidth(context, .03),
+                    fontWeight: FontWeight.w300,
+                  ),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
               ),
             ],
           ),
@@ -341,91 +355,4 @@ Widget dailyUpdateCard(context, title, date, price, unit, category, image) {
       ],
     ),
   );
-  // return Stack(
-  //   children: [
-  //     Center(
-  //       child: Container(
-  //         height: dynamicHeight(context, .12),
-  //         width: dynamicWidth(context, .9),
-  //         decoration: BoxDecoration(
-  //           color: greenLite,
-  //           borderRadius: BorderRadius.circular(
-  //             dynamicWidth(context, .03),
-  //           ),
-  //           boxShadow: [
-  //             BoxShadow(
-  //               color: myBlack.withOpacity(0.2),
-  //               spreadRadius: 1,
-  //               blurRadius: 6,
-  //               offset: const Offset(0, 3), // changes position of shadow
-  //             ),
-  //           ],
-  //         ),
-  //         padding: EdgeInsets.symmetric(
-  //           vertical: dynamicHeight(context, .004),
-  //           horizontal: dynamicWidth(context, .04),
-  //         ),
-  //         child: Column(
-  //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //           children: [
-  //             Row(
-  //               children: [
-  //                 Text(
-  //                   "$title ~ $category",
-  //                   style: TextStyle(
-  //                     color: myBlack,
-  //                     fontSize: dynamicWidth(context, .052),
-  //                     fontWeight: FontWeight.w500,
-  //                   ),
-  //                   maxLines: 1,
-  //                   overflow: TextOverflow.ellipsis,
-  //                 ),
-  //               ],
-  //             ),
-  //             Row(
-  //               children: [
-  //                 Text(
-  //                   date ?? "",
-  //                   style: TextStyle(
-  //                     color: myBlack,
-  //                     fontSize: dynamicWidth(context, .042),
-  //                     fontWeight: FontWeight.w300,
-  //                   ),
-  //                   maxLines: 1,
-  //                   overflow: TextOverflow.ellipsis,
-  //                 ),
-  //               ],
-  //             ),
-  //             Row(
-  //               children: [
-  //                 Text(
-  //                   "Rs. $price / $unit",
-  //                   style: TextStyle(
-  //                     color: myBlack,
-  //                     fontSize: dynamicWidth(context, .046),
-  //                     fontWeight: FontWeight.w400,
-  //                   ),
-  //                   maxLines: 1,
-  //                   overflow: TextOverflow.ellipsis,
-  //                 ),
-  //               ],
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //     SizedBox(
-  //       height: dynamicHeight(context, .14),
-  //       width: dynamicWidth(context, 1),
-  //       child: Row(
-  //         mainAxisAlignment: MainAxisAlignment.end,
-  //         children: const [
-  //           Image(
-  //             image: AssetImage("assets/leaf.png"),
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   ],
-  // );
 }

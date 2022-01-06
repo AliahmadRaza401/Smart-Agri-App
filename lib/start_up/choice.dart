@@ -61,7 +61,6 @@ class _ChoiceState extends State<Choice> {
                   ),
                   child: button(context, "Login as Trader", () async {
                     var user = await AuthServices.getUserLoggedIn();
-                    print('user: $user');
 
                     if (user == true) {
                       AppRoutes.replace(
@@ -85,7 +84,6 @@ class _ChoiceState extends State<Choice> {
                   child: button(context, "Login as Farmer", () async {
                     dynamic farmerLoggedIn =
                         await AuthServices.getFarmerLoggedIn();
-                    print('farmerLoggedIn: $farmerLoggedIn');
                     if (farmerLoggedIn == true) {
                       var id = await AuthServices.getFarmerID();
                       AppRoutes.replace(

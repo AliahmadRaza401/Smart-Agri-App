@@ -1,12 +1,7 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:smart_agri/services/firebase_services.dart';
-import 'package:smart_agri/trader_screens/daily_update/update_daily_update.dart';
 import 'package:smart_agri/utils/config.dart';
-import 'package:smart_agri/utils/local_notification.dart';
 import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/box_widgets.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
@@ -27,7 +22,7 @@ class _FarmerDailyUpdatesState extends State<FarmerDailyUpdates> {
   User? user = FirebaseAuth.instance.currentUser;
 
   final searchQuery = TextEditingController();
-  String stream = "";
+  dynamic stream = "", activeCategory = "";
 
   @override
   Widget build(BuildContext context) {
@@ -45,36 +40,17 @@ class _FarmerDailyUpdatesState extends State<FarmerDailyUpdates> {
           color: myWhite,
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {
-          showDialog(
-            context: context,
-            builder: (context) => const AddUpdate(),
-          );
-        },
-        backgroundColor: myGreen,
-        elevation: 4.0,
-        label: AutoSizeText(
-          'New Update',
-          style: TextStyle(
-            color: myWhite,
-            fontSize: dynamicWidth(context, .04),
-            fontWeight: FontWeight.w400,
-          ),
-          maxLines: 1,
-        ),
-        icon: const Icon(
-          Icons.add,
-          color: myWhite,
-        ),
-      ),
       body: Column(
         children: [
           Padding(
             padding: EdgeInsets.symmetric(
               vertical: dynamicHeight(context, .02),
             ),
-            child: SizedBox(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: myWhite,
+              ),
               width: dynamicWidth(context, .9),
               child: inputTextField(
                 context,
@@ -85,11 +61,83 @@ class _FarmerDailyUpdatesState extends State<FarmerDailyUpdates> {
                 inputAction: TextInputAction.done,
                 submitFunction: (value) {
                   setState(() {
-                    stream = value;
+                    if (value == "") {
+                      stream = "";
+                    } else {
+                      stream = FirebaseFirestore.instance
+                          .collection('dailyUpdate')
+                          .where("itemName", isEqualTo: value.toLowerCase())
+                          .where("traderId", isEqualTo: widget.traderId)
+                          .snapshots();
+                    }
                   });
                 },
               ),
             ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    activeCategory = "";
+                    stream = "";
+                  });
+                },
+                child: dailyUpdateFilter(
+                  context,
+                  "All",
+                  activeCategory == "" ? true : false,
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    activeCategory = "Fertilizers";
+                    stream = FirebaseFirestore.instance
+                        .collection('dailyUpdate')
+                        .where("category", isEqualTo: "Fertilizers")
+                        .where("traderId", isEqualTo: widget.traderId)
+                        .snapshots();
+                  });
+                },
+                child: dailyUpdateFilter(context, "Fertilizers",
+                    activeCategory == "Fertilizers" ? true : false),
+              ),
+              GestureDetector(
+                onTap: () {
+                  setState(() {
+                    activeCategory = "Pesticides";
+
+                    stream = FirebaseFirestore.instance
+                        .collection('dailyUpdate')
+                        .where("category", isEqualTo: "Pesticides")
+                        .where("traderId", isEqualTo: widget.traderId)
+                        .snapshots();
+                  });
+                },
+                child: dailyUpdateFilter(context, "Pesticides",
+                    activeCategory == "Pesticides" ? true : false),
+              ),
+              GestureDetector(
+                onTap: () {
+                  setState(
+                    () {
+                      activeCategory = "Seed";
+
+                      stream = FirebaseFirestore.instance
+                          .collection('dailyUpdate')
+                          .where("category", isEqualTo: "Seed")
+                          .where("traderId", isEqualTo: widget.traderId)
+                          .snapshots();
+                    },
+                  );
+                },
+                child: dailyUpdateFilter(
+                    context, "Seed", activeCategory == "Seed" ? true : false),
+              ),
+            ],
           ),
           Padding(
             padding: EdgeInsets.only(
@@ -113,10 +161,7 @@ class _FarmerDailyUpdatesState extends State<FarmerDailyUpdates> {
           Expanded(
             child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
               stream: stream != ""
-                  ? FirebaseFirestore.instance
-                      .collection('dailyUpdate')
-                      .where("itemName", isEqualTo: stream.toLowerCase())
-                      .snapshots()
+                  ? stream
                   : FirebaseFirestore.instance
                       .collection('dailyUpdate')
                       .where("traderId", isEqualTo: widget.traderId)
@@ -132,7 +177,6 @@ class _FarmerDailyUpdatesState extends State<FarmerDailyUpdates> {
                 }
                 if (snapshot.hasData) {
                   final docs = snapshot.data!.docs;
-                  print('docs: $docs');
 
                   if (docs.isEmpty) {
                     return noDataError(
@@ -140,7 +184,6 @@ class _FarmerDailyUpdatesState extends State<FarmerDailyUpdates> {
                       "assets/dailyUpdatesCartoon.png",
                       const AddUpdate(),
                       dynamicHeight(context, .34),
-                      farmer: true,
                     );
                   } else {
                     return Padding(
@@ -151,72 +194,20 @@ class _FarmerDailyUpdatesState extends State<FarmerDailyUpdates> {
                         itemCount: docs.length,
                         itemBuilder: (context, i) {
                           final data = docs[i].data();
-                          DateTime date = DateTime.now();
-                          DateTime postDate = data['createdAt'].toDate();
-                          final diff = date.difference(postDate).inMinutes;
-                          if (diff <= 1) {
-                            LocalNotificationsService.instance
-                                .showChatNotifcation(
-                                    title: "New Post",
-                                    body:
-                                        "Trader Upload new post in daily item");
-                          }
-
-                          return Slidable(
-                            endActionPane: ActionPane(
-                              motion: const ScrollMotion(),
-                              children: [
-                                SlidableAction(
-                                  onPressed: (BuildContext context) {
-                                    var id =
-                                        snapshot.data!.docs[i].reference.id;
-                                    showDialog(
-                                      context: context,
-                                      builder: (context) => UpdateDailyUpdate(
-                                        itemName: data['itemName'],
-                                        price: data['itemPrice'],
-                                        unit: data['itemUnit'],
-                                        docsId: id,
-                                        category: "category",
-                                      ),
-                                    );
-                                  },
-                                  backgroundColor: myLiteGreen,
-                                  foregroundColor: myWhite,
-                                  icon: Icons.edit,
-                                  label: 'Edit',
-                                ),
-                                SlidableAction(
-                                  onPressed: (BuildContext context) {
-                                    var id =
-                                        snapshot.data!.docs[i].reference.id;
-                                    FirebaseServices.deleteRecord(
-                                      context,
-                                      'dailyUpdate',
-                                      id,
-                                    );
-                                  },
-                                  backgroundColor: myRed,
-                                  foregroundColor: myWhite,
-                                  icon: Icons.delete,
-                                  label: 'Delete',
-                                ),
-                              ],
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: dynamicHeight(context, .012),
+                              horizontal: dynamicWidth(context, .04),
                             ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                vertical: dynamicHeight(context, .012),
-                                horizontal: dynamicWidth(context, .04),
-                              ),
-                              child: dailyUpdateCard(
-                                context,
-                                data['itemName'],
-                                data['date'],
-                                data['itemPrice'],
-                                data['itemUnit'],
-                                "category",
-                                data['image']['url'],
-                              ),
+                            child: dailyUpdateCard(
+                              context,
+                              data['itemName'],
+                              data['date'],
+                              data['itemPrice'],
+                              data['itemUnit'],
+                              data['category'],
+                              data['image']['url'],
+                              data['description'],
                             ),
                           );
                         },
@@ -234,6 +225,38 @@ class _FarmerDailyUpdatesState extends State<FarmerDailyUpdates> {
             height: dynamicHeight(context, .02),
           ),
         ],
+      ),
+    );
+  }
+
+  Widget dailyUpdateFilter(context, text, check) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: dynamicWidth(context, .012),
+      ),
+      child: Container(
+        height: dynamicHeight(context, .036),
+        decoration: BoxDecoration(
+          color: check == false ? noColor : myGreen,
+          borderRadius: BorderRadius.circular(
+            dynamicWidth(context, .4),
+          ),
+          border: Border.all(
+            color: myGreen,
+          ),
+        ),
+        padding: EdgeInsets.symmetric(
+          horizontal: dynamicWidth(context, .04),
+        ),
+        child: Center(
+          child: Text(
+            text,
+            style: TextStyle(
+              fontSize: dynamicWidth(context, .036),
+              color: check == false ? myGreen : myWhite,
+            ),
+          ),
+        ),
       ),
     );
   }

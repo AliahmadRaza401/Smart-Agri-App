@@ -14,7 +14,6 @@ class HistoryServices {
     name,
     price,
   ) async {
-    print('addi in History........:');
     DateTime now = DateTime.now();
     var date = DateFormat.yMMMMd('en_US').format(now);
     var time = DateFormat.jm().format(now);
@@ -32,9 +31,7 @@ class HistoryServices {
         },
       );
 
-      print("Success");
     } catch (e) {
-      print('e: $e');
     }
   }
 }

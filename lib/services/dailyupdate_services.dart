@@ -3,7 +3,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/farmer_screens/services/balance_services.dart';
@@ -11,15 +10,22 @@ import 'package:smart_agri/services/fcm_services.dart';
 import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/utils/app_route.dart';
-import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/motion_toast.dart';
 
 class DailyUpdateServices {
   static final _auth = FirebaseAuth.instance;
   static FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
-  static addDailyItemToDB(BuildContext context, name, price, unit, category,
-      subCategory, imageFile) async {
+  static addDailyItemToDB(
+    BuildContext context,
+    name,
+    price,
+    unit,
+    category,
+    subCategory,
+    imageFile,
+    description,
+  ) async {
     AuthProvider authProvider =
         Provider.of<AuthProvider>(context, listen: false);
     User? user = _auth.currentUser;
@@ -29,9 +35,8 @@ class DailyUpdateServices {
     var time = DateFormat.jm().format(now);
 
     try {
-      print(name);
       var image = await FirebaseServices.imageUpload(imageFile, now.toString());
-      print('image: $image');
+
       firebaseFirestore.collection("dailyUpdate").add({
         'itemName': name,
         'itemPrice': price,
@@ -42,7 +47,9 @@ class DailyUpdateServices {
         'time': time,
         'createdAt': now,
         'traderId': user!.uid,
-        'image': {'name': now.toString(), 'url': image}
+        'image': {'name': now.toString(), 'url': image},
+        'description':description,
+        'timeStamp': DateTime.now(),
       });
       BalanceServices.sendRequest(
         context,
@@ -57,16 +64,16 @@ class DailyUpdateServices {
         "Trader add new Post in Daily Update",
       );
       authProvider.isLoading(false);
-      AppRoutes.pop(context);
       MyMotionToast.success(
         context,
         "Success",
         "Post Upload Successfully",
       );
-      print("Success");
+
+      AppRoutes.pop(context);
     } catch (e) {
       authProvider.isLoading(false);
-      print("Catch Error");
+
       MyMotionToast.error(
         context,
         "Error",
@@ -92,7 +99,6 @@ class DailyUpdateServices {
     var time = DateFormat.jm().format(now);
 
     try {
-      print(name);
       firebaseFirestore.collection("dailyUpdate").doc(docsID).update({
         'itemName': name,
         'itemPrice': price,
@@ -109,10 +115,9 @@ class DailyUpdateServices {
         "Update Successfully Donw",
       );
       AppRoutes.pop(context);
-      print("Success");
     } catch (e) {
       authProvider.isLoading(false);
-      print("Catch Error");
+
       MyMotionToast.error(
         context,
         "Error",

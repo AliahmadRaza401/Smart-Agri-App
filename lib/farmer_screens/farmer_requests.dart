@@ -33,7 +33,6 @@ class _FarmerRequestsState extends State<FarmerRequests> {
         .get()
         .then(
           (value) => {
-            print(value.data()),
             setState(
               () {
                 traderId = value.data()!["traderId"];
@@ -58,6 +57,7 @@ class _FarmerRequestsState extends State<FarmerRequests> {
             color: myWhite,
           ),
         ),
+        automaticallyImplyLeading: false,
         centerTitle: true,
         iconTheme: const IconThemeData(
           color: myWhite,
@@ -99,7 +99,8 @@ class _FarmerRequestsState extends State<FarmerRequests> {
           child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
             stream: FirebaseFirestore.instance
                 .collection('request')
-                .where("traderId", isEqualTo: traderId)
+                .orderBy('timeStamp', descending: true)
+                .where("farmerId", isEqualTo: widget.farmerId)
                 .snapshots(),
             builder: (_, snapshot) {
               if (snapshot.hasError) {
@@ -131,11 +132,6 @@ class _FarmerRequestsState extends State<FarmerRequests> {
                       itemCount: docs.length,
                       itemBuilder: (context, i) {
                         final data = docs[i].data();
-                        print('data: $data');
-                        // LocalNotificationsService.instance.showChatNotifcation(
-                        //   title: "Request Declined",
-                        //   body: "Trader reject your request",
-                        // );
                         return farmerRequestCard(
                           context,
                           data["farmerImage"].toString(),

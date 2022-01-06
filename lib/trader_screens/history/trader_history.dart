@@ -1,10 +1,6 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_agri/farmer_screens/add_request.dart';
 import 'package:smart_agri/utils/config.dart';
-import 'package:smart_agri/utils/local_notification.dart';
-import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
 import 'package:smart_agri/widgets/farmer_bottom_nav.dart';
@@ -44,17 +40,17 @@ class _TraderHistoryState extends State<TraderHistory> {
       ),
       body: Center(
         child: SizedBox(
-          height: dynamicHeight(context, .9),
+          height: dynamicHeight(context, .8),
           width: dynamicWidth(context, 1),
           child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
             stream: FirebaseFirestore.instance
                 .collection('history')
-                // .orderBy('timeStamp')
+                .orderBy('timeStamp', descending: true)
                 .where("traderId", isEqualTo: widget.traderId)
                 .snapshots(),
             builder: (_, snapshot) {
               if (snapshot.hasError) {
-                return Center(child: const Text('Oops! Something went wrong'));
+                return const Text('Oops! Something went wrong');
               }
               if (!snapshot.hasData) {
                 return const Center(
@@ -82,7 +78,6 @@ class _TraderHistoryState extends State<TraderHistory> {
                       itemCount: docs.length,
                       itemBuilder: (context, i) {
                         final data = docs[i].data();
-                        // print('data: $data');
 
                         return historyCard(
                           context,

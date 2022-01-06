@@ -9,13 +9,11 @@ import 'package:smart_agri/utils/config.dart';
 class FCMServices {
   static fcmGetTokenandSubscribe(topic) {
     FirebaseMessaging.instance.getToken().then((value) {
-      print("FCM Token: $value");
       FirebaseMessaging.instance.subscribeToTopic("$topic");
-      print("Scribe $topic Success");
     });
   }
 
- static Future<http.Response> sendFCM(topic, id, title, description) {
+  static Future<http.Response> sendFCM(topic, id, title, description) {
     return http.post(
       Uri.parse('https://fcm.googleapis.com/fcm/send'),
       headers: <String, String>{
@@ -30,6 +28,7 @@ class FCMServices {
         },
         "data": {
           "id": id,
+          "userName": "ali",
         }
       }),
     );
