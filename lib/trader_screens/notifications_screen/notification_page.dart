@@ -42,7 +42,7 @@ class _NotificationPageState extends State<NotificationPage> {
           child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
             stream: FirebaseFirestore.instance
                 .collection('request')
-                // .orderBy('timeStamp', descending: true)
+                .orderBy('timeStamp', descending: true)
                 .where("traderId", isEqualTo: user!.uid)
                 .snapshots(),
             builder: (_, snapshot) {
