@@ -2,12 +2,10 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/services/fcm_services.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/utils/app_route.dart';
-import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
 import 'package:smart_agri/widgets/motion_toast.dart';
 
@@ -47,7 +45,8 @@ class FarmerServices {
       "subCategory": subCategory,
       "unit": unit,
       "quantity": quantity,
-      "status": "Pending"
+      "status": "Pending",
+      "timeStamp": DateTime.now(),
     }).then((value) {
       FCMServices.sendFCM(
         'trader',
@@ -61,7 +60,7 @@ class FarmerServices {
         "Success",
         "Account created successfully :) ",
       );
-   
+
       AppRoutes.pop(context);
     }).catchError(() {
       authProvider.isLoading(false);

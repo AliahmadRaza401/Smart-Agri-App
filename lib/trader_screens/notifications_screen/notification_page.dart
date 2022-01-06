@@ -42,6 +42,7 @@ class _NotificationPageState extends State<NotificationPage> {
           child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
             stream: FirebaseFirestore.instance
                 .collection('request')
+                // .orderBy('timeStamp', descending: true)
                 .where("traderId", isEqualTo: user!.uid)
                 .snapshots(),
             builder: (_, snapshot) {
@@ -73,7 +74,7 @@ class _NotificationPageState extends State<NotificationPage> {
                       itemCount: docs.length,
                       itemBuilder: (context, i) {
                         final data = docs[i].data();
-
+                        dynamic requestPrice = 0;
                         return farmerRequestCard(
                           context,
                           data["farmerImage"].toString(),
@@ -99,6 +100,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                   if (data["category"].toString() == "Cash") {
                                     check = true;
                                     price = result.data()["price"];
+                                    requestPrice = result.data()["price"];
                                     break;
                                   } else {
                                     price = result.data()["price"];
@@ -106,6 +108,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                         int.parse(data["quantity"].toString());
                                     check = true;
                                     price = temp;
+                                    requestPrice = temp;
                                     break;
                                   }
                                 } else {
@@ -193,6 +196,8 @@ class _NotificationPageState extends State<NotificationPage> {
                                     );
                                   }
                                 });
+
+                                print("\n\n\nobject $price");
                                 await HistoryServices.addHistory(
                                   context,
                                   data["farmerId"],

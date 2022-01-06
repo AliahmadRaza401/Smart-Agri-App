@@ -142,6 +142,7 @@ class FarmerServicesTrader {
           'deductions': deduction,
           'finalBalance': finalPrice,
           'todayPrice': todayPrice,
+          "timeStamp": DateTime.now(),
         },
       );
 

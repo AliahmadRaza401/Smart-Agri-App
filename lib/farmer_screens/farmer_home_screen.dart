@@ -284,7 +284,7 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                                         data['date'],
                                         data['itemPrice'],
                                         data['itemUnit'],
-                                        "category",
+                                        data['category'],
                                         data['image']['url'],
                                         data['description'],
 

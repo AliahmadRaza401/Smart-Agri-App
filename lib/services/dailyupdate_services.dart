@@ -49,6 +49,7 @@ class DailyUpdateServices {
         'traderId': user!.uid,
         'image': {'name': now.toString(), 'url': image},
         'description':description,
+        'timeStamp': DateTime.now(),
       });
       BalanceServices.sendRequest(
         context,

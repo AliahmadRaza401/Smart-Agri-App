@@ -99,6 +99,7 @@ class _FarmerRequestsState extends State<FarmerRequests> {
           child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
             stream: FirebaseFirestore.instance
                 .collection('request')
+                .orderBy('timeStamp', descending: true)
                 .where("farmerId", isEqualTo: widget.farmerId)
                 .snapshots(),
             builder: (_, snapshot) {

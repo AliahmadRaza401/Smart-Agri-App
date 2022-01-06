@@ -283,6 +283,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                           .collection("farmers")
                           .doc(widget.farmerId)
                           .collection("balance")
+                          .orderBy('timeStamp', descending: true)
                           .snapshots(),
                       builder: (_, snapshot) {
                         if (snapshot.hasError) {

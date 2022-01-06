@@ -250,6 +250,7 @@ class _HomeState extends State<Home> {
                       StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
                         stream: FirebaseFirestore.instance
                             .collection('dailyUpdate')
+                            .orderBy('timeStamp', descending: true)
                             .where("traderId", isEqualTo: user!.uid)
                             .snapshots(),
                         builder: (_, snapshot) {
@@ -292,7 +293,7 @@ class _HomeState extends State<Home> {
                                         data['date'],
                                         data['itemPrice'],
                                         data['itemUnit'],
-                                        "category",
+                                        data['category'],
                                         data['image']['url'],
                                         data['description'],
 
