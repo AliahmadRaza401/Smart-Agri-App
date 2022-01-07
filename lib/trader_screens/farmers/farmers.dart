@@ -44,7 +44,6 @@ class _FarmersState extends State<Farmers> {
   }
 
   // addAmount(farmerId) async {
-  //   print("hy");
   //   QuerySnapshot snap = await FirebaseFirestore.instance
   //       .collection('farmers')
   //       .doc(farmerId)
@@ -54,21 +53,17 @@ class _FarmersState extends State<Farmers> {
   //   for (int i = 0; i < snap.docs.length; i++) {
   //     var a = snap.docs[i].data();
   //     var b = a['name'] == null ? "sdf" : "asdf";
-  //     print('a: ${a['name'] ?? "vnnbm"}');
   //   }
 
   //   // snap.docs.forEach((document) {
-  //   //   print(document.data());
 
   //   //   var credit = 0;
   //   //   var dabit = 0;
   //   //   if (document[0].data()!['type'] == 'credit') {
-  //   //     print("credit type DAta");
   //   //     setState(() {
   //   //       credit = document.data()['credit'];
   //   //     });
   //   //   } else {
-  //   //       print("dabit type DAta");
   //   //     setState(() {
   //   //       credit = document.data()!['dabit'];
   //   //     });

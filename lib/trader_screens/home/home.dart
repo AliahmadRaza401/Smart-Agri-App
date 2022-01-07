@@ -44,11 +44,7 @@ class _HomeState extends State<Home> {
 
   fcmListen() {
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      print("FCM Main");
-      print('user!.uid: ${user!.uid}');
-
-      print(event.data['id']);
-      if (event.data['id'] == user!.uid || event.data['id'] == "all") {
+      if (event.data['id'] == user!.uid) {
         LocalNotificationsService.instance.showChatNotifcation(
             title: '${event.notification!.title}',
             body: '${event.notification!.body}');

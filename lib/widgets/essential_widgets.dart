@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
@@ -383,37 +384,39 @@ Widget farmerRequestCard(
                       ),
                     ],
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        name,
-                        style: TextStyle(
-                          color: myBlack,
-                          fontSize: dynamicWidth(context, .04),
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          name,
+                          style: TextStyle(
+                            color: myBlack,
+                            fontSize: dynamicWidth(context, .04),
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        height: dynamicHeight(context, .006),
-                      ),
-                      Text(
-                        category,
-                        style: TextStyle(
-                          color: myBlack,
-                          fontSize: dynamicWidth(context, .04),
+                        SizedBox(
+                          height: dynamicHeight(context, .006),
                         ),
-                      ),
-                      SizedBox(
-                        height: dynamicHeight(context, .006),
-                      ),
-                      Text(
-                        quantity + "/" + unit,
-                        style: TextStyle(
-                          color: myBlack,
-                          fontSize: dynamicWidth(context, .04),
+                        Text(
+                          category,
+                          style: TextStyle(
+                            color: myBlack,
+                            fontSize: dynamicWidth(context, .04),
+                          ),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          height: dynamicHeight(context, .006),
+                        ),
+                        AutoSizeText(
+                          quantity + "/" + unit,
+                          style: TextStyle(
+                            color: myBlack,
+                            fontSize: dynamicWidth(context, .04),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

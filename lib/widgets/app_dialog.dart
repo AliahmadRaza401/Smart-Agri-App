@@ -188,7 +188,6 @@ class ImageDialog extends StatelessWidget {
                 //     );
                 //   },
                 //   errorWidget: (context, url, error) {
-                //     print(error);
                 //     return Column(
                 //       mainAxisAlignment: MainAxisAlignment.center,
                 //       children: [

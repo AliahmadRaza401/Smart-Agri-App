@@ -74,7 +74,8 @@ class _NotificationPageState extends State<NotificationPage> {
                       itemCount: docs.length,
                       itemBuilder: (context, i) {
                         final data = docs[i].data();
-                        dynamic requestPrice = 0;
+                        double requestPrice = 0.0;
+                        dynamic check = "";
                         return farmerRequestCard(
                           context,
                           data["farmerImage"].toString(),
@@ -87,141 +88,147 @@ class _NotificationPageState extends State<NotificationPage> {
                           data["status"].toString(),
                           farmer: false,
                           function1: () async {
-                            dynamic check, price;
-                            await FirebaseFirestore.instance
-                                .collection("rates")
-                                .get()
-                                .then((value) async {
-                              for (var result in value.docs) {
-                                if (result.data()["traderID"].toString() ==
-                                        user!.uid &&
-                                    data["category"].toString() ==
-                                        result.data()["category"].toString()) {
-                                  if (data["category"].toString() == "Cash") {
+                            requestPrice = 0.0;
+                            if (data["category"].toString() == "Cash") {
+                              check = true;
+                              requestPrice =
+                                  double.parse(data["quantity"].toString());
+                            } else {
+                              await FirebaseFirestore.instance
+                                  .collection("dailyUpdate")
+                                  .get()
+                                  .then((value) async {
+                                for (var result in value.docs) {
+                                  requestPrice = 0.0;
+                                  if (data["category"].toString() ==
+                                      result.data()["category"].toString()) {
+                                    requestPrice = double.parse(
+                                        result.data()["itemPrice"].toString());
+
+                                    double temp = requestPrice *
+                                        double.parse(
+                                            data["quantity"].toString());
                                     check = true;
-                                    price = result.data()["price"];
-                                    requestPrice = result.data()["price"];
-                                    break;
-                                  } else {
-                                    price = result.data()["price"];
-                                    var temp = int.parse(price.toString()) *
-                                        int.parse(data["quantity"].toString());
-                                    check = true;
-                                    price = temp;
                                     requestPrice = temp;
                                     break;
+                                  } else {
+                                    check = false;
                                   }
-                                } else {
-                                  check = false;
                                 }
-                              }
-                              if (check == true) {
-                                await FirebaseFirestore.instance
-                                    .collection("users")
-                                    .doc(user!.uid)
-                                    .collection("balance")
-                                    .doc(data["farmerId"])
-                                    .set(
-                                  {
-                                    'traderId': user!.uid,
-                                    'farmerId': data["farmerId"],
-                                    'leneHen': price,
-                                  },
-                                );
-                                await FirebaseFirestore.instance
-                                    .collection("farmers")
-                                    .doc(data["farmerId"])
-                                    .collection("balance")
-                                    .doc(user!.uid)
-                                    .set(
-                                  {
-                                    'traderId': user!.uid,
-                                    'farmerId': data["farmerId"],
-                                    'deneHen': price,
-                                  },
-                                );
-                                await FirebaseFirestore.instance
-                                    .collection("request")
-                                    .doc(docs[i].reference.id)
-                                    .update(
-                                  {
-                                    'status': "Accepted",
-                                    'traderId': user!.uid,
-                                  },
-                                );
+                              });
+                            }
 
-                                await FirebaseFirestore.instance
-                                    .collection("farmers")
-                                    .doc(data["farmerId"])
-                                    .get()
-                                    .then((querySnapshot) async {
-                                  var deneHenData =
-                                      querySnapshot.data()!["deneHen"];
-                                  var leneHenData =
-                                      querySnapshot.data()!["leneHen"];
+                            if (check == true) {
+                              await FirebaseFirestore.instance
+                                  .collection("users")
+                                  .doc(user!.uid)
+                                  .collection("balance")
+                                  .doc(data["farmerId"])
+                                  .set(
+                                {
+                                  'traderId': user!.uid,
+                                  'farmerId': data["farmerId"],
+                                  'leneHen': requestPrice,
+                                },
+                              );
+                              await FirebaseFirestore.instance
+                                  .collection("farmers")
+                                  .doc(data["farmerId"])
+                                  .collection("balance")
+                                  .doc(user!.uid)
+                                  .set(
+                                {
+                                  'traderId': user!.uid,
+                                  'farmerId': data["farmerId"],
+                                  'deneHen': requestPrice,
+                                },
+                              );
+                              await FirebaseFirestore.instance
+                                  .collection("request")
+                                  .doc(docs[i].reference.id)
+                                  .update(
+                                {
+                                  'status': "Accepted",
+                                  'traderId': user!.uid,
+                                },
+                              );
 
-                                  if (leneHenData > 0) {
-                                    if (leneHenData > price) {
-                                      price = leneHenData - price;
-                                      await FirebaseFirestore.instance
-                                          .collection("farmers")
-                                          .doc(data["farmerId"])
-                                          .update(
-                                        {
-                                          'deneHen': deneHenData,
-                                          'leneHen': price,
-                                        },
-                                      );
-                                    } else if (leneHenData < price) {
-                                      price = price - leneHenData;
-                                      await FirebaseFirestore.instance
-                                          .collection("farmers")
-                                          .doc(data["farmerId"])
-                                          .update(
-                                        {
-                                          'deneHen': price + deneHenData,
-                                          'leneHen': 0,
-                                        },
-                                      );
-                                    }
-                                  } else if (leneHenData == 0) {
+                              await FirebaseFirestore.instance
+                                  .collection("farmers")
+                                  .doc(data["farmerId"])
+                                  .get()
+                                  .then((querySnapshot) async {
+                                var deneHenData =
+                                    querySnapshot.data()!["deneHen"];
+                                var leneHenData =
+                                    querySnapshot.data()!["leneHen"];
+
+                                if (leneHenData > 0) {
+                                  if (leneHenData > requestPrice) {
+                                    var price = leneHenData - requestPrice;
                                     await FirebaseFirestore.instance
                                         .collection("farmers")
                                         .doc(data["farmerId"])
                                         .update(
                                       {
-                                        'deneHen': price + deneHenData,
+                                        'deneHen': int.parse(
+                                            deneHenData.toStringAsFixed(0)),
+                                        'leneHen': price,
+                                      },
+                                    );
+                                  } else if (leneHenData < requestPrice) {
+                                    var price = requestPrice - leneHenData;
+                                    await FirebaseFirestore.instance
+                                        .collection("farmers")
+                                        .doc(data["farmerId"])
+                                        .update(
+                                      {
+                                        'deneHen': int.parse(
+                                                price.toStringAsFixed(0)) +
+                                            int.parse(
+                                                deneHenData.toStringAsFixed(0)),
                                         'leneHen': 0,
                                       },
                                     );
                                   }
-                                });
+                                } else if (leneHenData == 0) {
+                                  await FirebaseFirestore.instance
+                                      .collection("farmers")
+                                      .doc(data["farmerId"])
+                                      .update(
+                                    {
+                                      'deneHen': int.parse(
+                                              requestPrice.toStringAsFixed(0)) +
+                                          int.parse(
+                                              deneHenData.toStringAsFixed(0)),
+                                      'leneHen': 0,
+                                    },
+                                  );
+                                }
+                              });
 
-                                print("\n\n\nobject $price");
-                                await HistoryServices.addHistory(
-                                  context,
-                                  data["farmerId"],
-                                  user!.uid,
-                                  data["itemName"].toString(),
-                                  price,
-                                );
+                              await HistoryServices.addHistory(
+                                context,
+                                data["farmerId"],
+                                user!.uid,
+                                data["itemName"].toString(),
+                                requestPrice,
+                              );
 
-                                print("\n\n\nfarmer id ${data["farmerId"]}");
-                                // send Notification to farmer
-                                FCMServices.sendFCM(
-                                  'farmer',
-                                  data["farmerId"],
-                                  "Request Accepted",
-                                  "your request is accepted",
-                                );
-                              } else if (check == false) {
-                                MyMotionToast.warning(
-                                  context,
-                                  "Missing",
-                                  "Add Daily Update first of this Category",
-                                );
-                              }
-                            });
+                              // send Notification to farmer
+                              FCMServices.sendFCM(
+                                'farmer',
+                                data["farmerId"],
+                                "Request Accepted",
+                                "your request is accepted",
+                              );
+                            } else if (check == false) {
+                              MyMotionToast.warning(
+                                context,
+                                "Missing",
+                                "Add Daily Update first of this Category",
+                              );
+                            }
                           },
                           function2: () {
                             FirebaseFirestore.instance
@@ -233,7 +240,6 @@ class _NotificationPageState extends State<NotificationPage> {
                                 'traderId': user!.uid,
                               },
                             );
-                            print("\n\n\nfarmer id ${data["farmerId"]}");
                             FCMServices.sendFCM(
                               'farmer',
                               data["farmerId"],

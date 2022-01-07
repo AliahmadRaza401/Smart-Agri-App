@@ -15,7 +15,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await LocalNotificationsService.instance.initialize();
-  FirebaseMessaging.onBackgroundMessage(_messageHandler);
+  // FirebaseMessaging.onBackgroundMessage(_messageHandler);
 
   runApp(const MyApp());
   SystemChrome.setSystemUIOverlayStyle(
@@ -25,27 +25,24 @@ Future<void> main() async {
   );
 }
 
-Future<void> _messageHandler(RemoteMessage event) async {
-  var traderId = await AuthServices.getTraderID();
-  var farmerId = await AuthServices.getFarmerID();
-
-  FirebaseMessaging.onMessageOpenedApp.listen((message) {
-    print(event.data['id']);
-    print('traderId: $traderId');
-    print('farmerId: $farmerId');
-
-    if (event.data['id'] == traderId || event.data['id'] == farmerId) {
-      LocalNotificationsService.instance.showChatNotifcation(
-          title: '${event.notification!.title}',
-          body: '${event.notification!.body}');
-    }
-    //  else if (event.data['id'] == '') {
-    //   LocalNotificationsService.instance.showChatNotifcation(
-    //       title: '${event.notification!.title}',
-    //       body: '${event.notification!.body}');
-    // }
-  });
-}
+// Future<void> _messageHandler(RemoteMessage event) async {
+//   var traderId = await AuthServices.getTraderID();
+//   var farmerId = await AuthServices.getFarmerID();
+//
+//   FirebaseMessaging.onMessageOpenedApp.listen((message) {
+//
+//     if (event.data['id'] == traderId || event.data['id'] == farmerId) {
+//       LocalNotificationsService.instance.showChatNotifcation(
+//           title: '${event.notification!.title}',
+//           body: '${event.notification!.body}');
+//     }
+//     //  else if (event.data['id'] == '') {
+//     //   LocalNotificationsService.instance.showChatNotifcation(
+//     //       title: '${event.notification!.title}',
+//     //       body: '${event.notification!.body}');
+//     // }
+//   });
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

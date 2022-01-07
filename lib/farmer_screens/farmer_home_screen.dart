@@ -35,20 +35,14 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
 
   fcmListen() {
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      print("FCM Main Farmer");
-      print('user!.uid: ${widget.farmerId}');
-
-      print(event.data);
 
       if (event.data['id'] == widget.farmerId) {
-        print("Id Match FCM");
         LocalNotificationsService.instance.showChatNotifcation(
             title: '${event.notification!.title}',
             body: '${event.notification!.body}');
 
         FirebaseMessaging.onMessageOpenedApp.listen((message) {});
       } else {
-        print("Id  Not Match FCM");
 
         // LocalNotificationsService.instance.showChatNotifcation(
         //     title: '${event.notification!.title}',
@@ -74,7 +68,6 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                 deneHen = value.data()!["deneHen"];
               },
             ),
-            print("\n\nabc $leneHen + abc $deneHen \n\n"),
           },
         );
   }

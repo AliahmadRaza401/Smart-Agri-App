@@ -105,7 +105,7 @@ class _AddRequestState extends State<AddRequest> {
                                     () {
                                       itemCategory = value.toString();
                                       if (itemCategory == "Fertilizers") {
-                                        unit = "No. of Bags";
+                                        unit = "Per Bag";
                                       } else if (itemCategory == "Seed") {
                                         unit = "Kg";
                                       } else if (itemCategory == "Pesticides") {
