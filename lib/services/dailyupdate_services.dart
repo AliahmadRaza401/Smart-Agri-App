@@ -48,7 +48,7 @@ class DailyUpdateServices {
         'createdAt': now,
         'traderId': user!.uid,
         'image': {'name': now.toString(), 'url': image},
-        'description':description,
+        'description': description,
         'timeStamp': DateTime.now(),
       });
       BalanceServices.sendRequest(
@@ -59,21 +59,20 @@ class DailyUpdateServices {
       );
       await FCMServices.sendFCM(
         'farmer',
-        "",
+        "all",
         "$name Post",
         "Trader add new Post in Daily Update",
       );
       authProvider.isLoading(false);
+      AppRoutes.pop(context);
       MyMotionToast.success(
         context,
         "Success",
         "Post Upload Successfully",
       );
-
-      AppRoutes.pop(context);
     } catch (e) {
       authProvider.isLoading(false);
-
+      AppRoutes.pop(context);
       MyMotionToast.error(
         context,
         "Error",

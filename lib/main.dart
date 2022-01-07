@@ -34,15 +34,16 @@ Future<void> _messageHandler(RemoteMessage event) async {
     print('traderId: $traderId');
     print('farmerId: $farmerId');
 
-    if (event.data['id'] == traderId || event.data['id'] == farmerId) {
-      LocalNotificationsService.instance.showChatNotifcation(
-          title: '${event.notification!.title}',
-          body: '${event.notification!.body}');
-    } else if (event.data['id'] == '') {
+    if (event.data['id'] == traderId || event.data['id'] == farmerId || event.data['id'] == "all") {
       LocalNotificationsService.instance.showChatNotifcation(
           title: '${event.notification!.title}',
           body: '${event.notification!.body}');
     }
+    //  else if (event.data['id'] == '') {
+    //   LocalNotificationsService.instance.showChatNotifcation(
+    //       title: '${event.notification!.title}',
+    //       body: '${event.notification!.body}');
+    // }
   });
 }
 

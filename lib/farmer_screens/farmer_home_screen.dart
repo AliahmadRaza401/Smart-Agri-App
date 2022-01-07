@@ -38,18 +38,22 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
 
       print(event.data);
 
-      if (event.data['id'] == widget.farmerId) {
+      if (event.data['id'] == widget.farmerId || event.data['id'] == "all") {
+        print("Id Match FCM");
         LocalNotificationsService.instance.showChatNotifcation(
             title: '${event.notification!.title}',
             body: '${event.notification!.body}');
 
         FirebaseMessaging.onMessageOpenedApp.listen((message) {});
-      } else {
-        LocalNotificationsService.instance.showChatNotifcation(
-            title: '${event.notification!.title}',
-            body: '${event.notification!.body}');
+      } 
+      else {
+        print("Id  Not Match FCM");
 
-        FirebaseMessaging.onMessageOpenedApp.listen((message) {});
+        // LocalNotificationsService.instance.showChatNotifcation(
+        //     title: '${event.notification!.title}',
+        //     body: '${event.notification!.body}');
+
+        // FirebaseMessaging.onMessageOpenedApp.listen((message) {});
       }
     });
   }
