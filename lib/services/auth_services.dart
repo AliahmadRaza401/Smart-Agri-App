@@ -182,6 +182,7 @@ class AuthServices {
   static logOutFarmer(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
     farmerLoggedIn(false);
+    userLoggedIn(false);
     AppRoutes.replace(context, const Choice());
   }
 
