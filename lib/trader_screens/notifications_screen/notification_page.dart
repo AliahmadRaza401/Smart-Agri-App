@@ -101,25 +101,25 @@ class _NotificationPageState extends State<NotificationPage> {
                                 for (var result in value.docs) {
                                   requestPrice = 0.0;
                                   if (data["category"].toString() ==
-                                      result.data()["category"].toString()) {
-                                    if (data["itemName"]
-                                            .toString()
-                                            .toLowerCase() ==
-                                        result
-                                            .data()["itemName"]
-                                            .toString()
-                                            .toLowerCase()) {
-                                      requestPrice = double.parse(result
-                                          .data()["itemPrice"]
-                                          .toString());
+                                          result
+                                              .data()["category"]
+                                              .toString() &&
+                                      data["itemName"]
+                                              .toString()
+                                              .toLowerCase() ==
+                                          result
+                                              .data()["itemName"]
+                                              .toString()
+                                              .toLowerCase()) {
+                                    requestPrice = double.parse(
+                                        result.data()["itemPrice"].toString());
 
-                                      double temp = requestPrice *
-                                          double.parse(
-                                              data["quantity"].toString());
-                                      check = true;
-                                      requestPrice = temp;
-                                      break;
-                                    }
+                                    double temp = requestPrice *
+                                        double.parse(
+                                            data["quantity"].toString());
+                                    check = true;
+                                    requestPrice = temp;
+                                    break;
                                   } else {
                                     check = false;
                                   }
