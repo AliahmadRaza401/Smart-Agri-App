@@ -235,6 +235,7 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                                         unit: data['itemUnit'],
                                         docsId: id,
                                         category: "category",
+                                        desc: data['description'],
                                       ),
                                     );
                                   },

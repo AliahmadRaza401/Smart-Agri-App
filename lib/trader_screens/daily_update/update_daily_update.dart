@@ -7,7 +7,7 @@ import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 
 class UpdateDailyUpdate extends StatefulWidget {
-  final String docsId, itemName, price, unit, category;
+  final String docsId, itemName, price, unit, category, desc;
 
   const UpdateDailyUpdate({
     Key? key,
@@ -16,6 +16,7 @@ class UpdateDailyUpdate extends StatefulWidget {
     required this.price,
     required this.unit,
     required this.category,
+    required this.desc,
   }) : super(key: key);
 
   @override
@@ -27,6 +28,8 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
   final itemName = TextEditingController();
   final itemPrice = TextEditingController();
   final itemUnit = TextEditingController();
+  final itemDesc = TextEditingController();
+
   dynamic itemCategory = "";
 
   List<String> dropdownList = <String>[
@@ -46,7 +49,7 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
           dynamicWidth(context, .04),
         ),
       ),
-      backgroundColor: greenLite,
+      backgroundColor: myWhite,
       child: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -147,6 +150,23 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                         SizedBox(
                           height: dynamicHeight(context, .02),
                         ),
+                        TextFormField(
+                          controller: itemDesc..text = widget.desc.toString(),
+                          keyboardType: TextInputType.text,
+                          decoration: const InputDecoration(
+                            hintText: "Item Description",
+                          ),
+                          validator: (text) {
+                            if (text == null || text.isEmpty) {
+                              return 'Required!';
+                            }
+                            return null;
+                          },
+                          onChanged: (_) => setState(() {}),
+                        ),
+                        SizedBox(
+                          height: dynamicHeight(context, .02),
+                        ),
                       ],
                     ),
                   ),
@@ -162,6 +182,7 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                             itemPrice.text,
                             itemUnit.text,
                             itemCategory,
+                            itemDesc,
                           );
                         }
                       },
@@ -170,7 +191,7 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                           fontSize: dynamicWidth(context, .042),
                           color: myWhite,
                           btnColor: myGreen),
-                      button(
+                      cancelButton(
                         context,
                         "Cancel",
                         () {

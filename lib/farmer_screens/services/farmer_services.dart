@@ -48,6 +48,7 @@ class FarmerServices {
       "status": "Pending",
       "timeStamp": DateTime.now(),
     }).then((value) {
+      print('traderId: $traderId');
       FCMServices.sendFCM(
         'trader',
         '$traderId',

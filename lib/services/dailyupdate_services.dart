@@ -88,6 +88,7 @@ class DailyUpdateServices {
     price,
     unit,
     itemCategory,
+    description,
   ) async {
     AuthProvider authProvider =
         Provider.of<AuthProvider>(context, listen: false);
@@ -106,6 +107,7 @@ class DailyUpdateServices {
         'date': date,
         'time': time,
         'traderId': user!.uid,
+        'description' : description,
       });
       authProvider.isLoading(false);
       MyMotionToast.success(

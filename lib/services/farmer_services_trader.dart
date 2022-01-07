@@ -44,7 +44,7 @@ class FarmerServicesTrader {
         'password': password,
         'traderId': user!.uid,
         'leneHen': 0.0,
-        'deneHen' :0.0,
+        'deneHen': 0.0,
         'image': {
           'name': cnic,
           'url': image,
@@ -52,12 +52,13 @@ class FarmerServicesTrader {
       });
 
       authProvider.isLoading(false);
+      AppRoutes.pop(context);
+
       MyMotionToast.success(
         context,
         "Success",
         "Farmer account created successfully :) ",
       );
-      AppRoutes.pop(context);
     } catch (e) {
       authProvider.isLoading(false);
       MyMotionToast.error(

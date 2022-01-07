@@ -134,7 +134,7 @@ class _AddUpdateState extends State<AddUpdate> {
                                     () {
                                       itemCategory = value.toString();
                                       if (itemCategory == "Fertilizers") {
-                                        unit = "No. of Bags";
+                                        unit = "Per Bag";
                                       } else if (itemCategory == "Seed") {
                                         unit = "Kg";
                                       } else if (itemCategory == "Cash") {
