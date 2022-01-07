@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -38,15 +40,14 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
 
       print(event.data);
 
-      if (event.data['id'] == widget.farmerId || event.data['id'] == "all") {
+      if (event.data['id'] == widget.farmerId) {
         print("Id Match FCM");
         LocalNotificationsService.instance.showChatNotifcation(
             title: '${event.notification!.title}',
             body: '${event.notification!.body}');
 
         FirebaseMessaging.onMessageOpenedApp.listen((message) {});
-      } 
-      else {
+      } else {
         print("Id  Not Match FCM");
 
         // LocalNotificationsService.instance.showChatNotifcation(
