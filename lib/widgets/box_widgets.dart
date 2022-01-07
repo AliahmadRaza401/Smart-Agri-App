@@ -94,30 +94,34 @@ Widget farmerCard(context, userName, number, debit, credit, image) {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        AutoSizeText(
-                          "Yet to Give",
-                          style: TextStyle(
-                            color: myBlack,
-                            fontSize: dynamicWidth(context, .044),
-                            fontWeight: FontWeight.w500,
+                        Flexible(
+                          child: AutoSizeText(
+                            "Yet to Give",
+                            style: TextStyle(
+                              color: myBlack,
+                              fontSize: dynamicWidth(context, .044),
+                              fontWeight: FontWeight.w500,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "Rs. $debit",
-                          style: TextStyle(
-                            color: myRed,
-                            fontSize: dynamicWidth(context, .04),
-                            fontWeight: FontWeight.w500,
+                        Flexible(
+                          child: AutoSizeText(
+                            "Rs. $debit",
+                            style: TextStyle(
+                              color: myRed,
+                              fontSize: dynamicWidth(context, .04),
+                              fontWeight: FontWeight.w500,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
@@ -171,15 +175,17 @@ Widget farmerCard(context, userName, number, debit, credit, image) {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text(
-                          "Rs. $credit",
-                          style: TextStyle(
-                            color: myGreen,
-                            fontSize: dynamicWidth(context, .04),
-                            fontWeight: FontWeight.w500,
+                        Flexible(
+                          child: AutoSizeText(
+                            "Rs. $credit",
+                            style: TextStyle(
+                              color: myGreen,
+                              fontSize: dynamicWidth(context, .04),
+                              fontWeight: FontWeight.w500,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),

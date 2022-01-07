@@ -42,8 +42,8 @@ class _NotificationPageState extends State<NotificationPage> {
           child: StreamBuilder<QuerySnapshot<Map<String, dynamic>>>(
             stream: FirebaseFirestore.instance
                 .collection('request')
-                .orderBy('timeStamp', descending: true)
                 .where("traderId", isEqualTo: user!.uid)
+                .orderBy('timeStamp', descending: true)
                 .snapshots(),
             builder: (_, snapshot) {
               if (snapshot.hasError) {
@@ -206,6 +206,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                   price,
                                 );
 
+                                print("\n\n\nfarmer id ${data["farmerId"]}");
                                 // send Notification to farmer
                                 FCMServices.sendFCM(
                                   'farmer',
@@ -232,9 +233,10 @@ class _NotificationPageState extends State<NotificationPage> {
                                 'traderId': user!.uid,
                               },
                             );
+                            print("\n\n\nfarmer id ${data["farmerId"]}");
                             FCMServices.sendFCM(
                               'farmer',
-                              docs[i].reference.id,
+                              data["farmerId"],
                               "Request Declined",
                               "Trader cancel your request",
                             );
