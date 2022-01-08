@@ -30,12 +30,11 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
     super.initState();
     getFarmerData();
     FCMServices.fcmGetTokenandSubscribe('farmer');
-    fcmListen();
+    // fcmListen();
   }
 
   fcmListen() {
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-
       if (event.data['id'] == widget.farmerId) {
         LocalNotificationsService.instance.showChatNotifcation(
             title: '${event.notification!.title}',
@@ -43,7 +42,6 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
 
         FirebaseMessaging.onMessageOpenedApp.listen((message) {});
       } else {
-
         // LocalNotificationsService.instance.showChatNotifcation(
         //     title: '${event.notification!.title}',
         //     body: '${event.notification!.body}');

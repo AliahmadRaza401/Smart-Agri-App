@@ -11,6 +11,7 @@ import 'package:smart_agri/widgets/box_widgets.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
 import 'package:smart_agri/widgets/form_fields.dart';
+import 'package:smart_agri/widgets/motion_toast.dart';
 
 class DailyUpdates extends StatefulWidget {
   const DailyUpdates({Key? key}) : super(key: key);
@@ -246,6 +247,8 @@ class _DailyUpdatesState extends State<DailyUpdates> {
                                 ),
                                 SlidableAction(
                                   onPressed: (BuildContext context) {
+                                    MyMotionToast.delete(context, "Success",
+                                        "Post Delete Success");
                                     var id =
                                         snapshot.data!.docs[i].reference.id;
                                     FirebaseServices.deleteRecord(

@@ -39,7 +39,7 @@ class _HomeState extends State<Home> {
     getBalance();
     saveTraderID();
     FCMServices.fcmGetTokenandSubscribe('trader');
-    fcmListen();
+    // fcmListen();
   }
 
   fcmListen() {
