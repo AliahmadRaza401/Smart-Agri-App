@@ -147,7 +147,9 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                         Text(
-                          'Balance : Rs.${balance.toStringAsFixed(0)}',
+                          balance == null
+                              ? 'Balance : Rs. 0.0'
+                              : 'Balance : Rs.${balance.toStringAsFixed(0)}',
                           style: TextStyle(
                             color: myWhite,
                             fontSize: dynamicWidth(context, .04),
