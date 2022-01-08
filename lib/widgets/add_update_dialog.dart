@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable
+// ignore_for_file: unused_local_variable, avoid_print
 
 import 'dart:io';
 
@@ -13,6 +13,7 @@ import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/utils/image_piker.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
+import 'package:smart_agri/widgets/motion_toast.dart';
 
 import 'essential_widgets.dart';
 
@@ -29,32 +30,34 @@ class _AddUpdateState extends State<AddUpdate> {
   final itemPrice = TextEditingController();
   final itemDescription = TextEditingController();
   File? _image;
+  var posts;
+  late QuerySnapshot querySnapshot;
+  bool itemAlreadyExist = false;
 
   @override
   void initState() {
     super.initState();
-    getData();
+    getDocs();
   }
 
+  Future getDocs() async {
+    print("Get.:.");
+    querySnapshot =
+        await FirebaseFirestore.instance.collection("dailyUpdate").get();
+  }
 
-  getData() async {
-    String mobile_number;
-    String? name;
-    String surname;
+  checkItemAlreadyExist(item, categorey) {
     var id = FirebaseAuth.instance.currentUser!.uid;
-
-    final QuerySnapshot result = await FirebaseFirestore.instance
-        .collection('dailyUpdate')
-        .where(
-          'traderId',
-          isEqualTo: id,
-        )
-        .get();
-    result.docs.map((value) {
-      var data = value.data();
-      // var a = data['itemName'] ?? "";
-      print('data: $data');
-    });
+    for (int i = 0; i < querySnapshot.docs.length; i++) {
+      posts = querySnapshot.docs[i].data();
+      if (posts['traderId'] == id) {
+        if (posts['category'] == categorey && posts['itemName'] == item) {
+          setState(() {
+            itemAlreadyExist = true;
+          });
+        }
+      }
+    }
   }
 
   String itemCategory = "", selectedType = "", unit = "";
@@ -290,18 +293,29 @@ class _AddUpdateState extends State<AddUpdate> {
                           if (_formKey.currentState!.validate()) {
                             if (_image != null) {
                               if (itemCategory != "") {
-                                DailyUpdateServices.addDailyItemToDB(
-                                  context,
-                                  itemName.text,
-                                  itemPrice.text,
-                                  unit,
-                                  itemCategory,
-                                  itemCategory == "Pesticides"
-                                      ? selectedType
-                                      : "",
-                                  _image,
-                                  itemDescription.text,
-                                );
+                                checkItemAlreadyExist(
+                                    itemName.text, itemCategory);
+                                if (itemAlreadyExist == true) {
+                                  AppRoutes.pop(context);
+                                  MyMotionToast.warning(
+                                    context,
+                                    "ItemName Exist",
+                                    "This item in his categorey is already exist",
+                                  );
+                                } else {
+                                  DailyUpdateServices.addDailyItemToDB(
+                                    context,
+                                    itemName.text,
+                                    itemPrice.text,
+                                    unit,
+                                    itemCategory,
+                                    itemCategory == "Pesticides"
+                                        ? selectedType
+                                        : "",
+                                    _image,
+                                    itemDescription.text,
+                                  );
+                                }
                               } else {
                                 showDialog(
                                   context: context,
