@@ -1,5 +1,9 @@
+// ignore_for_file: unused_local_variable
+
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/services/dailyupdate_services.dart';
@@ -25,6 +29,34 @@ class _AddUpdateState extends State<AddUpdate> {
   final itemPrice = TextEditingController();
   final itemDescription = TextEditingController();
   File? _image;
+
+  @override
+  void initState() {
+    super.initState();
+    getData();
+  }
+
+
+  getData() async {
+    String mobile_number;
+    String? name;
+    String surname;
+    var id = FirebaseAuth.instance.currentUser!.uid;
+
+    final QuerySnapshot result = await FirebaseFirestore.instance
+        .collection('dailyUpdate')
+        .where(
+          'traderId',
+          isEqualTo: id,
+        )
+        .get();
+    result.docs.map((value) {
+      var data = value.data();
+      // var a = data['itemName'] ?? "";
+      print('data: $data');
+    });
+  }
+
   String itemCategory = "", selectedType = "", unit = "";
   List<String> dropdownList = <String>[
     "Select Category",

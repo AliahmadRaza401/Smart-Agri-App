@@ -162,7 +162,11 @@ class AuthServices {
     });
     _authProvider.isLoading(false);
 
-    AppRoutes.push(context, const LoginPage());
+    AppRoutes.push(
+        context,
+        const LoginPage(
+          name: "Trader",
+        ));
 
     MyMotionToast.success(
       context,

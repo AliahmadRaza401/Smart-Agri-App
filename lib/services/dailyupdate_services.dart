@@ -51,12 +51,12 @@ class DailyUpdateServices {
         'description': description,
         'timeStamp': DateTime.now(),
       });
-      BalanceServices.sendRequest(
-        context,
-        user.uid,
-        category,
-        price,
-      );
+      // BalanceServices.sendRequest(
+      //   context,
+      //   user.uid,
+      //   category,
+      //   price,
+      // );
       await FCMServices.sendFCM(
         'farmer',
         "all",
@@ -107,7 +107,7 @@ class DailyUpdateServices {
         'date': date,
         'time': time,
         'traderId': user!.uid,
-        'description' : description,
+        'description': description,
       });
       authProvider.isLoading(false);
       MyMotionToast.success(
