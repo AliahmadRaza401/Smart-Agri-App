@@ -111,6 +111,7 @@ class FarmerServicesTrader {
     farmerId,
     name,
     price,
+    itemWeight,
     todayPrice,
   ) async {
     DateTime now = DateTime.now();
@@ -137,8 +138,7 @@ class FarmerServicesTrader {
         {
           'name': name,
           'price': price,
-          'date': date,
-          'time': time,
+          "itemWeight": itemWeight,
           'labourCharges': labourCharges,
           'brokerCharges': brokerCharges,
           'traderCharges': traderCharges,

@@ -170,12 +170,11 @@ class _AddUpdateState extends State<AddUpdate> {
                                       itemCategory = value.toString();
                                       if (itemCategory == "Fertilizers") {
                                         unit = "Per Bag";
-                                      } else if (itemCategory == "Seed") {
-                                        unit = "Kg";
+                                      } else if (itemCategory == "Seed" ||
+                                          itemCategory == "Pesticides") {
+                                        unit = "Per Acre";
                                       } else if (itemCategory == "Cash") {
                                         unit = "Rs.";
-                                      } else if (itemCategory == "Pesticides") {
-                                        unit = "Acres";
                                       } else if (itemCategory ==
                                           "Select Category") {
                                         unit = "";
@@ -263,6 +262,9 @@ class _AddUpdateState extends State<AddUpdate> {
                             ],
                           ),
                         ),
+                        SizedBox(
+                          height: dynamicHeight(context, .01),
+                        ),
                         TextFormField(
                           controller: itemDescription,
                           keyboardType: TextInputType.text,
@@ -270,8 +272,10 @@ class _AddUpdateState extends State<AddUpdate> {
                             hintText: "item Description",
                           ),
                           validator: (text) {
-                            if (text == null || text.isEmpty) {
-                              return 'Required!';
+                            if (itemCategory == "Pesticides") {
+                              if (text == null || text.isEmpty) {
+                                return 'Required!';
+                              }
                             }
                             return null;
                           },

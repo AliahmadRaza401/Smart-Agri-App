@@ -33,7 +33,7 @@ class FarmerDetails extends StatefulWidget {
 }
 
 class _FarmerDetailsState extends State<FarmerDetails> {
-  dynamic netBalance = 0;
+  dynamic netBalance = 0.0;
   late DocumentSnapshot snapshot;
 
   getNetBalance() async {
@@ -46,7 +46,8 @@ class _FarmerDetailsState extends State<FarmerDetails> {
       for (var i in value.docs) {
         if (i.data().containsKey("price") == true) {
           setState(() {
-            netBalance = netBalance + int.parse(i.data()['price']);
+            netBalance = netBalance +
+                int.parse(i.data()['finalBalance'].toStringAsFixed(0));
           });
         }
       }
@@ -297,7 +298,9 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                         if (snapshot.hasData) {
                           final docs = snapshot.data!.docs;
                           if (docs.isEmpty) {
-                            return Center(child: const Text("Record is empty"));
+                            return const Center(
+                              child: Text("Record is empty"),
+                            );
                           } else {
                             return ListView.builder(
                               shrinkWrap: true,
@@ -350,12 +353,13 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                                                         data['brokerCharges'],
                                                     traderChar:
                                                         data['traderCharges'],
+                                                      itemWeight: data['itemWeight'],
                                                   ));
                                         },
                                         child: farmerRecordCard(
                                           context,
                                           data['name'],
-                                          data['finalBalance'].toInt(),
+                                          data['finalBalance'].toStringAsFixed(0),
                                           data['date'],
                                           data['time'],
                                         ),

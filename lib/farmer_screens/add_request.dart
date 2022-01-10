@@ -106,10 +106,9 @@ class _AddRequestState extends State<AddRequest> {
                                       itemCategory = value.toString();
                                       if (itemCategory == "Fertilizers") {
                                         unit = "Per Bag";
-                                      } else if (itemCategory == "Seed") {
-                                        unit = "Kg";
-                                      } else if (itemCategory == "Pesticides") {
-                                        unit = "Acres";
+                                      } else if (itemCategory == "Seed" ||
+                                          itemCategory == "Pesticides") {
+                                        unit = "Per Acre";
                                       } else if (itemCategory == "Cash") {
                                         unit = "Rs.";
                                       } else if (itemCategory ==
@@ -185,7 +184,7 @@ class _AddRequestState extends State<AddRequest> {
                               )
                             : const SizedBox(),
                         itemCategory == "Cash"
-                            ? SizedBox()
+                            ? const SizedBox()
                             : TextFormField(
                                 controller: itemName,
                                 keyboardType: TextInputType.text,

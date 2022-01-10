@@ -29,7 +29,18 @@ class FarmerForm extends StatefulWidget {
 
 class _FarmerFormState extends State<FarmerForm> {
   File? _image;
-  int farmerNo = 0; 
+  int farmerNo = 0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    farmerFName.clear();
+    farmerLName.clear();
+    userName.clear();
+    farmerNumber.clear();
+    farmerCnic.clear();
+  }
 
   @override
   Widget build(BuildContext context) {

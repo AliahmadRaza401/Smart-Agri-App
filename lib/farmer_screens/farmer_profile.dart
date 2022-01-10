@@ -1,13 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_agri/farmer_screens/farmer_history.dart';
-import 'package:smart_agri/farmer_screens/farmer_requests.dart';
 import 'package:smart_agri/services/auth_services.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
-import 'package:smart_agri/utils/local_notification.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
+import 'package:smart_agri/widgets/update_password_dialog.dart';
 
 class FarmerProfile extends StatefulWidget {
   final dynamic farmerId;
@@ -19,7 +18,12 @@ class FarmerProfile extends StatefulWidget {
 }
 
 class _FarmerProfileState extends State<FarmerProfile> {
-  dynamic farmerFName, farmerLName, farmerNo, farmerCNIC, image = "";
+  dynamic farmerFName,
+      farmerLName,
+      farmerNo,
+      farmerCNIC,
+      farmerPassword,
+      image = "";
 
   @override
   void initState() {
@@ -40,6 +44,7 @@ class _FarmerProfileState extends State<FarmerProfile> {
                 farmerLName = value.data()!["lastName"];
                 farmerNo = value.data()!["mobileNumber"];
                 farmerCNIC = value.data()!["cnic"];
+                farmerPassword = value.data()!["password"];
                 image = value.data()!["image"]["url"];
               },
             ),
@@ -142,24 +147,36 @@ class _FarmerProfileState extends State<FarmerProfile> {
                     SizedBox(
                       height: dynamicHeight(context, .04),
                     ),
-                    // Padding(
-                    //   padding: EdgeInsets.symmetric(
-                    //     vertical: dynamicHeight(context, .01),
-                    //   ),
-                    //   child: profileButton(
-                    //     context,
-                    //     Icons.edit,
-                    //     "Edit Profile",
-                    //     function: () {},
-                    //   ),
-                    // ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: dynamicHeight(context, .01),
+                      ),
+                      child: profileButton(
+                        context,
+                        Icons.edit,
+                        "Edit Password",
+                        function: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => UpdatePasswordDialog(
+                              password: farmerPassword,
+                              docsId: widget.farmerId,
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.symmetric(
                         vertical: dynamicHeight(context, .01),
                       ),
                       child: profileButton(context, Icons.history, "History",
                           function: () {
-                        AppRoutes.push(context, FarmerHistory(farmerId: widget.farmerId,));
+                        AppRoutes.push(
+                            context,
+                            FarmerHistory(
+                              farmerId: widget.farmerId,
+                            ));
                       }),
                     ),
                     Padding(

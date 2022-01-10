@@ -1,8 +1,6 @@
 // ignore_for_file: prefer_typing_uninitialized_variables, prefer_const_constructors
 
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'package:intl/intl.dart';
 import 'package:smart_agri/services/farmer_services_trader.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
@@ -11,6 +9,7 @@ import 'package:smart_agri/widgets/dynamic_size.dart';
 
 class AddAmount extends StatefulWidget {
   final String farmerId;
+
   const AddAmount({required this.farmerId});
 
   @override
@@ -22,6 +21,7 @@ class _AddAmountState extends State<AddAmount> {
   final _formKey = GlobalKey<FormState>();
   final itemName = TextEditingController();
   final itemPrice = TextEditingController();
+  final itemWeight = TextEditingController();
   final itemTodayRate = TextEditingController();
 
   // int hour = 00;
@@ -129,11 +129,31 @@ class _AddAmountState extends State<AddAmount> {
                           Container(
                             margin: EdgeInsets.only(),
                             child: TextFormField(
+                              controller: itemWeight,
+                              keyboardType: TextInputType.number,
+                              textInputAction: TextInputAction.next,
+                              decoration: InputDecoration(
+                                hintText: "Item Weight",
+                              ),
+                              validator: (text) {
+                                if (text == null || text.isEmpty) {
+                                  return 'Required!';
+                                }
+                                return null;
+                              },
+                              onChanged: (_) => setState(() {}),
+                            ),
+                          ),
+                          SizedBox(
+                            height: dynamicHeight(context, .02),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(),
+                            child: TextFormField(
                               controller: itemTodayRate,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 hintText: "Today Rate of Item",
-
                               ),
                               validator: (text) {
                                 if (text == null || text.isEmpty) {
@@ -159,15 +179,17 @@ class _AddAmountState extends State<AddAmount> {
                         button(
                           context,
                           "ADD",
-                          () {
+                          () async {
                             if (_formKey.currentState!.validate()) {
-                              FarmerServicesTrader.addFarmerAmount(
-                                  context,
-                                  widget.farmerId,
-                                  itemName.text,
-                                  itemPrice.text,
+                              await FarmerServicesTrader.addFarmerAmount(
+                                context,
+                                widget.farmerId,
+                                itemName.text,
+                                itemPrice.text,
+                                itemWeight.text,
                                 itemTodayRate.text,
                               );
+                              AppRoutes.pop(context);
                             }
                           },
                           width: dynamicWidth(context, .3),
@@ -175,7 +197,6 @@ class _AddAmountState extends State<AddAmount> {
                           fontSize: dynamicWidth(context, .042),
                           color: myWhite,
                           btnColor: myGreen,
-                          
                         ),
                         cancelButton(
                           context,

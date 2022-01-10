@@ -14,6 +14,7 @@ class BalanceDetailDialog extends StatelessWidget {
   final double laberChar;
   final double brokerChar;
   final double traderChar;
+  final dynamic itemWeight;
 
   const BalanceDetailDialog({
     Key? key,
@@ -25,6 +26,7 @@ class BalanceDetailDialog extends StatelessWidget {
     required this.laberChar,
     required this.brokerChar,
     required this.traderChar,
+    required this.itemWeight,
   }) : super(key: key);
 
   @override
@@ -90,6 +92,29 @@ class BalanceDetailDialog extends StatelessWidget {
                   ),
                 ),
               ],
+            ),SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Item Weight:  ',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: dynamicWidth(context, .038),
+                    color: myGreen,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  '$itemWeight',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: dynamicWidth(context, .038),
+                    color: myBlack,
+                    // fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 10),
             Row(
@@ -134,7 +159,7 @@ class BalanceDetailDialog extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      ' Labor Charges  of 1% =',
+                      'Labor Charges  of 1% =',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: dynamicWidth(context, .035),
@@ -155,7 +180,7 @@ class BalanceDetailDialog extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      ' Borker Charges of 0.15% =',
+                      'Borker Charges of 0.15% =',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: dynamicWidth(context, .035),
@@ -176,7 +201,7 @@ class BalanceDetailDialog extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      ' Trader Charges of 1.6% =',
+                      'Trader Charges of 1.6% =',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: dynamicWidth(context, .035),
