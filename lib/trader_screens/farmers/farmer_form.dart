@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/services/farmer_services_trader.dart';
@@ -10,6 +12,7 @@ import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
 import 'package:smart_agri/widgets/form_fields.dart';
+import 'package:smart_agri/widgets/motion_toast.dart';
 
 final _formKey = GlobalKey<FormState>();
 final farmerFName = TextEditingController();
@@ -40,6 +43,32 @@ class _FarmerFormState extends State<FarmerForm> {
     userName.clear();
     farmerNumber.clear();
     farmerCnic.clear();
+    getDocs();
+  }
+
+  var farmers;
+  late QuerySnapshot querySnapshot;
+  bool userAlreadyExist = false;
+
+  Future getDocs() async {
+    print("Get.:.");
+    querySnapshot =
+        await FirebaseFirestore.instance.collection("farmers").get();
+  }
+
+  checkuserAlreadyExist(userName) {
+    print("check");
+    var id = FirebaseAuth.instance.currentUser!.uid;
+    for (int i = 0; i < querySnapshot.docs.length; i++) {
+      farmers = querySnapshot.docs[i].data();
+      if (farmers['traderId'] == id) {
+        if (farmers['userName'] == userName) {
+          setState(() {
+            userAlreadyExist = true;
+          });
+        }
+      }
+    }
   }
 
   @override
@@ -254,17 +283,29 @@ class _FarmerFormState extends State<FarmerForm> {
                           return;
                         } else {
                           if (_image != null) {
-                            FarmerServicesTrader.addFarmerToDB(
-                              context,
-                              0,
-                              userName.text,
-                              farmerPassword.text,
-                              farmerFName.text,
-                              farmerLName.text,
-                              farmerNumber.text,
-                              farmerCnic.text,
-                              _image,
-                            );
+                            checkuserAlreadyExist(userName.text);
+                            if (userAlreadyExist == true) {
+                              MyMotionToast.warning(
+                                context,
+                                "Username already exist",
+                                "Try some unique username with character and number",
+                              );
+                              setState(() {
+                                userAlreadyExist = false;
+                              });
+                            } else {
+                              FarmerServicesTrader.addFarmerToDB(
+                                context,
+                                0,
+                                userName.text,
+                                farmerPassword.text,
+                                farmerFName.text,
+                                farmerLName.text,
+                                farmerNumber.text,
+                                farmerCnic.text,
+                                _image,
+                              );
+                            }
                           } else {
                             showDialog(
                               context: context,
