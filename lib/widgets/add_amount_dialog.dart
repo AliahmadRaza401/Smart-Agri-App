@@ -8,9 +8,9 @@ import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 
 class AddAmount extends StatefulWidget {
-  final String farmerId;
+  final String farmerId, farmerUserName;
 
-  const AddAmount({required this.farmerId});
+  const AddAmount({required this.farmerId, required this.farmerUserName});
 
   @override
   State<AddAmount> createState() => _AddAmountState();
@@ -188,6 +188,7 @@ class _AddAmountState extends State<AddAmount> {
                                 itemPrice.text,
                                 itemWeight.text,
                                 itemTodayRate.text,
+                                widget.farmerUserName,
                               );
                               AppRoutes.pop(context);
                             }

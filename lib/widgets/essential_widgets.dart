@@ -4,11 +4,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
-import 'package:smart_agri/utils/local_notification.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'app_buttons.dart';
 import 'dynamic_size.dart';
 
 Widget rowText(context, text1, page, text2) {
@@ -483,6 +481,7 @@ Widget historyCard(
   int price,
   date,
   time,
+  farmerName,
 ) {
   return Padding(
     padding: EdgeInsets.symmetric(
@@ -512,7 +511,7 @@ Widget historyCard(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
-            children: [
+            children: const [
               Icon(
                 Icons.history_rounded,
                 color: myGreen,
@@ -548,6 +547,17 @@ Widget historyCard(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    SizedBox(
+                      height: dynamicHeight(context, .006),
+                    ),
+                    Text(
+                      "Farmer Username : ",
+                      style: TextStyle(
+                        color: myBlack,
+                        fontSize: dynamicWidth(context, .04),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ],
                 ),
                 Column(
@@ -570,16 +580,24 @@ Widget historyCard(
                         fontSize: dynamicWidth(context, .04),
                       ),
                     ),
+                    SizedBox(
+                      height: dynamicHeight(context, .006),
+                    ),
+                    Text(
+                      '$farmerName',
+                      style: TextStyle(
+                        color: myBlack,
+                        fontSize: dynamicWidth(context, .04),
+                      ),
+                    ),
                   ],
                 ),
               ],
             ),
           ),
-          Container(
-            child: Divider(
-              thickness: 0.7,
-              color: myGreen,
-            ),
+          Divider(
+            thickness: 0.7,
+            color: myGreen,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

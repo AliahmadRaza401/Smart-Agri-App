@@ -113,6 +113,7 @@ class FarmerServicesTrader {
     price,
     itemWeight,
     todayPrice,
+    farmerUserName,
   ) async {
     DateTime now = DateTime.now();
     var date = DateFormat.yMMMMd('en_US').format(now);
@@ -203,6 +204,7 @@ class FarmerServicesTrader {
         user!.uid,
         name,
         finalPrice,
+        farmerUserName,
       );
 
       MyMotionToast.success(

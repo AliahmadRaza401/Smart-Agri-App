@@ -167,6 +167,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
             context: context,
             builder: (context) => AddAmount(
               farmerId: widget.farmerId,
+              farmerUserName: widget.userName,
             ),
           );
         },

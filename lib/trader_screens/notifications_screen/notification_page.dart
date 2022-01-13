@@ -222,6 +222,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                 user!.uid,
                                 data["itemName"].toString(),
                                 requestPrice,
+                                data["farmerName"].toString(),
                               );
 
                               // send Notification to farmer
