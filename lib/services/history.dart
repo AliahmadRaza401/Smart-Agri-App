@@ -13,6 +13,7 @@ class HistoryServices {
     traderId,
     name,
     price,
+    farmerName,
   ) async {
     DateTime now = DateTime.now();
     var date = DateFormat.yMMMMd('en_US').format(now);
@@ -28,10 +29,9 @@ class HistoryServices {
           'farmerId': farmerId,
           'traderId': traderId,
           'timeStamp': now,
+          'farmerName': farmerName,
         },
       );
-
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 }

@@ -1,10 +1,6 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_agri/farmer_screens/add_request.dart';
 import 'package:smart_agri/utils/config.dart';
-import 'package:smart_agri/utils/local_notification.dart';
-import 'package:smart_agri/widgets/add_update_dialog.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/essential_widgets.dart';
 import 'package:smart_agri/widgets/farmer_bottom_nav.dart';
@@ -89,6 +85,7 @@ class _FarmerHistoryState extends State<FarmerHistory> {
                           data['price'].toInt(),
                           data['date'],
                           data['time'],
+                          data['farmerName'],
                         );
                       },
                     ),
