@@ -5,6 +5,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:smart_agri/farmer_screens/farmer_daily_updates.dart';
+import 'package:smart_agri/services/auth_services.dart';
 import 'package:smart_agri/services/fcm_services.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/utils/local_notification.dart';
@@ -30,26 +31,39 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
     super.initState();
     getFarmerData();
     FCMServices.fcmGetTokenandSubscribe('farmer');
-    // fcmListen();
+    fcmListen();
   }
 
-  // fcmListen() {
-  //   FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-  //     if (event.data['id'] == widget.farmerId) {
-  //       LocalNotificationsService.instance.showChatNotifcation(
-  //           title: '${event.notification!.title}',
-  //           body: '${event.notification!.body}');
+  fcmListen() async {
+    print("famrer fcm listen________________________!");
+    var testForID = FirebaseFirestore.instance
+        .doc(widget.farmerId)
+        .collection("farmers")
+        .get()
+        .then((QuerySnapshot) {
+      for (var item in QuerySnapshot.docs) {
+        print(item.data());
+      }
+    });
+    var spID = await AuthServices.getFarmerID();
+    print('spID: $spID');
+    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+      print('event: ${event.data}');
+      print("Noti ID: ${event.data['id']}");
+      print("farmerID: ${widget.farmerId}");
+      print('spID: $spID');
 
-  //       FirebaseMessaging.onMessageOpenedApp.listen((message) {});
-  //     } else {
-  //       // LocalNotificationsService.instance.showChatNotifcation(
-  //       //     title: '${event.notification!.title}',
-  //       //     body: '${event.notification!.body}');
+      if (event.data['id'].toString() == widget.farmerId.toString()) {
+        print("Notification Home match_____________!");
 
-  //       // FirebaseMessaging.onMessageOpenedApp.listen((message) {});
-  //     }
-  //   });
-  // }
+        LocalNotificationsService.instance.showChatNotifcation(
+            title: '${event.notification!.title}',
+            body: '${event.notification!.body}');
+
+        FirebaseMessaging.onMessageOpenedApp.listen((message) {});
+      }
+    });
+  }
 
   getFarmerData() {
     FirebaseFirestore.instance
@@ -72,6 +86,7 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print("farmerID Build wali: ${widget.farmerId}");
     return Scaffold(
       backgroundColor: myGrey,
       body: SafeArea(

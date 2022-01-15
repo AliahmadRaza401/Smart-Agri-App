@@ -28,13 +28,15 @@ Future<void> main() async {
 // Future<void> _messageHandler(RemoteMessage event) async {
 //   var traderId = await AuthServices.getTraderID();
 //   var farmerId = await AuthServices.getFarmerID();
-//
+
 //   FirebaseMessaging.onMessageOpenedApp.listen((message) {
-//
+//     print("Notification not match_____________!");
 //     if (event.data['id'] == traderId || event.data['id'] == farmerId) {
 //       LocalNotificationsService.instance.showChatNotifcation(
 //           title: '${event.notification!.title}',
 //           body: '${event.notification!.body}');
+//     } else {
+//       print("Notification not match_____________!");
 //     }
 //     //  else if (event.data['id'] == '') {
 //     //   LocalNotificationsService.instance.showChatNotifcation(

@@ -43,7 +43,7 @@ class _LoginPageState extends State<LoginPage> {
     setState(() {
       _authProvider.isLoading(true);
     });
-    dynamic check, id;
+    dynamic check = "", id = "";
     await FirebaseFirestore.instance
         .collection("farmers")
         .get()
@@ -52,6 +52,7 @@ class _LoginPageState extends State<LoginPage> {
         if (result.data()["userName"].toString() == fUsername.text.toString() &&
             result.data()["password"].toString() == password.text.toString()) {
           id = result.reference.id;
+          print(' id: $id');
           AuthServices.saveFarmerID(id);
           check = true;
           break;
@@ -216,7 +217,6 @@ class _LoginPageState extends State<LoginPage> {
                                 ? "Loading..."
                                 : "Login",
                             () async {
-
                               if (!_formKey.currentState!.validate()) {
                                 return;
                               } else {
@@ -233,8 +233,6 @@ class _LoginPageState extends State<LoginPage> {
                                   setState(() {
                                     _authProvider.isLoading(false);
                                   });
-
-
                                 } else {
                                   loginCheck();
                                 }

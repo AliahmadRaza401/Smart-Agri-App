@@ -185,8 +185,11 @@ class AuthServices {
 
   static logOutFarmer(BuildContext context) async {
     await FirebaseAuth.instance.signOut();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
     farmerLoggedIn(false);
     userLoggedIn(false);
+
     AppRoutes.replace(context, const Choice());
   }
 
@@ -219,6 +222,7 @@ class AuthServices {
 // save FarmerId
   static saveFarmerID(String value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
     prefs.setString('farmerID', value);
   }
 
