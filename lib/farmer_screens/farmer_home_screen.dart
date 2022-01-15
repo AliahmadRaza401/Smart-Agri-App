@@ -33,23 +33,23 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
     // fcmListen();
   }
 
-  fcmListen() {
-    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      if (event.data['id'] == widget.farmerId) {
-        LocalNotificationsService.instance.showChatNotifcation(
-            title: '${event.notification!.title}',
-            body: '${event.notification!.body}');
+  // fcmListen() {
+  //   FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+  //     if (event.data['id'] == widget.farmerId) {
+  //       LocalNotificationsService.instance.showChatNotifcation(
+  //           title: '${event.notification!.title}',
+  //           body: '${event.notification!.body}');
 
-        FirebaseMessaging.onMessageOpenedApp.listen((message) {});
-      } else {
-        // LocalNotificationsService.instance.showChatNotifcation(
-        //     title: '${event.notification!.title}',
-        //     body: '${event.notification!.body}');
+  //       FirebaseMessaging.onMessageOpenedApp.listen((message) {});
+  //     } else {
+  //       // LocalNotificationsService.instance.showChatNotifcation(
+  //       //     title: '${event.notification!.title}',
+  //       //     body: '${event.notification!.body}');
 
-        // FirebaseMessaging.onMessageOpenedApp.listen((message) {});
-      }
-    });
-  }
+  //       // FirebaseMessaging.onMessageOpenedApp.listen((message) {});
+  //     }
+  //   });
+  // }
 
   getFarmerData() {
     FirebaseFirestore.instance

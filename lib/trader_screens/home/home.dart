@@ -42,17 +42,17 @@ class _HomeState extends State<Home> {
     // fcmListen();
   }
 
-  fcmListen() {
-    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      if (event.data['id'] == user!.uid) {
-        LocalNotificationsService.instance.showChatNotifcation(
-            title: '${event.notification!.title}',
-            body: '${event.notification!.body}');
+  // fcmListen() {
+  //   FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+  //     if (event.data['id'] == user!.uid) {
+  //       LocalNotificationsService.instance.showChatNotifcation(
+  //           title: '${event.notification!.title}',
+  //           body: '${event.notification!.body}');
 
-        FirebaseMessaging.onMessageOpenedApp.listen((message) {});
-      }
-    });
-  }
+  //       FirebaseMessaging.onMessageOpenedApp.listen((message) {});
+  //     }
+  //   });
+  // }
 
   saveTraderID() async {
     await AuthServices.saveTraderID(user!.uid);
