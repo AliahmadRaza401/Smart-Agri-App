@@ -68,12 +68,13 @@ class _UpdatePasswordDialogState extends State<UpdatePasswordDialog> {
                           height: dynamicHeight(context, .04),
                         ),
                         TextFormField(
+                          autovalidateMode: AutovalidateMode.onUserInteraction,
                           controller: password
                             ..text = widget.password.toString(),
                           textInputAction: TextInputAction.next,
-                          validator: (text) {
-                            if (text == null || text.isEmpty) {
-                              return 'Required!';
+                          validator: (value) {
+                            if (value!.isEmpty || value.length < 6) {
+                              return 'Password must have 6 characters';
                             }
                             return null;
                           },

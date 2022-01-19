@@ -41,8 +41,6 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
 
   @override
   Widget build(BuildContext context) {
-    // bool loading = Provider.of<HomeProvider>(context).isLoading;
-
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
@@ -81,6 +79,7 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                           controller: itemName
                             ..text = widget.itemName.toString(),
                           keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.next,
                           decoration: const InputDecoration(
                             hintText: "item Name",
                           ),
@@ -90,7 +89,6 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                             }
                             return null;
                           },
-                          onChanged: (_) => setState(() {}),
                         ),
                         SizedBox(
                           height: dynamicHeight(context, .02),
@@ -98,6 +96,7 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                         TextFormField(
                           controller: itemPrice..text = widget.price.toString(),
                           keyboardType: TextInputType.number,
+                          textInputAction: TextInputAction.next,
                           decoration: const InputDecoration(
                             hintText: "Price",
                           ),
@@ -107,7 +106,6 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                             }
                             return null;
                           },
-                          onChanged: (_) => setState(() {}),
                         ),
                         SizedBox(
                           height: dynamicHeight(context, .02),
@@ -115,6 +113,7 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                         TextFormField(
                           controller: itemUnit..text = widget.unit.toString(),
                           keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.next,
                           decoration: const InputDecoration(
                             hintText: "Unit",
                           ),
@@ -124,7 +123,6 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                             }
                             return null;
                           },
-                          onChanged: (_) => setState(() {}),
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(
@@ -153,6 +151,7 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                         TextFormField(
                           controller: itemDesc..text = widget.desc.toString(),
                           keyboardType: TextInputType.text,
+                          textInputAction: TextInputAction.next,
                           decoration: const InputDecoration(
                             hintText: "Item Description",
                           ),
@@ -162,7 +161,6 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                             }
                             return null;
                           },
-                          onChanged: (_) => setState(() {}),
                         ),
                         SizedBox(
                           height: dynamicHeight(context, .02),
@@ -173,24 +171,28 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      button(context, "UPDATE", () {
-                        if (_formKey.currentState!.validate()) {
-                          DailyUpdateServices.updateDailyItemToDB(
-                            context,
-                            widget.docsId,
-                            itemName.text.toLowerCase(),
-                            itemPrice.text,
-                            itemUnit.text,
-                            itemCategory,
-                            itemDesc,
-                          );
-                        }
-                      },
-                          width: dynamicWidth(context, .3),
-                          height: dynamicHeight(context, .056),
-                          fontSize: dynamicWidth(context, .042),
-                          color: myWhite,
-                          btnColor: myGreen),
+                      button(
+                        context,
+                        "UPDATE",
+                        () {
+                          if (_formKey.currentState!.validate()) {
+                            DailyUpdateServices.updateDailyItemToDB(
+                              context,
+                              widget.docsId,
+                              itemName.text.toLowerCase(),
+                              itemPrice.text,
+                              itemUnit.text,
+                              itemCategory,
+                              itemDesc,
+                            );
+                          }
+                        },
+                        width: dynamicWidth(context, .3),
+                        height: dynamicHeight(context, .056),
+                        fontSize: dynamicWidth(context, .042),
+                        color: myWhite,
+                        btnColor: myGreen,
+                      ),
                       cancelButton(
                         context,
                         "Cancel",
