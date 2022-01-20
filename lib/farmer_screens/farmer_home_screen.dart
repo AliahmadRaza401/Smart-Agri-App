@@ -43,7 +43,7 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
       print("Noti ID: ${event.data['id']}");
       print('spID: $spID');
       if (event.data['id'].toString() == spID.toString()) {
-        print("Notification Home match_____________!");
+        print("Notification Home match__________!");
 
         LocalNotificationsService.instance.showChatNotifcation(
             title: '${event.notification!.title}',
