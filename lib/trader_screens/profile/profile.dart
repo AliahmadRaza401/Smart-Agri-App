@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:smart_agri/model/user_model.dart';
 import 'package:smart_agri/services/auth_services.dart';
 import 'package:smart_agri/trader_screens/history/trader_history.dart';
+import 'package:smart_agri/trader_screens/profile/edit_profile.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
@@ -34,15 +35,16 @@ class _ProfileState extends State<Profile> {
 
   getUserData() async {
     await _firebaseFirestore.collection('users').doc(user!.uid).get().then(
-          (value) => {
-            setState(() {
-              userImage = value.data()!['image']['url'].toString();
+          (value) =>
+      {
+        setState(() {
+          userImage = value.data()!['image']['url'].toString();
 
 
-              loggedInUser = UserModel.fromMap(value.data());
-            }),
-          },
-        );
+          loggedInUser = UserModel.fromMap(value.data());
+        }),
+      },
+    );
   }
 
   @override
@@ -158,25 +160,41 @@ class _ProfileState extends State<Profile> {
                     SizedBox(
                       height: dynamicHeight(context, .04),
                     ),
-                    // Padding(
-                    //   padding: EdgeInsets.symmetric(
-                    //     vertical: dynamicHeight(context, .01),
-                    //   ),
-                    //   child: profileButton(
-                    //     context,
-                    //     Icons.edit,
-                    //     "Edit Profile",
-                    //   ),
-                    // ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        vertical: dynamicHeight(context, .01),
+                      ),
+                      child: profileButton(
+                        context,
+                        Icons.edit,
+                        "Edit Profile",
+                        function: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) =>
+                                EditTraderProfile(
+                                    firstName: loggedInUser.firstName
+                                        .toString(),
+                                    secondName: loggedInUser.secondName
+                                        .toString(),
+                                    cnic: loggedInUser.cnic.toString(),
+                                    mobileNumber: loggedInUser.mobileNumber
+                                        .toString(),
+                                    password: "password",
+                                ),
+                          );
+                        },
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.symmetric(
                         vertical: dynamicHeight(context, .01),
                       ),
                       child: profileButton(context, Icons.history, "History",
                           function: () {
-                        AppRoutes.push(
-                            context, TraderHistory(traderId: user!.uid));
-                      }),
+                            AppRoutes.push(
+                                context, TraderHistory(traderId: user!.uid));
+                          }),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(
@@ -184,8 +202,8 @@ class _ProfileState extends State<Profile> {
                       ),
                       child: profileButton(context, Icons.logout, "LogOut",
                           function: () {
-                        AuthServices.logOut(context);
-                      }),
+                            AuthServices.logOut(context);
+                          }),
                     ),
                   ],
                 ),
@@ -214,11 +232,11 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                       child: Text("")
-                      //  Image.network(
+                    //  Image.network(
 
-                      //   userImage.toString(),
-                      // ),
-                      ),
+                    //   userImage.toString(),
+                    // ),
+                  ),
                 ),
               ],
             ),
