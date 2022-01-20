@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:smart_agri/model/user_model.dart';
@@ -10,7 +9,6 @@ import 'package:smart_agri/start_up/choice.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/trader_screens/authentication/login.dart';
 import 'package:smart_agri/utils/app_route.dart';
-import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/botton_nav.dart';
 import 'package:smart_agri/widgets/motion_toast.dart';
 
@@ -234,17 +232,17 @@ class AuthServices {
     return value;
   }
 
-  static saveUniqueFarmerID(String value) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('uniqueFarmerID', value);
-    print("Save Farmer Id in SF________________________$value");
+  static saveUniqueFarmerID(String farmerValue) async {
+    SharedPreferences prefsValue = await SharedPreferences.getInstance();
+    prefsValue.setString('uniqueFarmerID', farmerValue.toString());
+    print("Save Farmer Id in SF________________________$farmerValue");
   }
 
   static getUniqueFarmerID() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    String? value = prefs.getString('uniqueFarmerID');
-    print("Get Farmerid form Sp _________________$value");
-    return value;
+    SharedPreferences prefsValue = await SharedPreferences.getInstance();
+    String? farmerValue = prefsValue.getString('uniqueFarmerID');
+    print("Get Farmerid form Sp _________________$farmerValue");
+    return farmerValue;
   }
 
   static clearSharedPref() async {
