@@ -28,7 +28,7 @@ class _UpdatePasswordDialogState extends State<UpdatePasswordDialog> {
           dynamicWidth(context, .04),
         ),
       ),
-      backgroundColor: containerBgColor,
+      backgroundColor: myWhite,
       child: Stack(
         clipBehavior: Clip.none,
         children: [

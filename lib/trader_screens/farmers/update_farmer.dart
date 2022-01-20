@@ -41,7 +41,7 @@ class _UpdateFarmerState extends State<UpdateFarmer> {
           dynamicWidth(context, .04),
         ),
       ),
-      backgroundColor: containerBgColor,
+      backgroundColor: myWhite,
       child: SizedBox(
         height: dynamicHeight(context, .76),
         child: Stack(

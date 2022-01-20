@@ -51,7 +51,7 @@ class _AddRequestState extends State<AddRequest> {
           dynamicWidth(context, .04),
         ),
       ),
-      backgroundColor: containerBgColor,
+      backgroundColor: myWhite,
       child: Stack(
         clipBehavior: Clip.none,
         children: [

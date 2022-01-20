@@ -292,7 +292,7 @@ Widget farmerRequestCard(
     child: Container(
       width: dynamicWidth(context, .9),
       decoration: BoxDecoration(
-        color: containerBgColor,
+        color: myWhite,
         borderRadius: BorderRadius.circular(
           dynamicWidth(context, .04),
         ),
@@ -491,7 +491,7 @@ Widget historyCard(
     child: Container(
       width: dynamicWidth(context, .9),
       decoration: BoxDecoration(
-        color: containerBgColor,
+        color: myWhite,
         borderRadius: BorderRadius.circular(
           dynamicWidth(context, .04),
         ),

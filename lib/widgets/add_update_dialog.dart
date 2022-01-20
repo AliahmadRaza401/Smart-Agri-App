@@ -83,7 +83,7 @@ class _AddUpdateState extends State<AddUpdate> {
           dynamicWidth(context, .04),
         ),
       ),
-      backgroundColor: containerBgColor,
+      backgroundColor: myWhite,
       child: Stack(
         clipBehavior: Clip.none,
         children: [

@@ -62,7 +62,7 @@ Widget farmerCard(context, userName, number, debit, credit, image) {
       height: dynamicHeight(context, .16),
       width: dynamicWidth(context, .9),
       decoration: BoxDecoration(
-        color: containerBgColor,
+        color: myWhite,
         borderRadius: BorderRadius.circular(
           dynamicWidth(context, .03),
         ),
@@ -133,7 +133,7 @@ Widget farmerCard(context, userName, number, debit, credit, image) {
                 backgroundColor: myGreen,
                 child: CircleAvatar(
                   radius: dynamicWidth(context, .08),
-                  backgroundColor: containerBgColor,
+                  backgroundColor: myWhite,
                   child: image != null
                       ? ClipOval(
                           child: Image.network(
@@ -235,7 +235,7 @@ Widget dailyUpdateCard(
     width: dynamicWidth(context, .9),
     height: dynamicHeight(context, .32),
     decoration: BoxDecoration(
-      color: containerBgColor,
+      color: myWhite,
       borderRadius: BorderRadius.circular(
         dynamicWidth(context, .06),
       ),
