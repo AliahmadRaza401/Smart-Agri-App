@@ -193,10 +193,10 @@ class _EditTraderProfileState extends State<EditTraderProfile> {
                           controller: password,
                           textInputAction: TextInputAction.next,
                           validator: (value) {
-                            if (value!.isEmpty || value.length < 6) {
-                              return 'Password must have 6 characters';
-                            }
-                            return null;
+                            // if (value!.isEmpty || value.length < 6) {
+                            //   return 'Password must have 6 characters';
+                            // }
+                            // return null;
                           },
                         ),
                         SizedBox(
@@ -225,21 +225,25 @@ class _EditTraderProfileState extends State<EditTraderProfile> {
                               'mobileNumber': mobileNumber.text,
                               'cnic': cnic.text,
                             }).then((value) {
-                              user?.updatePassword(password.text).then((value) {
-                                AppRoutes.push(context, const BottomNav());
+                              if (password.text != null ||
+                                  password.text.isNotEmpty) {
+                                user?.updatePassword(password.text);
+                              }
+                              AppRoutes.push(context, const BottomNav());
 
-                                MyMotionToast.success(
-                                  context,
-                                  "Success",
-                                  "Profile Update Success!",
-                                );
-                              }).catchError((err) {
-                                MyMotionToast.error(
-                                  context,
-                                  "Error",
-                                  "Profile Update Error!",
-                                );
-                              });
+                              MyMotionToast.success(
+                                context,
+                                "Success",
+                                "Profile Update Success!",
+                              );
+                            }).catchError((e) {
+                              print('e: $e');
+                              AppRoutes.pop(context);
+                              MyMotionToast.success(
+                                context,
+                                "Oops!",
+                                "Some thing wrong please try again later",
+                              );
                             });
                           }
                         },
