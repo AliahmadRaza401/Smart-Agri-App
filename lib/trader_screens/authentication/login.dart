@@ -52,12 +52,6 @@ class _LoginPageState extends State<LoginPage> {
         if (result.data()["userName"].toString() == fUsername.text.toString() &&
             result.data()["password"].toString() == password.text.toString()) {
           id = result.reference.id;
-          setState(() {
-            uniqueFarmerId = result.reference.id;
-          });
-          await AuthServices.saveUniqueFarmerID(id);
-
-          AuthServices.saveFarmerID(id);
 
           check = true;
           break;
@@ -67,9 +61,18 @@ class _LoginPageState extends State<LoginPage> {
       }
       if (check == true) {
         setState(() {
+          uniqueFarmerId = id;
+        });
+        await AuthServices.saveUniqueFarmerID("1111111111111111111");
+        AuthServices.saveFarmerID(id);
+        var uniqueFarmerID = await AuthServices.getUniqueFarmerID();
+        print('uniqueFarmerID Succes: $uniqueFarmerID');
+
+        setState(() {
           _authProvider.isLoading(false);
           AuthServices.farmerLoggedIn(true);
         });
+
         AppRoutes.replace(
           context,
           FarmerBottomNav(

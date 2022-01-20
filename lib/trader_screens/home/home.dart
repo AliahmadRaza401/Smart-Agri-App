@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -39,20 +41,26 @@ class _HomeState extends State<Home> {
     getBalance();
     saveTraderID();
     FCMServices.fcmGetTokenandSubscribe('trader');
-    // fcmListen();
+    fcmListen();
   }
 
-  // fcmListen() {
-  //   FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-  //     if (event.data['id'] == user!.uid) {
-  //       LocalNotificationsService.instance.showChatNotifcation(
-  //           title: '${event.notification!.title}',
-  //           body: '${event.notification!.body}');
+  fcmListen() async {
+    var sfID = await AuthServices.getTraderID();
+    print('sfID: $sfID');
+    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+      print("notification Id: ${event.data['id']}");
+      if (event.data['id'] == user!.uid) {
+        print("fCM True");
+        LocalNotificationsService.instance.showChatNotifcation(
+            title: '${event.notification!.title}',
+            body: '${event.notification!.body}');
 
-  //       FirebaseMessaging.onMessageOpenedApp.listen((message) {});
-  //     }
-  //   });
-  // }
+        FirebaseMessaging.onMessageOpenedApp.listen((message) {});
+      } else {
+        print("fCM False");
+      }
+    });
+  }
 
   saveTraderID() async {
     await AuthServices.saveTraderID(user!.uid);

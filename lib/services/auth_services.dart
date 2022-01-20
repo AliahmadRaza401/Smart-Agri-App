@@ -236,7 +236,7 @@ class AuthServices {
 
   static saveUniqueFarmerID(String value) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('uniqueFarmerID', value);
+    prefs.setString('uniqueFarmerID', "112233");
     print("Save Farmer Id in SF________________________$value");
   }
 
