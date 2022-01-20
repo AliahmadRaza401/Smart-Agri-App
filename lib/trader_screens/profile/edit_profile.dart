@@ -9,7 +9,7 @@ import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/motion_toast.dart';
 
 class EditTraderProfile extends StatefulWidget {
-  final String firstName, secondName, mobileNumber, cnic, password;
+  final String firstName, secondName, mobileNumber, cnic;
 
   const EditTraderProfile({
     Key? key,
@@ -17,7 +17,6 @@ class EditTraderProfile extends StatefulWidget {
     required this.secondName,
     required this.mobileNumber,
     required this.cnic,
-    required this.password,
   }) : super(key: key);
 
   @override
@@ -191,8 +190,7 @@ class _EditTraderProfileState extends State<EditTraderProfile> {
                         ),
                         TextFormField(
                           autovalidateMode: AutovalidateMode.onUserInteraction,
-                          controller: password
-                            ..text = widget.password.toString(),
+                          controller: password,
                           textInputAction: TextInputAction.next,
                           validator: (value) {
                             if (value!.isEmpty || value.length < 6) {
@@ -226,7 +224,6 @@ class _EditTraderProfileState extends State<EditTraderProfile> {
                               'secondName': secondName.text,
                               'mobileNumber': mobileNumber.text,
                               'cnic': cnic.text,
-                              'password': password.text,
                             }).then((value) {
                               AppRoutes.push(context, BottomNav());
                               MyMotionToast.success(

@@ -180,7 +180,6 @@ class _ProfileState extends State<Profile> {
                                     cnic: loggedInUser.cnic.toString(),
                                     mobileNumber: loggedInUser.mobileNumber
                                         .toString(),
-                                    password: "password",
                                 ),
                           );
                         },
