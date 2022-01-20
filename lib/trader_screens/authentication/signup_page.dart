@@ -187,11 +187,11 @@ class _SignUpPageState extends State<SignUpPage> {
                               Flexible(
                                 child: inputTextField(
                                   context,
-                                  "CNIC",
+                                  "CNIC without Dashes",
                                   cnic,
                                   TextInputType.number,
                                   function: (value) {
-                                    if (value!.isEmpty || value.length <= 13) {
+                                    if (value!.isEmpty || value.length <= 12) {
                                       return 'Please enter a valid CNIC';
                                     }
                                     return null;

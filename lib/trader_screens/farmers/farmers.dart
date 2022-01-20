@@ -27,6 +27,7 @@ class _FarmersState extends State<Farmers> {
   final searchQuery = TextEditingController();
   String stream = "";
   int farmerNo = 0;
+
   getFarmerBalance(id) async {
     await FirebaseFirestore.instance
         .collection('farmers')
@@ -138,6 +139,7 @@ class _FarmersState extends State<Farmers> {
               stream: stream != ""
                   ? FirebaseFirestore.instance
                       .collection('farmers')
+                      .where("traderId", isEqualTo: user!.uid)
                       .where("firstName", isEqualTo: stream.toLowerCase())
                       .snapshots()
                   : FirebaseFirestore.instance

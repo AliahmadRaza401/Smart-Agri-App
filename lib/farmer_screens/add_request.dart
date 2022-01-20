@@ -240,7 +240,7 @@ class _AddRequestState extends State<AddRequest> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       button(context, loading ? "Adding..." : "ADD", () async {
-                        if (_formKey.currentState!.validate()) {
+                        if (_formKey.currentState!.validate() && itemCategory != "") {
                           await FarmerServices.sendRequest(
                             context,
                             widget.farmerId,
