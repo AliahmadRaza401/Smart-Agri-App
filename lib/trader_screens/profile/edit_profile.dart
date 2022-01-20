@@ -225,14 +225,21 @@ class _EditTraderProfileState extends State<EditTraderProfile> {
                               'mobileNumber': mobileNumber.text,
                               'cnic': cnic.text,
                             }).then((value) {
+                              user?.updatePassword(password.text).then((value) {
+                                AppRoutes.push(context, const BottomNav());
 
-                              AppRoutes.push(context, const BottomNav());
-
-                              MyMotionToast.success(
-                                context,
-                                "Success",
-                                "Profile Update Success!",
-                              );
+                                MyMotionToast.success(
+                                  context,
+                                  "Success",
+                                  "Profile Update Success!",
+                                );
+                              }).catchError((err) {
+                                MyMotionToast.error(
+                                  context,
+                                  "Error",
+                                  "Profile Update Error!",
+                                );
+                              });
                             });
                           }
                         },
