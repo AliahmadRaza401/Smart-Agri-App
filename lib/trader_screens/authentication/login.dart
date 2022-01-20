@@ -30,13 +30,19 @@ class _LoginPageState extends State<LoginPage> {
   final password = TextEditingController();
   final fUsername = TextEditingController();
   late AuthProvider _authProvider;
-
+  var farmerId;
   @override
   void initState() {
     super.initState();
     _authProvider = Provider.of<AuthProvider>(context, listen: false);
     email.clear();
     password.clear();
+  }
+
+  getSf() async {
+    await AuthServices.saveUniqueFarmerID(farmerId);
+    var id = await AuthServices.getUniqueFarmerID();
+    print('id: $id');
   }
 
   loginCheck() async {
@@ -71,8 +77,9 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           _authProvider.isLoading(false);
           AuthServices.farmerLoggedIn(true);
+          farmerId = id;
         });
-
+        getSf();
         AppRoutes.replace(
           context,
           FarmerBottomNav(

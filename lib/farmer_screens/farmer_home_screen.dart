@@ -36,17 +36,12 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
 
   fcmListen() async {
     print("famrer fcm listen________________________!");
-    var uniqueFarmerID = await AuthServices.getUniqueFarmerID();
-    print('uniqueFarmerID: $uniqueFarmerID');
     var spID = await AuthServices.getUniqueFarmerID();
     print('spID: $spID');
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
       print('event: ${event.data}');
       print("Noti ID: ${event.data['id']}");
-      print("farmerID: ${widget.farmerId}");
       print('spID: $spID');
-      print('uniqueFarmerId: $uniqueFarmerId');
-
       if (event.data['id'].toString() == spID.toString()) {
         print("Notification Home match_____________!");
 
