@@ -237,7 +237,6 @@ class _EditTraderProfileState extends State<EditTraderProfile> {
                                 "Profile Update Success!",
                               );
                             }).catchError((e) {
-                              print('e: $e');
                               AppRoutes.pop(context);
                               MyMotionToast.success(
                                 context,

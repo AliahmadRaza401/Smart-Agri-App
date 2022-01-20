@@ -95,7 +95,6 @@ class DailyUpdateServices {
     User? user = _auth.currentUser;
     authProvider.isLoading(true);
     DateTime now = DateTime.now();
-    print('now: $now');
     var date = DateFormat.yMMMMd('en_US').format(now);
     var time = DateFormat.jm().format(now);
 
@@ -110,7 +109,6 @@ class DailyUpdateServices {
         'traderId': user!.uid,
         'description': description,
       }).then((value) {
-        print("Update Success!");
         authProvider.isLoading(false);
         AppRoutes.pop(context);
         MyMotionToast.success(

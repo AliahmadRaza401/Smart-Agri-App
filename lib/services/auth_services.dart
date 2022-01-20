@@ -235,13 +235,11 @@ class AuthServices {
   static saveUniqueFarmerID(String farmerValue) async {
     SharedPreferences prefsValue = await SharedPreferences.getInstance();
     prefsValue.setString('uniqueFarmerID', farmerValue.toString());
-    print("Save Farmer Id in SF________________________$farmerValue");
   }
 
   static getUniqueFarmerID() async {
     SharedPreferences prefsValue = await SharedPreferences.getInstance();
     String? farmerValue = prefsValue.getString('uniqueFarmerID');
-    print("Get Farmerid form Sp _________________$farmerValue");
     return farmerValue;
   }
 

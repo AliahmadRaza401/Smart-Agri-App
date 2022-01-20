@@ -35,15 +35,9 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
   }
 
   fcmListen() async {
-    print("famrer fcm listen________________________!");
     var spID = await AuthServices.getUniqueFarmerID();
-    print('spID: $spID');
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      print('event: ${event.data}');
-      print("Noti ID: ${event.data['id']}");
-      print('spID: $spID');
       if (event.data['id'].toString() == spID.toString()) {
-        print("Notification Home match__________!");
 
         LocalNotificationsService.instance.showChatNotifcation(
             title: '${event.notification!.title}',
@@ -51,7 +45,6 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
 
         FirebaseMessaging.onMessageOpenedApp.listen((message) {});
       } else {
-        print("Notification Not match_____________!");
       }
     });
   }
@@ -77,7 +70,6 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print("farmerID Build wali: ${widget.farmerId}");
     return Scaffold(
       backgroundColor: myGrey,
       body: SafeArea(

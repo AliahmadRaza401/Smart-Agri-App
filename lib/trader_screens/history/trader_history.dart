@@ -62,7 +62,6 @@ class _TraderHistoryState extends State<TraderHistory> {
                   auth: false,
                   inputAction: TextInputAction.done,
                   submitFunction: (value) {
-                    print(value);
                     setState(() {
                       if (value == "") {
                         stream = "";

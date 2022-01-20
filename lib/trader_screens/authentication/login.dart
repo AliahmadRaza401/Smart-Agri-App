@@ -31,6 +31,7 @@ class _LoginPageState extends State<LoginPage> {
   final fUsername = TextEditingController();
   late AuthProvider _authProvider;
   var farmerId;
+
   @override
   void initState() {
     super.initState();
@@ -41,8 +42,6 @@ class _LoginPageState extends State<LoginPage> {
 
   getSf() async {
     await AuthServices.saveUniqueFarmerID(farmerId);
-    var id = await AuthServices.getUniqueFarmerID();
-    print('id: $id');
   }
 
   loginCheck() async {
@@ -69,11 +68,6 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           uniqueFarmerId = id;
         });
-        await AuthServices.saveUniqueFarmerID("1111111111111111111");
-        AuthServices.saveFarmerID(id);
-        var uniqueFarmerID = await AuthServices.getUniqueFarmerID();
-        print('uniqueFarmerID Succes: $uniqueFarmerID');
-
         setState(() {
           _authProvider.isLoading(false);
           AuthServices.farmerLoggedIn(true);

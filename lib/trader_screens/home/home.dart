@@ -46,18 +46,14 @@ class _HomeState extends State<Home> {
 
   fcmListen() async {
     var sfID = await AuthServices.getTraderID();
-    print('sfID: $sfID');
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      print("notification Id: ${event.data['id']}");
       if (event.data['id'] == user!.uid) {
-        print("fCM True");
         LocalNotificationsService.instance.showChatNotifcation(
             title: '${event.notification!.title}',
             body: '${event.notification!.body}');
 
         FirebaseMessaging.onMessageOpenedApp.listen((message) {});
       } else {
-        print("fCM False");
       }
     });
   }

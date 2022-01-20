@@ -41,7 +41,6 @@ class _AddUpdateState extends State<AddUpdate> {
   }
 
   Future getDocs() async {
-    print("Get.:.");
     querySnapshot =
         await FirebaseFirestore.instance.collection("dailyUpdate").get();
   }
