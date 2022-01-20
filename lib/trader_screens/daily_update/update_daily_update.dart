@@ -183,7 +183,7 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                               itemPrice.text,
                               itemUnit.text,
                               itemCategory,
-                              itemDesc,
+                              itemDesc.text,
                             );
                           }
                         },

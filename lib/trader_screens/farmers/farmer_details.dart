@@ -309,6 +309,7 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                               itemCount: docs.length,
                               itemBuilder: (_, i) {
                                 final data = docs[i].data();
+                                print('data: $data');
 
                                 if (data.containsKey("price") == true) {
                                   return Slidable(
@@ -354,15 +355,18 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                                                         data['brokerCharges'],
                                                     traderChar:
                                                         data['traderCharges'],
-                                                      itemWeight: data['itemWeight'],
+                                                    itemWeight:
+                                                        data['itemWeight'],
                                                   ));
                                         },
                                         child: farmerRecordCard(
                                           context,
-                                          data['name'],
-                                          data['finalBalance'].toStringAsFixed(0),
-                                          data['date'],
-                                          data['time'],
+                                          data['name'] ?? "",
+                                          data['finalBalance']
+                                                  .toStringAsFixed(0) ??
+                                              "",
+                                          data['date'] ?? "",
+                                          data['time'] ?? "",
                                         ),
                                       ),
                                     ),

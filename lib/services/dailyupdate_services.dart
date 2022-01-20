@@ -95,6 +95,7 @@ class DailyUpdateServices {
     User? user = _auth.currentUser;
     authProvider.isLoading(true);
     DateTime now = DateTime.now();
+    print('now: $now');
     var date = DateFormat.yMMMMd('en_US').format(now);
     var time = DateFormat.jm().format(now);
 
@@ -108,21 +109,23 @@ class DailyUpdateServices {
         'time': time,
         'traderId': user!.uid,
         'description': description,
+      }).then((value) {
+        print("Update Success!");
+        authProvider.isLoading(false);
+        AppRoutes.pop(context);
+        MyMotionToast.success(
+          context,
+          "Success",
+          "Update Successfully Done",
+        );
       });
-      authProvider.isLoading(false);
-      MyMotionToast.success(
-        context,
-        "Success",
-        "Update Successfully Donw",
-      );
-      AppRoutes.pop(context);
     } catch (e) {
       authProvider.isLoading(false);
 
       MyMotionToast.error(
         context,
-        "Error",
-        e.toString(),
+        "Oops!",
+        "Update Fail",
       );
     }
   }

@@ -147,6 +147,8 @@ class FarmerServicesTrader {
           'finalBalance': finalPrice,
           'todayPrice': todayPrice,
           "timeStamp": DateTime.now(),
+          "time": time,
+          "date": date,
         },
       );
 
