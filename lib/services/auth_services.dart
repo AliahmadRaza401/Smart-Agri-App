@@ -187,6 +187,7 @@ class AuthServices {
     await FirebaseAuth.instance.signOut();
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
+    AuthServices.clearSharedPref();
     farmerLoggedIn(false);
     userLoggedIn(false);
 
@@ -231,6 +232,24 @@ class AuthServices {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String? value = prefs.getString('farmerID');
     return value;
+  }
+
+  static saveUniqueFarmerID(String value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('uniqueFarmerID', value);
+    print("Save Farmer Id in SF________________________$value");
+  }
+
+  static getUniqueFarmerID() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String? value = prefs.getString('uniqueFarmerID');
+    print("Get Farmerid form Sp _________________$value");
+    return value;
+  }
+
+  static clearSharedPref() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
   }
 
   // save TraderId

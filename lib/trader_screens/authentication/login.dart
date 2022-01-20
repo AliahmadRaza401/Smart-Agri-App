@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/services/auth_services.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
@@ -31,6 +30,7 @@ class _LoginPageState extends State<LoginPage> {
   final password = TextEditingController();
   final fUsername = TextEditingController();
   late AuthProvider _authProvider;
+
   @override
   void initState() {
     super.initState();
@@ -47,13 +47,18 @@ class _LoginPageState extends State<LoginPage> {
     await FirebaseFirestore.instance
         .collection("farmers")
         .get()
-        .then((querySnapshot) {
+        .then((querySnapshot) async {
       for (var result in querySnapshot.docs) {
         if (result.data()["userName"].toString() == fUsername.text.toString() &&
             result.data()["password"].toString() == password.text.toString()) {
           id = result.reference.id;
-          print(' id: $id');
+          setState(() {
+            uniqueFarmerId = result.reference.id;
+          });
+          await AuthServices.saveUniqueFarmerID(id);
+
           AuthServices.saveFarmerID(id);
+
           check = true;
           break;
         } else {

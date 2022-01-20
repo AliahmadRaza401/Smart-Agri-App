@@ -13,5 +13,7 @@ const Color containerBgColor = Colors.white;
 
 bool obscureText = true;
 
+dynamic uniqueFarmerId = "";
+
  const serverKey =
       'AAAAVodnUJE:APA91bEwRX1Xso62LpTo4IvYaskEU6zRUqH0rIch6siffylQoElQAM4KtTOdRPcIG_c4RlAXGjbgGpJ5-inYRua5eiCRCnI6E3Iernbbne68E5Ca7bFKvGNdwT-BZykmrIw3FfC0CDzp';
