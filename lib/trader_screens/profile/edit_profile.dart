@@ -229,7 +229,6 @@ class _EditTraderProfileState extends State<EditTraderProfile> {
                               'password': password.text,
                             }).then((value) {
                               AppRoutes.push(context, BottomNav());
-
                               MyMotionToast.success(
                                 context,
                                 "Success",
