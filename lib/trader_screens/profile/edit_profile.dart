@@ -3,8 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
+import 'package:smart_agri/widgets/botton_nav.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
+import 'package:smart_agri/widgets/motion_toast.dart';
 
 class EditTraderProfile extends StatefulWidget {
   final String firstName, secondName, mobileNumber, cnic, password;
@@ -225,8 +227,15 @@ class _EditTraderProfileState extends State<EditTraderProfile> {
                               'mobileNumber': mobileNumber.text,
                               'cnic': cnic.text,
                               'password': password.text,
+                            }).then((value) {
+                              AppRoutes.push(context, BottomNav());
+
+                              MyMotionToast.success(
+                                context,
+                                "Success",
+                                "Profile Update Success!",
+                              );
                             });
-                            AppRoutes.pop(context);
                           }
                         },
                         width: dynamicWidth(context, .3),
