@@ -126,6 +126,8 @@ class _TraderHistoryState extends State<TraderHistory> {
                                 data['date'],
                                 data['time'],
                                 data['farmerName'],
+                                data['mode'],
+                                data['quantity'],
                               );
                             },
                           ),

@@ -192,12 +192,12 @@ class _EditTraderProfileState extends State<EditTraderProfile> {
                           autovalidateMode: AutovalidateMode.onUserInteraction,
                           controller: password,
                           textInputAction: TextInputAction.next,
-                          validator: (value) {
-                            // if (value!.isEmpty || value.length < 6) {
-                            //   return 'Password must have 6 characters';
-                            // }
-                            // return null;
-                          },
+                          // validator: (value) {
+                          //   if (value!.length < 6) {
+                          //     return 'Password must have 6 characters';
+                          //   }
+                          //   return null;
+                          // },
                         ),
                         SizedBox(
                           height: dynamicHeight(context, .02),
@@ -212,10 +212,11 @@ class _EditTraderProfileState extends State<EditTraderProfile> {
                         context,
                         loader == false ? "Update" : "Updating...",
                         () async {
-                          setState(() {
-                            loader = true;
-                          });
                           if (_formKey.currentState!.validate()) {
+                            setState(() {
+                              loader = true;
+                            });
+
                             await FirebaseFirestore.instance
                                 .collection("users")
                                 .doc(user!.uid)
@@ -224,18 +225,28 @@ class _EditTraderProfileState extends State<EditTraderProfile> {
                               'secondName': secondName.text,
                               'mobileNumber': mobileNumber.text,
                               'cnic': cnic.text,
-                            }).then((value) {
-                              if (password.text != null ||
-                                  password.text.isNotEmpty) {
-                                user?.updatePassword(password.text);
-                              }
-                              AppRoutes.push(context, const BottomNav());
+                            }).then((value) async {
+                              if (password.text.toString() != "" ||
+                                  password.text.length >= 6) {
+                                await user?.updatePassword(password.text);
 
-                              MyMotionToast.success(
-                                context,
-                                "Success",
-                                "Profile Update Success!",
-                              );
+                                AppRoutes.push(context, const BottomNav());
+
+                                MyMotionToast.success(
+                                  context,
+                                  "Success",
+                                  "Profile Update Success!",
+                                );
+                              } else {
+                                setState(() {
+                                  loader = false;
+                                });
+                                MyMotionToast.error(
+                                  context,
+                                  "Error",
+                                  "Password is less than 6",
+                                );
+                              }
                             }).catchError((e) {
                               AppRoutes.pop(context);
                               MyMotionToast.success(

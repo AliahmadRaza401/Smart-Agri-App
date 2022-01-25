@@ -482,6 +482,8 @@ Widget historyCard(
   date,
   time,
   farmerName,
+  mode,
+  quantity,
 ) {
   return Padding(
     padding: EdgeInsets.symmetric(
@@ -558,6 +560,28 @@ Widget historyCard(
                         fontWeight: FontWeight.bold,
                       ),
                     ),
+                    SizedBox(
+                      height: dynamicHeight(context, .006),
+                    ),
+                    Text(
+                      "Quantity : ",
+                      style: TextStyle(
+                        color: myBlack,
+                        fontSize: dynamicWidth(context, .04),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(
+                      height: dynamicHeight(context, .006),
+                    ),
+                    Text(
+                      "Mode : ",
+                      style: TextStyle(
+                        color: myBlack,
+                        fontSize: dynamicWidth(context, .04),
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ],
                 ),
                 Column(
@@ -585,6 +609,26 @@ Widget historyCard(
                     ),
                     Text(
                       '$farmerName',
+                      style: TextStyle(
+                        color: myBlack,
+                        fontSize: dynamicWidth(context, .04),
+                      ),
+                    ),
+                    SizedBox(
+                      height: dynamicHeight(context, .006),
+                    ),
+                    Text(
+                      '$quantity',
+                      style: TextStyle(
+                        color: myBlack,
+                        fontSize: dynamicWidth(context, .04),
+                      ),
+                    ),
+                    SizedBox(
+                      height: dynamicHeight(context, .006),
+                    ),
+                    Text(
+                      '$mode',
                       style: TextStyle(
                         color: myBlack,
                         fontSize: dynamicWidth(context, .04),

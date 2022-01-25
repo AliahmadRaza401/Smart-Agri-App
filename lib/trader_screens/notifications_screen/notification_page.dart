@@ -223,6 +223,8 @@ class _NotificationPageState extends State<NotificationPage> {
                                 data["itemName"].toString(),
                                 requestPrice,
                                 data["farmerName"].toString(),
+                                "Request",
+                                data["quantity"].toString(),
                               );
 
                               // send Notification to farmer

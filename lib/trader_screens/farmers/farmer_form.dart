@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:smart_agri/services/farmer_services_trader.dart';
@@ -51,20 +50,19 @@ class _FarmerFormState extends State<FarmerForm> {
   bool userAlreadyExist = false;
 
   Future getDocs() async {
-    querySnapshot =
-        await FirebaseFirestore.instance.collection("farmers").get();
+    setState(() async {
+      querySnapshot =
+          await FirebaseFirestore.instance.collection("farmers").get();
+    });
   }
 
-  checkuserAlreadyExist(userName) {
-    var id = FirebaseAuth.instance.currentUser!.uid;
+  checkUserAlreadyExist(userName) {
     for (int i = 0; i < querySnapshot.docs.length; i++) {
       farmers = querySnapshot.docs[i].data();
-      if (farmers['traderId'] == id) {
-        if (farmers['userName'] == userName) {
-          setState(() {
-            userAlreadyExist = true;
-          });
-        }
+      if (farmers['userName'] == userName) {
+        setState(() {
+          userAlreadyExist = true;
+        });
       }
     }
   }
@@ -281,7 +279,7 @@ class _FarmerFormState extends State<FarmerForm> {
                           return;
                         } else {
                           if (_image != null) {
-                            checkuserAlreadyExist(userName.text);
+                            checkUserAlreadyExist(userName.text);
                             if (userAlreadyExist == true) {
                               MyMotionToast.warning(
                                 context,

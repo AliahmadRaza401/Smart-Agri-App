@@ -24,6 +24,8 @@ class _AddAmountState extends State<AddAmount> {
   final itemWeight = TextEditingController();
   final itemTodayRate = TextEditingController();
 
+  bool buttonLoading = false;
+
   // int hour = 00;
   // int mint = 00;
   // var addTime;
@@ -176,29 +178,39 @@ class _AddAmountState extends State<AddAmount> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
-                        button(
-                          context,
-                          "ADD",
-                          () async {
-                            if (_formKey.currentState!.validate()) {
-                              await FarmerServicesTrader.addFarmerAmount(
+                        buttonLoading == false
+                            ? button(
                                 context,
-                                widget.farmerId,
-                                itemName.text,
-                                itemPrice.text,
-                                itemWeight.text,
-                                itemTodayRate.text,
-                                widget.farmerUserName,
-                              );
-                              AppRoutes.pop(context);
-                            }
-                          },
-                          width: dynamicWidth(context, .3),
-                          height: dynamicHeight(context, .056),
-                          fontSize: dynamicWidth(context, .042),
-                          color: myWhite,
-                          btnColor: myGreen,
-                        ),
+                                "ADD",
+                                () async {
+                                  setState(() {
+                                    buttonLoading = true;
+                                  });
+                                  if (_formKey.currentState!.validate()) {
+                                    await FarmerServicesTrader.addFarmerAmount(
+                                      context,
+                                      widget.farmerId,
+                                      itemName.text,
+                                      itemPrice.text,
+                                      itemWeight.text,
+                                      itemTodayRate.text,
+                                      widget.farmerUserName,
+                                    );
+                                    AppRoutes.pop(context);
+                                  }
+                                },
+                                width: dynamicWidth(context, .3),
+                                height: dynamicHeight(context, .056),
+                                fontSize: dynamicWidth(context, .042),
+                                color: myWhite,
+                                btnColor: myGreen,
+                              )
+                            : SizedBox(
+                                height: dynamicHeight(context, .04),
+                                child: CircularProgressIndicator(
+                                  color: myGreen,
+                                ),
+                              ),
                         cancelButton(
                           context,
                           "Cancel",

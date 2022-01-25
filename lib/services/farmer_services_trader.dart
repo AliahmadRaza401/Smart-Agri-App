@@ -207,6 +207,8 @@ class FarmerServicesTrader {
         name,
         finalPrice,
         farmerUserName,
+        "Sales",
+        itemWeight,
       );
 
       MyMotionToast.success(

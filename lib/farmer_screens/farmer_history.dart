@@ -86,6 +86,8 @@ class _FarmerHistoryState extends State<FarmerHistory> {
                           data['date'],
                           data['time'],
                           data['farmerName'],
+                          data['mode'],
+                          data['quantity'],
                         );
                       },
                     ),

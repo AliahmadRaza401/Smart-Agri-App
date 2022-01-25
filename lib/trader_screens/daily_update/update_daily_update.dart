@@ -41,6 +41,7 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
 
   @override
   Widget build(BuildContext context) {
+    print("chaa ${widget.category}");
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(
