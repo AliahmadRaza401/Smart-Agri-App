@@ -183,7 +183,9 @@ class _UpdateDailyUpdateState extends State<UpdateDailyUpdate> {
                               itemName.text.toLowerCase(),
                               itemPrice.text,
                               itemUnit.text,
-                              itemCategory,
+                              itemCategory == ""
+                                  ? widget.category
+                                  : itemCategory,
                               itemDesc.text,
                             );
                           }
