@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:smart_agri/services/fcm_services.dart';
 import 'package:smart_agri/services/firebase_services.dart';
 import 'package:smart_agri/trader_screens/authentication/auth_provider.dart';
 import 'package:smart_agri/trader_screens/farmers/farmers.dart';
@@ -207,6 +208,13 @@ class FarmerServicesTrader {
         name,
         finalPrice,
         farmerUserName,
+      );
+
+      FCMServices.sendFCM(
+        'trader',
+        farmerId,
+        "Balance added",
+        "Trader add new item in your account",
       );
 
       MyMotionToast.success(

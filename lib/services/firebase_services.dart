@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:smart_agri/services/fcm_services.dart';
 import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/motion_toast.dart';
 
@@ -32,13 +33,18 @@ class FirebaseServices {
           .collection("balance")
           .doc(balanceId)
           .delete();
+      FCMServices.sendFCM(
+        'trader',
+        farmerId,
+        "Balance Delete",
+        "Trader delete item in your account",
+      );
       MyMotionToast.delete(
         context,
         "Success",
         "Delete successfully :) ",
       );
-    } catch (e) {
-    }
+    } catch (e) {}
   }
 
   static Future<String> imageUpload(imageFile, name) async {

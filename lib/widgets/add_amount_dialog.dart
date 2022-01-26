@@ -23,7 +23,7 @@ class _AddAmountState extends State<AddAmount> {
   final itemPrice = TextEditingController();
   final itemWeight = TextEditingController();
   final itemTodayRate = TextEditingController();
-
+  bool loading = false;
   // int hour = 00;
   // int mint = 00;
   // var addTime;
@@ -178,21 +178,30 @@ class _AddAmountState extends State<AddAmount> {
                       children: [
                         button(
                           context,
-                          "ADD",
-                          () async {
-                            if (_formKey.currentState!.validate()) {
-                              await FarmerServicesTrader.addFarmerAmount(
-                                context,
-                                widget.farmerId,
-                                itemName.text,
-                                itemPrice.text,
-                                itemWeight.text,
-                                itemTodayRate.text,
-                                widget.farmerUserName,
-                              );
-                              AppRoutes.pop(context);
-                            }
-                          },
+                          loading == true ? "Adding..." : "ADD",
+                          loading == true
+                              ? () {}
+                              : () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    setState(() {
+                                      loading = true;
+                                    });
+
+                                    await FarmerServicesTrader.addFarmerAmount(
+                                      context,
+                                      widget.farmerId,
+                                      itemName.text,
+                                      itemPrice.text,
+                                      itemWeight.text,
+                                      itemTodayRate.text,
+                                      widget.farmerUserName,
+                                    );
+                                    setState(() {
+                                      loading = true;
+                                    });
+                                    AppRoutes.pop(context);
+                                  }
+                                },
                           width: dynamicWidth(context, .3),
                           height: dynamicHeight(context, .056),
                           fontSize: dynamicWidth(context, .042),
