@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:quds_popup_menu/quds_popup_menu.dart';
@@ -35,6 +36,7 @@ class FarmerDetails extends StatefulWidget {
 class _FarmerDetailsState extends State<FarmerDetails> {
   dynamic netBalance = 0.0;
   late DocumentSnapshot snapshot;
+  User? user = FirebaseAuth.instance.currentUser;
 
   getNetBalance() async {
     await FirebaseFirestore.instance
@@ -317,13 +319,52 @@ class _FarmerDetailsState extends State<FarmerDetails> {
                                       motion: const ScrollMotion(),
                                       children: [
                                         SlidableAction(
-                                          onPressed: (BuildContext context) {
+                                          onPressed:
+                                              (BuildContext context) async {
                                             var balanceId = docs[i].id;
-                                            FirebaseServices.deleteBalance(
+                                            await FirebaseServices
+                                                .deleteBalance(
                                               context,
                                               widget.farmerId,
                                               balanceId,
                                             );
+                                            await FirebaseFirestore.instance
+                                                .collection("farmers")
+                                                .doc(widget.farmerId)
+                                                .get()
+                                                .then((querySnapshot) async {
+                                              var leneHenData = querySnapshot
+                                                      .data()!["leneHen"] ??
+                                                  0;
+
+                                              await FirebaseFirestore.instance
+                                                  .collection("farmers")
+                                                  .doc(widget.farmerId)
+                                                  .update(
+                                                {
+                                                  'leneHen': leneHenData -
+                                                      data['finalBalance']
+                                                          .toInt(),
+                                                },
+                                              );
+                                            });
+
+                                            await FirebaseFirestore.instance
+                                                .collection("users")
+                                                .doc(user?.uid)
+                                                .get()
+                                                .then((querySnapshot) async {
+                                              var balance = querySnapshot
+                                                      .data()!["balance"] ??
+                                                  0;
+                                              await FirebaseFirestore.instance
+                                                  .collection("users")
+                                                  .doc(user?.uid)
+                                                  .update({
+                                                "balance": balance -
+                                                    data['traderCharges'],
+                                              });
+                                            });
                                           },
                                           backgroundColor: myRed,
                                           foregroundColor: Colors.white,
