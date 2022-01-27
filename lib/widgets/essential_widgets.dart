@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_agri/utils/app_route.dart';
 import 'package:smart_agri/utils/config.dart';
@@ -8,6 +9,7 @@ import 'package:smart_agri/widgets/buttons.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'dynamic_size.dart';
+import 'motion_toast.dart';
 
 Widget rowText(context, text1, page, text2) {
   return Padding(
@@ -476,15 +478,15 @@ Widget farmerRequestCard(
 }
 
 Widget historyCard(
-  context,
-  name,
-  int price,
-  date,
-  time,
-  farmerName,
-  mode,
-  quantity,
-) {
+    context, name, int price, date, time, farmerName, mode, quantity, type,
+    {Timestamp? timeStamp, id}) {
+  var temp, diff;
+  if (type == "trader") {
+    temp = Timestamp.now().toDate().difference(timeStamp!.toDate());
+    diff = int.parse(temp.toString().substring(0, 2));
+    // print("haha ${}");
+    // print("hahah \n ${timeStamp!.toDate()} & ${Timestamp.now().toDate()} =  ${Timestamp.now().toDate().difference(timeStamp.toDate())}");
+  }
   return Padding(
     padding: EdgeInsets.symmetric(
       horizontal: dynamicWidth(context, .05),
@@ -511,15 +513,32 @@ Widget historyCard(
       ),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
-              Icon(
-                Icons.history_rounded,
-                color: myGreen,
-              )
-            ],
-          ),
+          type == "trader" && diff < 01
+              ? Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        FirebaseFirestore.instance
+                            .collection("history")
+                            .doc(id)
+                            .delete()
+                            .then((e) {
+                          MyMotionToast.delete(
+                            context,
+                            "Success",
+                            "Deleted Successfully :)",
+                          );
+                        });
+                      },
+                      child: Icon(
+                        Icons.delete_outline_rounded,
+                        color: myRed,
+                      ),
+                    )
+                  ],
+                )
+              : SizedBox(),
           Padding(
             padding: EdgeInsets.symmetric(
               vertical: dynamicHeight(context, .01),
@@ -670,16 +689,8 @@ Widget historyCard(
 
 statusColor(status) {
   if (status == "Accepted") {
-    // LocalNotificationsService.instance.showChatNotifcation(
-    //   title: "Request Accepted",
-    //   body: "Trader accept your request",
-    // );
     return myGreen;
   } else if (status == "Declined") {
-    // LocalNotificationsService.instance.showChatNotifcation(
-    //   title: "Request Declined",
-    //   body: "Trader reject your request",
-    // );
     return myRed;
   } else {
     return myYellow;

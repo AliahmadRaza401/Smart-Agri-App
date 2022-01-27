@@ -114,7 +114,6 @@ class _TraderHistoryState extends State<TraderHistory> {
                             horizontal: dynamicWidth(context, .02),
                           ),
                           child: ListView.builder(
-                            // reverse: true,
                             itemCount: docs.length,
                             itemBuilder: (context, i) {
                               final data = docs[i].data();
@@ -128,6 +127,9 @@ class _TraderHistoryState extends State<TraderHistory> {
                                 data['farmerName'],
                                 data['mode'],
                                 data['quantity'],
+                                "trader",
+                                timeStamp: data['timeStamp'],
+                                id: docs[i].reference.id,
                               );
                             },
                           ),
