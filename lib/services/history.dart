@@ -14,6 +14,8 @@ class HistoryServices {
     name,
     price,
     farmerName,
+      mode,
+      quantity,
   ) async {
     DateTime now = DateTime.now();
     var date = DateFormat.yMMMMd('en_US').format(now);
@@ -26,6 +28,8 @@ class HistoryServices {
           'price': price,
           'date': date,
           'time': time,
+          'mode' : mode,
+          'quantity': quantity,
           'farmerId': farmerId,
           'traderId': traderId,
           'timeStamp': now,

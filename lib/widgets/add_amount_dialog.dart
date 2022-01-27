@@ -197,7 +197,7 @@ class _AddAmountState extends State<AddAmount> {
                                       widget.farmerUserName,
                                     );
                                     setState(() {
-                                      loading = true;
+                                      loading = false;
                                     });
                                     AppRoutes.pop(context);
                                   }

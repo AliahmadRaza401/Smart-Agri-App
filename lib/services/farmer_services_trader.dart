@@ -208,6 +208,8 @@ class FarmerServicesTrader {
         name,
         finalPrice,
         farmerUserName,
+        "Sales",
+        itemWeight,
       );
 
       FCMServices.sendFCM(
