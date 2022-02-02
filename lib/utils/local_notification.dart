@@ -20,7 +20,7 @@ class LocalNotificationsService {
   late final FlutterLocalNotificationsPlugin _notificationsPlugin;
 
   Future<void> initialize() async {
-    this._notificationsPlugin = FlutterLocalNotificationsPlugin();
+    _notificationsPlugin = FlutterLocalNotificationsPlugin();
 
     const androidSettings = AndroidInitializationSettings(
       "@mipmap/ic_launcher",
@@ -45,7 +45,7 @@ class LocalNotificationsService {
     throw UnimplementedError();
   }
 
-   Future<void> showChatNotifcation({
+   Future<void> showChatNotification({
     required String title,
     required String body,
   }) async {

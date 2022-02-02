@@ -39,7 +39,7 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
       if (event.data['id'].toString() == spID.toString()) {
 
-        LocalNotificationsService.instance.showChatNotifcation(
+        LocalNotificationsService.instance.showChatNotification(
             title: '${event.notification!.title}',
             body: '${event.notification!.body}');
 
@@ -261,7 +261,7 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                                           date.difference(postDate).inMinutes;
                                       if (diff <= 1) {
                                         LocalNotificationsService.instance
-                                            .showChatNotifcation(
+                                            .showChatNotification(
                                                 title: "New Post",
                                                 body:
                                                     "Trader Upload new post in daily item");
