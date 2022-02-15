@@ -36,15 +36,19 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
 
   fcmListen() async {
     var spID = await AuthServices.getUniqueFarmerID();
-    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
-      if (event.data['id'].toString() == spID.toString()) {
 
+    FirebaseMessaging.onMessage.listen((RemoteMessage event) {
+      print("FCM ID: ${event.data['id'].toString()}");
+      print('spID: $spID');
+      if (event.data['id'].toString() == spID.toString()) {
+        print("FCM  Match Success!");
         LocalNotificationsService.instance.showChatNotifcation(
             title: '${event.notification!.title}',
             body: '${event.notification!.body}');
 
         FirebaseMessaging.onMessageOpenedApp.listen((message) {});
       } else {
+        print("FCM Not Match");
       }
     });
   }
@@ -58,10 +62,10 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
           (value) => {
             setState(
               () {
-                farmerName = value.data()!["firstName"];
-                traderId = value.data()!["traderId"];
-                leneHen = value.data()!["leneHen"];
-                deneHen = value.data()!["deneHen"];
+                farmerName = value.data()!["firstName"] ?? "";
+                traderId = value.data()!["traderId"] ?? "";
+                leneHen = value.data()!["leneHen"] ?? "";
+                deneHen = value.data()!["deneHen"] ?? "";
               },
             ),
           },
@@ -192,9 +196,9 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           balanceBox(context, "Yet To Receive",
-                              leneHen.toStringAsFixed(0), myGreen),
+                              "${leneHen.toStringAsFixed(0)}", myGreen),
                           balanceBox(context, "Yet To Give",
-                              deneHen.toStringAsFixed(0), myRed),
+                              "${deneHen.toStringAsFixed(0)}", myRed),
                         ],
                       ),
                     ),
