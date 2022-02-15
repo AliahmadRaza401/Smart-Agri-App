@@ -41,8 +41,8 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
       print("FCM ID: ${event.data['id'].toString()}");
       print('spID: $spID');
       if (event.data['id'].toString() == spID.toString()) {
-        print("FCM  Match Success!");
-        LocalNotificationsService.instance.showChatNotifcation(
+
+        LocalNotificationsService.instance.showChatNotification(
             title: '${event.notification!.title}',
             body: '${event.notification!.body}');
 
@@ -265,7 +265,7 @@ class _FarmerHomeScreenState extends State<FarmerHomeScreen> {
                                           date.difference(postDate).inMinutes;
                                       if (diff <= 1) {
                                         LocalNotificationsService.instance
-                                            .showChatNotifcation(
+                                            .showChatNotification(
                                                 title: "New Post",
                                                 body:
                                                     "Trader Upload new post in daily item");

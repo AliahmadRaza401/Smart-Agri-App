@@ -45,18 +45,11 @@ class DailyUpdateServices {
         'subCategory': subCategory,
         'date': date,
         'time': time,
-        'createdAt': now,
         'traderId': user!.uid,
         'image': {'name': now.toString(), 'url': image},
         'description': description,
         'timeStamp': DateTime.now(),
       });
-      // BalanceServices.sendRequest(
-      //   context,
-      //   user.uid,
-      //   category,
-      //   price,
-      // );
       await FCMServices.sendFCM(
         'farmer',
         "all",

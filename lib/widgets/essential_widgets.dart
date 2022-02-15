@@ -480,12 +480,10 @@ Widget farmerRequestCard(
 Widget historyCard(
     context, name, int price, date, time, farmerName, mode, quantity, type,
     {Timestamp? timeStamp, id}) {
-  var temp, diff;
+  var diff;
+
   if (type == "trader") {
-    temp = Timestamp.now().toDate().difference(timeStamp!.toDate());
-    diff = int.parse(temp.toString().substring(0, 2));
-    // print("haha ${}");
-    // print("hahah \n ${timeStamp!.toDate()} & ${Timestamp.now().toDate()} =  ${Timestamp.now().toDate().difference(timeStamp.toDate())}");
+    diff = Timestamp.now().toDate().difference(timeStamp!.toDate()).inHours;
   }
   return Padding(
     padding: EdgeInsets.symmetric(

@@ -129,30 +129,6 @@ class _NotificationPageState extends State<NotificationPage> {
 
                             if (check == true) {
                               await FirebaseFirestore.instance
-                                  .collection("users")
-                                  .doc(user!.uid)
-                                  .collection("balance")
-                                  .doc(data["farmerId"])
-                                  .set(
-                                {
-                                  'traderId': user!.uid,
-                                  'farmerId': data["farmerId"],
-                                  'leneHen': requestPrice,
-                                },
-                              );
-                              await FirebaseFirestore.instance
-                                  .collection("farmers")
-                                  .doc(data["farmerId"])
-                                  .collection("balance")
-                                  .doc(user!.uid)
-                                  .set(
-                                {
-                                  'traderId': user!.uid,
-                                  'farmerId': data["farmerId"],
-                                  'deneHen': requestPrice,
-                                },
-                              );
-                              await FirebaseFirestore.instance
                                   .collection("request")
                                   .doc(docs[i].reference.id)
                                   .update(

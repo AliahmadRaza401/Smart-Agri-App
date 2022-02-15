@@ -28,7 +28,7 @@ Future<void> main() async {
 // Future<void> _messageHandler(RemoteMessage event) async {
 //   var traderId = await AuthServices.getTraderID();
 //   var farmerId = await AuthServices.getFarmerID();
-
+//
 //   FirebaseMessaging.onMessageOpenedApp.listen((message) {
 //     print("Notification not match_____________!");
 //     if (event.data['id'] == traderId || event.data['id'] == farmerId) {
@@ -71,7 +71,7 @@ class MyApp extends StatelessWidget {
       providers: multiProviders,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Flutter Demo',
+        title: 'Smart Agri',
         theme: ThemeData(
           primarySwatch: primaryColor,
           fontFamily: 'Zen Kurenaido',

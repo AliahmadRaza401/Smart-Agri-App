@@ -32,7 +32,7 @@ class _HomeState extends State<Home> {
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
 
   dynamic leneHen = 0.0, deneHen = 0.0, balance = 0.0;
-  late FirebaseMessaging messaging;
+  // late FirebaseMessaging messaging;
 
   @override
   void initState() {
@@ -48,7 +48,7 @@ class _HomeState extends State<Home> {
     var sfID = await AuthServices.getTraderID();
     FirebaseMessaging.onMessage.listen((RemoteMessage event) {
       if (event.data['id'] == user!.uid) {
-        LocalNotificationsService.instance.showChatNotifcation(
+        LocalNotificationsService.instance.showChatNotification(
             title: '${event.notification!.title}',
             body: '${event.notification!.body}');
 
