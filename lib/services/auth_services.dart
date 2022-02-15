@@ -154,7 +154,7 @@ class AuthServices {
       'email': user.email,
       'firstName': firstName,
       'secondName': lastName,
-      'mobileNumber': mobileNumber,
+      'mobileNumber': '0$mobileNumber',
       'cnic': cnic,
       'image': {'name': cnic, 'url': image}
     });

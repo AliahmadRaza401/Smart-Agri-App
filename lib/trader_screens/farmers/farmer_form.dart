@@ -47,7 +47,6 @@ class _FarmerFormState extends State<FarmerForm> {
 
   var farmers;
   late QuerySnapshot querySnapshot;
-  bool userAlreadyExist = false;
 
   Future getDocs() async {
     setState(() async {
@@ -55,6 +54,7 @@ class _FarmerFormState extends State<FarmerForm> {
           await FirebaseFirestore.instance.collection("farmers").get();
     });
   }
+  bool userAlreadyExist = false;
 
   checkUserAlreadyExist(userName) {
     for (int i = 0; i < querySnapshot.docs.length; i++) {

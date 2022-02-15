@@ -40,7 +40,7 @@ class FarmerServicesTrader {
         'firstName': firstName,
         'lastName': lastName,
         'cnic': cnic,
-        'mobileNumber': mobileNumber,
+        'mobileNumber': '0$mobileNumber',
         'userName': userName,
         'password': password,
         'traderId': user!.uid,

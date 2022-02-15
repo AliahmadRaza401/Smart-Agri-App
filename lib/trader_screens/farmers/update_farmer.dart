@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:smart_agri/services/farmer_services_trader.dart';
 import 'package:smart_agri/utils/app_route.dart';
@@ -5,6 +6,7 @@ import 'package:smart_agri/utils/config.dart';
 import 'package:smart_agri/widgets/buttons.dart';
 import 'package:smart_agri/widgets/dynamic_size.dart';
 import 'package:smart_agri/widgets/form_fields.dart';
+import 'package:smart_agri/widgets/motion_toast.dart';
 
 final _formKey = GlobalKey<FormState>();
 final farmerFName = TextEditingController();
@@ -33,6 +35,35 @@ class UpdateFarmer extends StatefulWidget {
 }
 
 class _UpdateFarmerState extends State<UpdateFarmer> {
+  @override
+  void initState() {
+    super.initState();
+    getDocs();
+  }
+
+  var farmers;
+  late QuerySnapshot querySnapshot;
+
+  Future getDocs() async {
+    setState(() async {
+      querySnapshot =
+          await FirebaseFirestore.instance.collection("farmers").get();
+    });
+  }
+
+  bool userAlreadyExist = false;
+
+  checkUserAlreadyExist(userName) {
+    for (int i = 0; i < querySnapshot.docs.length; i++) {
+      farmers = querySnapshot.docs[i].data();
+      if (farmers['userName'] == userName) {
+        setState(() {
+          userAlreadyExist = true;
+        });
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -242,16 +273,28 @@ class _UpdateFarmerState extends State<UpdateFarmer> {
                           children: [
                             button(context, "UPDATE", () {
                               if (_formKey.currentState!.validate()) {
-                                FarmerServicesTrader.updateFarmerToDB(
-                                  context,
-                                  widget.docsID,
-                                  userName.text,
-                                  farmerPassword.text,
-                                  farmerFName.text,
-                                  farmerLName.text,
-                                  farmerNumber.text,
-                                  farmerCnic.text,
-                                );
+                                checkUserAlreadyExist(userName.text);
+                                if (userAlreadyExist == true) {
+                                  MyMotionToast.warning(
+                                    context,
+                                    "Username already exist",
+                                    "Try some unique username with character and number",
+                                  );
+                                  setState(() {
+                                    userAlreadyExist = false;
+                                  });
+                                } else {
+                                  FarmerServicesTrader.updateFarmerToDB(
+                                    context,
+                                    widget.docsID,
+                                    userName.text,
+                                    farmerPassword.text,
+                                    farmerFName.text,
+                                    farmerLName.text,
+                                    farmerNumber.text,
+                                    farmerCnic.text,
+                                  );
+                                }
                               }
                             },
                                 width: dynamicWidth(context, .3),
